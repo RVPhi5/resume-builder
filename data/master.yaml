@@ -1,0 +1,175 @@
+# =============================================================================
+# master.yaml — the single source of truth for resume-tailor.
+#
+# Everything the tailor can ever emit lives here. A tailoring run scores
+# bullets against a job description, selects a subset that fits one page, and
+# renders them through templates/. Nothing is invented at render time.
+#
+# SHAPE NOTES
+#   - Every bullet has a stable `id`. Selections, overrides/*.yaml, and
+#     cached LLM judgments all reference bullets by `<entry-id>.<bullet-id>`,
+#     so ids must never be renumbered or reused for different text.
+#   - `strength` (1-5) is the author's own confidence in a bullet independent
+#     of any job: 5 = flagship, quantified, always a candidate; 1 = filler,
+#     included only when space is abundant and tags match well.
+#   - `anchor: true` means the bullet is exempt from score-based cutting: if
+#     its entry renders at all, this bullet renders. Use sparingly — an entry
+#     with too many anchors cannot be compressed to fit one page.
+#   - `tags` are free-form lowercase-kebab keywords matched against the JD.
+#
+# This file currently holds EXAMPLE entries only, to review the shape.
+# =============================================================================
+
+schema_version: 1
+
+# -----------------------------------------------------------------------------
+# constraints — hard rules the selector/renderer must satisfy, checked after
+# scoring. A run that cannot satisfy a constraint fails loudly rather than
+# silently emitting a resume that violates it.
+#
+# ordering: named rules, applied in listed order, that override score-based
+#   section ordering. Each name maps to a rule implemented in the ordering
+#   module; the comment records the intent so the YAML stays readable.
+# -----------------------------------------------------------------------------
+constraints:
+  ordering:
+    # Mirico Ltd. must render above Brown Space Engineering in Experience,
+    # regardless of relevance score or date sort.
+    - mirico_before_bse
+
+# -----------------------------------------------------------------------------
+# contact — rendered verbatim in the header. No tailoring applied.
+# -----------------------------------------------------------------------------
+contact:
+  name: Example Name
+  phone: (000)-000-0000
+  email: example@brown.edu
+  linkedin: linkedin.com/in/example
+  github: github.com/example
+  portfolio: https://example.vercel.app/
+
+# -----------------------------------------------------------------------------
+# education — single school for now; lists are trimmed to fit, never reworded.
+# -----------------------------------------------------------------------------
+education:
+  school: Example University
+  degree: Bachelor of Science in Applied Mathematics and Computer Science
+  location: Providence, RI
+  dates: Sep. 2024 -- May 2028
+  gpa: "3.92"
+  honors:
+    - Example Fellowship
+    - Undergraduate Teaching and Research Award (UTRA)
+  coursework:
+    - Deep Learning
+    - Computer Systems
+    - Networks
+  leadership:
+    - Co-President - Example Club
+    - Treasurer - Example Department
+
+# -----------------------------------------------------------------------------
+# experience — entries are ordered by score at render time, subject to
+# constraints.ordering. `end: Present` is allowed and sorts as "now".
+# -----------------------------------------------------------------------------
+experience:
+  - id: mirico
+    title: Data and Software Engineer Intern
+    org: Mirico Ltd.
+    location: Harwell Science & Innovation Campus, UK
+    start: June 2026
+    end: August 2026
+    bullets:
+      - id: zarr-pipeline
+        text: >-
+          Designed, optimized, and deployed a production HDF5-to-Zarr conversion
+          pipeline transforming raw sensor data from Azure Blob Storage into
+          cloud-native Zarr format for downstream analysis.
+        tags: [data-engineering, python, azure, cloud, pipelines]
+        strength: 5
+        anchor: true
+      - id: parallel-upload
+        text: >-
+          Cut total pipeline runtime ~74% (87->23 min) for a monthly batch of
+          ~1,400 objects by parallelizing uploads with a Python
+          ThreadPoolExecutor, reducing upload time ~81% (71->13 min).
+        tags: [performance, concurrency, python]
+        strength: 5
+      - id: k8s-cronjob
+        text: >-
+          Deployed the converter as a scheduled Kubernetes CronJob using
+          Kustomize for secret generation, with resource limits derived from
+          measured peak memory and an execution deadline preventing stuck-job
+          deadlock.
+        tags: [kubernetes, devops, docker, infrastructure]
+        strength: 4
+      - id: tooling
+        text: >-
+          Maintained robust software standards using modern tooling (uv, ruff,
+          Docker-based devcontainers) to ensure cross-functional alignment
+          between hardware and software teams.
+        tags: [tooling, collaboration]
+        strength: 2
+
+  - id: bse
+    title: Flight Software Engineer
+    org: Brown Space Engineering (PVDX CubeSat)
+    location: Providence, RI
+    start: September 2025
+    end: Present
+    bullets:
+      - id: pvdxos-core
+        text: >-
+          Developed the PVDXos flight-software core in embedded C/C++ on the
+          radiation-hardened SAMV71 microcontroller, running under a FreeRTOS
+          real-time operating system for a CubeSat launching in 2027.
+        tags: [embedded, c, cpp, rtos, systems]
+        strength: 5
+        anchor: true
+      - id: bootloader-crc
+        text: >-
+          Enhanced the bootloader with triplicated OS images and checksums,
+          improving bit-flip reliability from 0.1% to 97%, and applied CRC and
+          parity checks to ensure integrity of high-throughput transmissions.
+        tags: [embedded, reliability, fault-tolerance]
+        strength: 5
+      - id: code-review
+        text: >-
+          Facilitated peer code inspections for 20+ flight-software modules and
+          enforced a static-allocation coding standard for deterministic
+          real-time behavior.
+        tags: [code-review, collaboration, standards]
+        strength: 3
+
+# -----------------------------------------------------------------------------
+# projects — same bullet shape as experience, plus `stack` (rendered inline in
+# the project heading) and a display `dates` string instead of start/end.
+# -----------------------------------------------------------------------------
+projects:
+  - id: coursetrees
+    name: CourseTrees
+    stack: Next.js 15, React, TypeScript, Supabase/Postgres, Cytoscape.js
+    dates: 2025 -- Present
+    bullets:
+      - id: platform
+        text: >-
+          Built and help lead a production course-planning platform mapping
+          prerequisite graphs, grade distributions, and degree requirements
+          across 150+ universities (394K+ courses, 426K+ prerequisite edges).
+        tags: [full-stack, typescript, postgres, product]
+        strength: 5
+        anchor: true
+      - id: agent-loop
+        text: >-
+          Engineered a grounded AI advisor running a bounded agent loop over 18
+          school-scoped, DB-backed tools, streaming typed SSE events to the
+          client.
+        tags: [llm, agents, ai, streaming, backend]
+        strength: 5
+      - id: rls-data-layer
+        text: >-
+          Architected a school-scoped data layer where every query filters by
+          school_id, with Postgres Row-Level Security as the security boundary
+          and cron-refreshed materialized views for heavy read aggregations.
+        tags: [postgres, security, architecture, sql]
+        strength: 4
