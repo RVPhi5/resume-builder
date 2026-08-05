@@ -1,0 +1,152 @@
+ROHAN VITTAL
+(609)-937-9296 | rohan_vittal@brown.edu | linkedin.com/in/rohan-vittal1618 | github.com/RVPhi5 | Portfolio: https://rohan-vittal-portfolio.vercel.app/
+
+NOTE: This is the exhaustive master resume. It is intentionally far longer than one
+page. Select from it; never add to it.
+
+
+================================================================================
+EDUCATION
+================================================================================
+
+Brown University — Providence, RI
+Bachelor of Science in Applied Mathematics and Computer Science
+Sep. 2024 -- May 2028
+- Cumulative GPA: 3.92 | Honors: Sprint Fellowship, Undergraduate Teaching and Research Award (UTRA), AIME Qualification, National Merit Finalist, Taekwondo 4th Dan, Speedcubing State Record Holder
+- Relevant Coursework: Networks, Deep Learning, Machine Learning, Computer Systems, Honors Statistics
+- Leadership: Co-President - Speedcubing Club, Treasurer - Math Undergraduate Department, Treasurer - Quiz Bowl
+
+
+================================================================================
+EXPERIENCE
+================================================================================
+
+Data and Software Engineer Intern — Mirico Ltd.
+Harwell Science & Innovation Campus, UK
+June 2026 -- August 2026
+- Designed, optimized, and deployed a production HDF5-to-Zarr conversion pipeline transforming raw laser methane-detection sensor data from Azure Blob Storage into cloud-native Zarr format for downstream emissions analysis.
+- Cut total pipeline runtime ~74% (87 -> 23 min) for a monthly batch of ~1,400 objects by parallelizing uploads with a Python ThreadPoolExecutor (8 workers), reducing upload time ~81% (71 -> 13 min).
+- Re-architected deduplication around a fault-tolerant JSON manifest of converted source URLs, replacing brittle filename-date parsing; reduced the step from O(H x Z) to O(H) via set-based lookups and made incremental runs resumable and self-healing.
+- Reduced Docker image size ~86% (1.74 GB -> 243 MB) by tracing the true import graph with static analysis and coverage.py, removing 94 unused source files (~24,000 lines) and 27 transitive dependencies, then stripping dev tooling from the runtime layer.
+- Diagnosed and fixed a startup anti-pattern where `uv run` triggered an implicit dependency re-sync on every container launch, invoking the virtualenv interpreter directly to remove a hard runtime dependency on PyPI reachability, verified with `--network none`.
+- Deployed the converter as a scheduled Kubernetes CronJob using Kustomize for secret generation, with resource limits derived from measured peak memory (886 MB RSS) and an execution deadline preventing stuck-job deadlock under `concurrencyPolicy: Forbid`.
+- Hardened the container against credential leakage by excluding `.env` files (write-scoped Azure SAS tokens) from image layers via `.dockerignore`, and surfaced the exposure for token rotation.
+- Validated correctness against live production data, confirming converted output preserved expected structure (73 data variables, ~8,700 timestamps/day), CF-1.6 metadata, fitted parameter sets, and physically plausible methane concentrations.
+- Resolved unbounded log growth across a fleet of ~10 production Linux edge instruments (Intel NUC x86 Ubuntu 24.04 + Koheron ARM/Zynq FPGA boards) by root-causing rsyslog dynamic-template routing that produced ~100 unrotated files per unit.
+- Authored and validated a logrotate config (glob-matched, `su` directive, postrotate HUP to reset daemon file descriptors, size ceilings), delivering it as infrastructure-as-code through the repo's Makefile deploy path rather than a manual production edit.
+- Integrated high-fidelity Computational Fluid Dynamics (CFD) data into the proprietary mipyelq gas-modeling framework to improve the accuracy of atmospheric gas dispersion simulations.
+- Collaborated with Data Scientists on next-generation localization models using Bayesian state estimation, Kalman smoothing, and stochastic systems modeling, accounting for 3D wind measurements and complex facility layouts.
+- Engineered production-grade backend services within the analysis-engine repository, using Azure Container Apps for scalable orchestration of real-time methane emission quantification for multinational energy clients.
+- Maintained robust software standards using modern tooling (uv, ruff, Docker-based devcontainers, Tailscale mesh VPN access) to ensure cross-functional alignment between hardware and software teams.
+
+Software Engineer, Freelance — United for Brownsville
+New York City, NY
+November 2025 -- February 2026
+- Repaired broken GA4 tracking on a live nonprofit site caused by multiple add-ons double-sending events, reducing inflated metrics by over 40%.
+- Mitigated bot traffic responsible for 60% of recorded metrics by enacting analytics filters and firewall rules.
+- Safely modified legacy PHP/JS in a live production environment with no downtime or regression in site functionality.
+
+Machine Learning Engineer (UTRA) — Huang Climate Lab
+Providence, RI
+January 2025 -- September 2025
+- Engineered a MATLAB GC-MS data pipeline that automated import, baseline correction, noise filtering, and peak detection for 200+ chromatograms, reducing overall preprocessing time by over 70%.
+- Trained two PyTorch neural networks for peak identification and fitting, achieving over 90% accuracy, and compared them against scikit-learn baselines for model trust and evaluation.
+- Indexed 1,000+ unique compounds into a custom SQL spectral library, linking peak data with comprehensive sample metadata for fast retrieval and downstream analysis.
+- Enhanced automated verification of raw sensor streams by integrating checksum validation gates across a 40+ field relational database, catching corrupted or inconsistent measurements before model training.
+- Helped bypass an 80% manual-identification bottleneck through an automated, ML-driven compound detection workflow, collaborating on an end-to-end pipeline with a four-person research team.
+
+Flight Software Engineer — Brown Space Engineering (PVDX CubeSat)
+Providence, RI
+September 2025 -- Present
+- Developed the PVDXos flight-software core in embedded C/C++ on the radiation-hardened SAMV71 microcontroller, running under a FreeRTOS real-time operating system for a CubeSat launching in 2027.
+- Integrated NASA's Core Flight System (cFS) to manage the software bus and modular command dispatching across all satellite subsystems, and architected a 7-stage deterministic state machine for the full mission lifecycle.
+- Engineered the CCSDS File Delivery Protocol (CFDP) main task loop with modular dispatchable functions (cfdp_put_request, cfdp_cancel_request) for reliable ground-control interfacing.
+- Enhanced the bootloader with triplicated OS images and checksums, improving bit-flip reliability from 0.1% to 97%, and applied CRC and parity checks to ensure integrity of high-throughput S-Band transmissions.
+- Established an autonomous Fault Detection, Isolation, and Recovery (FDIR) system distinguishing transient bit-flips from permanent hardware failure, backed by a "dead_list" in persistent memory letting the dispatcher bypass faulty hardware on reboot.
+- Designed a persistent MRAM storage schema (column-per-sensor, dual-version metadata, doubly linked list queue) to warehouse failure timestamps and prevent corruption during mid-write failures.
+- Created watchdog recovery logic monitoring consecutive kicks and triggering a system audit past threshold; verified resiliency in 100% of simulated corruption events using a custom-built "Cosmic Monkey" fault-injection tool.
+- Developed autonomous power logic (under-voltage response, EPS monitoring, an autonomous Low Power state), improving power-aware transition efficiency by 15% and defining a 14-day power-balanced Safe Mode requirement.
+- Integrated ADCS software controls for magnetometers and magnetorquers to stabilize vehicle orientation during the detumbling phase.
+- Reduced manual telemetry debugging time by 40% via a structured failure-logging system in MRAM; retrieved live telemetry from the ISS and other satellites using Node, Flask, and the SatNOGS database.
+- Facilitated peer code inspections for 20+ flight-software modules and enforced a static-allocation, "No Infinite Loops" coding standard for deterministic real-time behavior.
+
+English and Communication TA — College Unbound
+Providence, RI
+September 2024 -- May 2025
+- Supported an initiative expanding access to college-level instruction for over 400 formerly incarcerated individuals.
+- Led office hours and review sessions for 40+ students addressing writing mechanics and presentation skills.
+
+
+================================================================================
+PROJECTS
+================================================================================
+
+CourseTrees | Next.js 15, React, TypeScript, Supabase/Postgres, Cytoscape.js, LLM Orchestration
+2025 -- Present
+- Built and help lead a production course-planning platform mapping prerequisite graphs, grade distributions, professor ratings, and degree requirements across 150+ universities (394K+ courses, 426K+ prerequisite edges, 448K+ grade rows).
+- Rendered the signature interactive Cytoscape prerequisite graph per school with three layouts: a most-connected department-cluster default, a filtered division/department/rating view, and a focus "waterfall" of a course's ancestors and unlocks.
+- Architected a school-scoped data layer where every query filters by `school_id` and all DB access routes through one module, with Postgres Row-Level Security as the security boundary and cron-refreshed materialized views for heavy read aggregations.
+- Engineered "Cam," a grounded AI advisor running a bounded agent loop (max 4 hops, concurrent tool execution with deterministic processing order) over 18 school-scoped, DB-backed tools, streaming typed SSE events (status, answer deltas, UI cards) to the client.
+- Implemented structural grounding verification that extracts every course code an answer asserts and validates it against the whitelist of codes the tools actually sourced, badging ungrounded responses rather than trusting model prose.
+- Hardened LLM inputs against prompt injection via Unicode NFKC normalization, role-marker and chat-template control-token stripping, and bidi-character collapsing, fencing untrusted review and board content the system prompt instructs the model never to obey.
+- Built a fail-closed cost and privacy layer: a free-tier-first router across 8 LLM providers (Groq, Cerebras, Gemini, DeepSeek, Anthropic, and others) with hard monthly spend caps and per-user daily limits enforced via a tamper-resistant SECURITY DEFINER RPC.
+- Enforced PII-safe routing that keeps authenticated-user data off providers that train on free-tier prompts, derived from the request payload rather than trusted from the caller so a missing flag still routes safely.
+- Designed a nonce-based handoff that transfers a student's draft question through same-origin localStorage (opaque nonce, 15-minute TTL, one-shot deletion) so drafts never enter a URL, access log, or analytics property.
+- Shipped an SSE streaming contract that is additive-only (unknown event types ignored) so deployed clients survive newer servers, with client-disconnect aborting the upstream LLM stream to cap cost and DoS exposure.
+
+jts --- In-Video Text Replacement Pipeline | Python, OpenCV, EasyOCR (CRAFT), PyTorch, Kalman Filtering
+2026
+- Built an end-to-end computer-vision pipeline that detects, tracks, removes, and replaces text regions in broadcast video, engineered for sports-jersey wordmarks on deforming fabric under occlusion, turn-aways, motion blur, and scale change.
+- Fused three per-region estimators --- a constant-velocity Kalman filter for prediction through occlusion, sparse Lucas-Kanade optical flow for frame-to-frame fabric deformation, and a One-Euro filter to remove sub-pixel corner jitter --- associated to detections via Hungarian assignment on quad IoU.
+- Designed a false-positive filtering stage using geometry gates, screen-static suppression (rejecting scoreboards and ad boards that hold a fixed screen position), exclusion zones, and OCR fuzzy-matching against a target brand string.
+- Implemented a visibility state machine (VISIBLE / OCCLUDED / NON_FRONTAL / LOST) with hysteresis and alpha ramping so replacement text is never projected onto an occluded or non-frontal surface.
+- Built temporally consistent inpainting by blending each frame's Telea result with the prior frame's inpainted output warped forward by dense optical flow on the ROI, eliminating the per-frame flicker of naive diffusion inpainting.
+- Developed perspective-aware compositing that warps replacement text by homography onto the tracked quad and matches fabric shading and directional motion blur, with a ProPainter hook for production-grade learned video inpainting.
+
+Full-Text Search & Archival Engine | Node.js, Express, SQLite (WASM), FTS4, Chart.js
+2026
+- Built a self-hosted archival search engine over a high-volume social feed, persisting 200MB+ of posts and comments into an embedded SQLite database with a full-text search UI supporting relevance/date/vote ranking, date filtering, pagination, and term highlighting.
+- Ran SQLite compiled to WebAssembly (sql.js) fully in-memory with periodic flushes to a single on-disk file, and implemented an FTS4 external-content virtual table with insert/update/delete triggers for incremental search updates.
+- Optimized bulk ingestion by dropping FTS triggers during batch loads and rebuilding the index once afterward, avoiding per-row trigger overhead and sharply cutting reindex time on large batches.
+- Engineered a self-contained ingestion service with scheduled backfill and 24h-refresh jobs on timers, idempotent upserts that refresh engagement counts without duplication, and 30s exponential backoff on HTTP 429 rate limits.
+- Developed an authenticated, URL-allowlisted asset-proxy endpoint and Chart.js analytics dashboards visualizing posts per day, activity by hour and day of week, top posters, and vote distribution.
+- Made the service deployment-ready on Railway with a volume-aware DB path, a raw-DB upload endpoint behind a secret for seeding deployed instances, and all ingestion baked into the server process for a single self-contained deploy with no external cron.
+
+PokeMatch (Poke'Match) | Python, PyTorch, CLIP, scikit-learn, NumPy, Pandas, Matplotlib
+April 2026 -- Present
+- Built an ML-based Pokemon TCG binder recommendation system that suggests visually cohesive cards based on human aesthetic preferences rather than set, rarity, or type; presented as a poster at Brown Deep Learning Day 2026.
+- Processed 13K+ Pokemon card images through an end-to-end pipeline for image downloading, artwork cropping, metadata cleaning, CLIP embedding extraction, and color feature generation.
+- Engineered 527-dimensional card representations by combining 512-dim CLIP ViT-B/32 embeddings with 15 handcrafted color features capturing dominant colors and RGB/HSV statistics.
+- Designed a human-in-the-loop labeling interface that collected 200 preference examples, then trained a PyTorch MLP ranker using a pairwise logistic ranking loss over joint query-candidate features, achieving roughly 90-92% validation pairwise accuracy.
+- Evaluated recommendations against a CLIP-only baseline in a human study across 20 binder-page comparisons, with users preferring PokeMatch 67% of the time overall and 72% in the single-card query setting.
+
+The Jungle Multiplayer Game | JavaScript, FastAPI, WebSockets, Python, SQLite, HTML/CSS
+April 2026 -- Present
+- Built a full-stack browser implementation of Jungle / Dou Shou Qi, supporting 4 gameplay modes: local two-player, human vs. AI, agent-vs-agent spectating, and real-time online multiplayer.
+- Developed 2 AI opponents using greedy one-ply search and minimax search with alpha-beta pruning, including depth-2 and depth-4 variants with randomized root jitter for varied play.
+- Built a real-time online backend with FastAPI REST endpoints and WebSocket rooms, enabling room creation/joining, synchronized moves, reconnectable room state, resignations, and in-room chat capped at 200 characters.
+- Added an SQLite-backed leaderboard API for online game results, with persistent match history exposed through setup-screen leaderboard viewing.
+
+Userspace TCP/IP Network Stack | Go, UDP Sockets, TCP, Concurrent Systems
+February 2026 -- May 2026
+- Built a userspace IPv4 network stack over UDP tunnels, modeling each virtual interface as a bound UDP socket and encapsulating raw IPv4 packets as UDP payloads.
+- Implemented IPv4 packet parsing, header construction, checksum validation/recomputation, TTL decrementing, local delivery, and longest-prefix-match forwarding across virtual hosts and routers.
+- Implemented a custom RIP protocol over IP protocol 200, including binary packet marshaling, periodic route advertisements, metric updates, poisoned/infinite-route filtering, and timeout-based route expiration.
+- Built a full TCP stack supporting active/passive open, three-way handshake, socket demultiplexing by 4-tuple, stream-oriented VRead/VWrite, and listener accept queues.
+- Added reliable data transfer with sliding-window sending, out-of-order receive buffering, duplicate-ACK handling, retransmission timers, RTT/RTO estimation, exponential backoff, and zero-window probing.
+- Implemented graceful TCP teardown across all FIN states (FIN_WAIT, CLOSE_WAIT, LAST_ACK, CLOSING, TIME_WAIT) with cleanup timers and EOF signaling to applications.
+
+OughtToSee | React Native, Python, FastAPI, SerpAPI, Gemini
+February 2026
+- Developed a full-stack mobile application using React Native and an AWS-hosted FastAPI backend.
+- Integrated AI agents with SerpAPI and Gemini to search events by criteria and generate an itinerary, with an end-to-end pipeline from API consumption to exportable PDFs.
+
+
+================================================================================
+TECHNICAL SKILLS
+================================================================================
+
+Languages: Python, JavaScript, TypeScript, C/C++, Java, SQL, Go, MATLAB
+Frameworks: PyTorch, FastAPI, React, Next.js, Node.js, Express, React Native, Flask, FreeRTOS, NASA cFS
+Developer Tools: Git, Docker, Kubernetes, Kustomize, AWS, Google Cloud Platform, Azure, Supabase, Vercel, VS Code, IntelliJ
+Libraries: pandas, NumPy, Matplotlib, OpenCV, CLIP, EasyOCR, scikit-learn, xarray, zarr, Cytoscape.js
