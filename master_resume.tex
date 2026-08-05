@@ -181,9 +181,10 @@
     \resumeSubHeadingListStart
 
       \resumeProjectHeading
-          {\textbf{CourseTrees} $|$ \emph{Next.js 15, React, TypeScript, Supabase/Postgres, Cytoscape.js, LLM Orchestration}}{2025 -- Present}
+          {\href{https://www.coursetrees.com/}{\underline{\textbf{CourseTrees}}} --- Co-Founder $|$ \emph{Next.js 15, React, TypeScript, Supabase/Postgres, Cytoscape.js, LLM Orchestration}}{2025 -- Present}
           \resumeItemListStart
-            \resumeItem{Built and help lead a production course-planning platform mapping prerequisite graphs, grade distributions, professor ratings, and degree requirements across 150+ universities (394K+ courses, 426K+ prerequisite edges, 448K+ grade rows).}
+            \resumeItem{Co-founded and help lead a production course-planning platform mapping prerequisite graphs, grade distributions, professor ratings, and degree requirements across 150+ universities (394K+ courses, 426K+ prerequisite edges, 448K+ grade rows).}
+            \resumeItem{Adopted by Brown University advising as an official course-planning resource for 2,000+ freshmen.}
             \resumeItem{Rendered the signature interactive Cytoscape prerequisite graph per school with three layouts: a most-connected department-cluster default, a filtered division/department/rating view, and a focus ``waterfall'' of a course's ancestors and unlocks.}
             \resumeItem{Architected a school-scoped data layer where every query filters by \texttt{school\_id} and all DB access routes through one module, with Postgres Row-Level Security as the security boundary and cron-refreshed materialized views for heavy read aggregations.}
             \resumeItem{Engineered ``Cam,'' a grounded AI advisor running a bounded agent loop (max 4 hops, concurrent tool execution with deterministic processing order) over 18 school-scoped, DB-backed tools, streaming typed SSE events (status, answer deltas, UI cards) to the client.}
@@ -196,7 +197,7 @@
           \resumeItemListEnd
 
       \resumeProjectHeading
-          {\textbf{jts --- In-Video Text Replacement Pipeline} $|$ \emph{Python, OpenCV, EasyOCR (CRAFT), PyTorch, Kalman Filtering}}{2026}
+          {\textbf{TextTrack --- In-Video Text Replacement Pipeline} $|$ \emph{Python, OpenCV, EasyOCR (CRAFT), PyTorch, Kalman Filtering}}{2026}
           \resumeItemListStart
             \resumeItem{Built an end-to-end computer-vision pipeline that detects, tracks, removes, and replaces text regions in broadcast video, engineered for sports-jersey wordmarks on deforming fabric under occlusion, turn-aways, motion blur, and scale change.}
             \resumeItem{Fused three per-region estimators --- a constant-velocity Kalman filter for prediction through occlusion, sparse Lucas-Kanade optical flow for frame-to-frame fabric deformation, and a One-Euro filter to remove sub-pixel corner jitter --- associated to detections via Hungarian assignment on quad IoU.}
@@ -204,17 +205,6 @@
             \resumeItem{Implemented a visibility state machine (VISIBLE / OCCLUDED / NON\_FRONTAL / LOST) with hysteresis and alpha ramping so replacement text is never projected onto an occluded or non-frontal surface.}
             \resumeItem{Built temporally consistent inpainting by blending each frame's Telea result with the prior frame's inpainted output warped forward by dense optical flow on the ROI, eliminating the per-frame flicker of naive diffusion inpainting.}
             \resumeItem{Developed perspective-aware compositing that warps replacement text by homography onto the tracked quad and matches fabric shading and directional motion blur, with a ProPainter hook for production-grade learned video inpainting.}
-          \resumeItemListEnd
-
-      \resumeProjectHeading
-          {\textbf{Full-Text Search \& Archival Engine} $|$ \emph{Node.js, Express, SQLite (WASM), FTS4, Chart.js}}{2026}
-          \resumeItemListStart
-            \resumeItem{Built a self-hosted archival search engine over a high-volume social feed, persisting 200MB+ of posts and comments into an embedded SQLite database with a full-text search UI supporting relevance/date/vote ranking, date filtering, pagination, and term highlighting.}
-            \resumeItem{Ran SQLite compiled to WebAssembly (sql.js) fully in-memory with periodic flushes to a single on-disk file, and implemented an FTS4 external-content virtual table with insert/update/delete triggers for incremental search updates.}
-            \resumeItem{Optimized bulk ingestion by dropping FTS triggers during batch loads and rebuilding the index once afterward, avoiding per-row trigger overhead and sharply cutting reindex time on large batches.}
-            \resumeItem{Engineered a self-contained ingestion service with scheduled backfill and 24h-refresh jobs on timers, idempotent upserts that refresh engagement counts without duplication, and 30s exponential backoff on HTTP 429 rate limits.}
-            \resumeItem{Developed an authenticated, URL-allowlisted asset-proxy endpoint and Chart.js analytics dashboards visualizing posts per day, activity by hour and day of week, top posters, and vote distribution.}
-            \resumeItem{Made the service deployment-ready on Railway with a volume-aware DB path, a raw-DB upload endpoint behind a secret for seeding deployed instances, and all ingestion baked into the server process for a single self-contained deploy with no external cron.}
           \resumeItemListEnd
 
       \resumeProjectHeading
@@ -228,16 +218,16 @@
           \resumeItemListEnd
 
       \resumeProjectHeading
-          {\textbf{The Jungle Multiplayer Game} $|$ \emph{JavaScript, FastAPI, WebSockets, Python, SQLite, HTML/CSS}}{April 2026 -- Present}
+          {\textbf{The Jungle Multiplayer Game} $|$ \emph{Java, Spring Boot, WebSockets, SQLite, JavaScript, HTML/CSS}}{April 2026 -- Present}
           \resumeItemListStart
             \resumeItem{Built a full-stack browser implementation of Jungle / Dou Shou Qi, supporting 4 gameplay modes: local two-player, human vs. AI, agent-vs-agent spectating, and real-time online multiplayer.}
             \resumeItem{Developed 2 AI opponents using greedy one-ply search and minimax search with alpha-beta pruning, including depth-2 and depth-4 variants with randomized root jitter for varied play.}
-            \resumeItem{Built a real-time online backend with FastAPI REST endpoints and WebSocket rooms, enabling room creation/joining, synchronized moves, reconnectable room state, resignations, and in-room chat capped at 200 characters.}
+            \resumeItem{Built a real-time online backend with Spring Boot REST endpoints and WebSocket rooms, enabling room creation/joining, synchronized moves, reconnectable room state, resignations, and in-room chat capped at 200 characters.}
             \resumeItem{Added an SQLite-backed leaderboard API for online game results, with persistent match history exposed through setup-screen leaderboard viewing.}
           \resumeItemListEnd
 
       \resumeProjectHeading
-          {\textbf{Userspace TCP/IP Network Stack} $|$ \emph{Go, UDP Sockets, TCP, Concurrent Systems}}{February 2026 -- May 2026}
+          {\textbf{Userspace TCP/IP Network Stack} $|$ \emph{C++, UDP Sockets, TCP, Concurrent Systems}}{February 2026 -- May 2026}
           \resumeItemListStart
             \resumeItem{Built a userspace IPv4 network stack over UDP tunnels, modeling each virtual interface as a bound UDP socket and encapsulating raw IPv4 packets as UDP payloads.}
             \resumeItem{Implemented IPv4 packet parsing, header construction, checksum validation/recomputation, TTL decrementing, local delivery, and longest-prefix-match forwarding across virtual hosts and routers.}
@@ -248,10 +238,80 @@
           \resumeItemListEnd
 
       \resumeProjectHeading
-          {\textbf{OughtToSee} $|$ \emph{React Native, Python, FastAPI, SerpAPI, Gemini}}{February 2026}
+          {\textbf{CoCube --- Two-Player Cooperative Rubik's Cube} $|$ \emph{C\#, .NET 8, ASP.NET Core, SignalR, Blazor WebAssembly, xUnit, bUnit}}{August 2026}
           \resumeItemListStart
-            \resumeItem{Developed a full-stack mobile application using React Native and an AWS-hosted FastAPI backend.}
-            \resumeItem{Integrated AI agents with SerpAPI and Gemini to search events by criteria and generate an itinerary, with an end-to-end pipeline from API consumption to exportable PDFs.}
+            \resumeItem{Built a two-player cooperative Rubik's cube game in C\#/.NET 8 where both players share one 3x3 cube, control three faces each, alternate turns strictly, and race a single 2-minute countdown; solve it together to win, or both lose when the clock expires.}
+            \resumeItem{Architected the server as the sole source of truth for cube state, turn order, face permissions, and the clock; the browser client sends move intents only and has no code path that computes cube state, decides whose turn it is, or decides whether time has run out.}
+            \resumeItem{Scoped gameplay calls to carry no room code, mapping connection to room server-side instead, so a client cannot address a room it is not seated in.}
+            \resumeItem{Implemented the cube engine as 54 facelets in six contiguous 9-element blocks in Singmaster U/R/F/D/L/B order, defining each face exactly once as five disjoint 4-cycles (20 stickers move, 34 stay) and deriving prime and double turns from a quarter-turn count so variants cannot drift from the base permutation.}
+            \resumeItem{Kept the engine a dependency-free class library (zero package and zero project references) with no networking, players, rooms, or time, making the game rules unit-testable without any transport.}
+            \resumeItem{Designed face grants to partition all six faces 3/3 between the two players, so no scramble can be unsolvable by the pair; enforced by tests asserting union, disjointness, and exactly one owner per face.}
+            \resumeItem{Built a seeded deterministic scrambler that rejects back-to-back same-face turns and re-rolls sequences cancelling to the identity, since opposite faces commute and R L R' L' is a four-move no-op; bounded at 64 attempts so it can never hang a server thread.}
+            \resumeItem{Fixed move-validation order (deadline, game active, player's turn, face ownership) with first-failure short-circuit, and pinned that order in tests by stacking simultaneous failures and asserting the first check wins.}
+            \resumeItem{Enforced the round deadline two independent ways: checked first on every submitted move, and swept every 250 ms by a hosted background service so a round where nobody moves again still resolves; both funnel through one lock-guarded expiry call, making it idempotent and producing exactly one end-of-game event.}
+            \resumeItem{Injected a time provider so nothing reads the system clock directly, letting deadline tests assert exact boundaries against a fake clock (no expiry at 119.5s, expiry at 120.0s, post-deadline moves discarded) rather than depending on sleeps.}
+            \resumeItem{Wrote 444 tests across engine, server, and client, pinning cube geometry with an exact order-105 constraint on the combined U and R turn and a six-repetition identity check, and driving two real SignalR clients against a live test host to verify byte-identical state, caller-only rejections, and no cross-room leakage.}
+            \resumeItem{Generated 5-character room codes from an alphabet with I, O, 0, and 1 removed so a code can be read aloud over a call, and made move buttons live only when the player owns the face and holds the turn.}
+          \resumeItemListEnd
+
+      \resumeProjectHeading
+          {\textbf{Quizbowl CAT} $|$ \emph{Python, Flask, gunicorn, JavaScript, Item Response Theory (Rasch/1PL)}}{2026}
+          \resumeItemListStart
+            \resumeItem{Built a single-page computerized adaptive test (CAT) for quizbowl bonus parts that streams live questions from the QBReader public API, grades free-text answers against its answerline matcher, and estimates player ability on a latent-trait ($\theta$) scale.}
+            \resumeItem{Implemented a Rasch (1PL) measurement engine updating ability by Robbins--Monro stochastic approximation, adding a fixed step times the residual between outcome and logistic response probability, which is the single-response gradient of the Rasch log-likelihood, with $\theta$ clamped to $\pm$5.}
+            \resumeItem{Accumulated Fisher information P(1-P) per response to derive a standard error of one over the square root of total information and a 95\% confidence interval, suppressing the interval entirely before any response is recorded.}
+            \resumeItem{Designed the item bank as a hand-calibrated table mapping tournament level crossed with bonus part position onto a difficulty anchor, treating the medium part of a College Regionals bonus as a single item class and sidestepping per-item calibration the app collects no response data for.}
+            \resumeItem{Selected items by nearest difficulty anchor with a relative near-tie window of 0.12 logits, so genuinely interchangeable tiers randomize and the candidate set widens near the boundaries where the ability estimate is least decisive.}
+            \resumeItem{Built a two-tier fetch pipeline that first demands well-curated packets (difficulty modifiers present, three-part bonuses, standard sets only) then falls back to a relaxed query so sparse category-by-difficulty cells still yield questions, reporting explicit exhaustion rather than hanging.}
+            \resumeItem{Enforced an acceptance predicate on every drawn bonus: non-null, unseen by a stable set/year/packet/number dedup key, and at least three usable parts measured as the minimum of the parts and answers arrays.}
+            \resumeItem{Made the Flask process fully stateless by keeping all session state in a signed, zlib-compressed cookie so any worker can serve any request, hand-writing the marshal and unmarshal for the set-typed seen field that Flask's session serializer cannot encode.}
+            \resumeItem{Converted the final ability estimate into a 1--10 score and six independent linear predictions of points-per-bonus across tiers from middle school through open/college nationals.}
+            \resumeItem{Held the dependency surface to two packages by using the standard library for outbound HTTP, hand-rolling retry with linear backoff and per-request timeouts.}
+            \resumeItem{Built dependent category and subcategory dropdowns from a static two-level graph, with sentinel ``All'' values normalized to unrestricted filters server-side.}
+          \resumeItemListEnd
+
+      \resumeProjectHeading
+          {\textbf{Brown Course Catalog Scraper} $|$ \emph{Python, Selenium, SQLite, GitHub Actions, GitHub Pages}}{2026}
+          \resumeItemListStart
+            \resumeItem{Built a Selenium web scraper for Brown University's course catalog collecting \textasciitilde1,645 courses into SQLite, capturing course code, name, department, meeting times, instructor, section, CRN, maximum enrollment, and seats available.}
+            \resumeItem{Designed the schema around a unique CRN and a (course\_code, section) uniqueness constraint with INSERT OR REPLACE, so the scraper can be stopped and restarted and re-scrapes update existing rows instead of duplicating them.}
+            \resumeItem{Hardened catalog navigation with retry logic for stale element references, real-time progress reporting every 10 courses, and a configurable headless mode; a full catalog scrape completes in 30--60 minutes.}
+            \resumeItem{Filtered out conference and discussion sections to keep only primary sections, and wrote analysis scripts to find and reconcile courses with missing meeting-time data.}
+            \resumeItem{Built a schedule heat map visualizing course-time density across the catalog, exporting scraped data to JSON and deploying it as a static site to GitHub Pages through a GitHub Actions workflow.}
+          \resumeItemListEnd
+
+      \resumeProjectHeading
+          {\textbf{UFB Budget \& Reimbursement} $|$ \emph{Java 21, Spring Boot, Oracle, PL/SQL, Flyway, Angular, Docker}}{2026}
+          \resumeItemListStart
+            \resumeItem{Built a multi-club budget and reimbursement system modeled on Brown University's Undergraduate Finance Board process, covering the full budget tree (fiscal year, request, category, item, line item), recorded expenses, reimbursement claims, and tournament invoicing.}
+            \resumeItem{Enforced separation of duties through three club-scoped roles (treasurer, signatory, viewer) resolved per request by mapping any addressed id back to its owning club, so the treasurer who spends the money cannot approve repaying it and the signatory who approves cannot mark it paid.}
+            \resumeItem{Moved the approval decision into a PL/SQL procedure that locks the line-item row before summing committed claims, closing a read-then-write race where two signatories could each see budget room and together overrun the line.}
+            \resumeItem{Translated the procedure's Oracle failure codes back into the service layer's own exceptions so API responses stay identical whichever layer refuses, and duplicated the signatory check inside the procedure for callers that reach the service off the HTTP path.}
+            \resumeItem{Returned 403 rather than 404 for ids belonging to another club, so probing cannot reveal which ids exist; 404 appears only for a resource the caller already holds the role to read.}
+            \resumeItem{Cached each budget item's actual spend total in the same transaction as the expense row under a pessimistic row lock so concurrent postings cannot lose an update, with a resync endpoint to rebuild the cache after bulk loads.}
+            \resumeItem{Built the revenue side as tournaments to invoices to lines with a draft/sent/paid/void lifecycle, lines editable only while draft, and HTML/PDF rendering whose letterhead is copied onto each invoice at creation so later config changes never rewrite invoices already sent.}
+            \resumeItem{Managed the schema exclusively through Flyway migrations with Hibernate pinned to validate mode, and ran with open-in-view off so every response reads only what its transaction loaded, via join-fetch queries or assembly inside the open transaction.}
+            \resumeItem{Secured the API with HTTP Basic over BCrypt hashes and a deliberately nullable password column, letting a club record a member who never signs in but for whom the treasurer files claims; refused removal of a club's last treasurer.}
+            \resumeItem{Wrote unit tests for money formatting, invoice rendering, and error mapping, plus Oracle-backed integration tests for the procedure and the HTTP role rules that run in a rolled-back transaction and skip when no database is listening, so a checkout without Docker still builds green.}
+            \resumeItem{Built the Angular frontend as standalone components with signals and a hand-written stylesheet, hiding buttons a role cannot use as a convenience over server-side checks that run regardless, with a dev-server proxy that keeps the browser on one origin and removes CORS configuration entirely.}
+          \resumeItemListEnd
+
+      \resumeProjectHeading
+          {\textbf{OughtToSee} $|$ \emph{React Native (Expo), TypeScript, Python, FastAPI, Gemini, SerpAPI, Google Maps Platform}}{February 2026}
+          \resumeItemListStart
+            \resumeItem{Built an AI event-discovery and itinerary-planning app with a React Native (Expo, TypeScript) client and a fully async FastAPI backend, turning a city, budget, date, and interests into a scheduled day rendered as a list, a map route, and an aerial video tour.}
+            \resumeItem{Split the generation pipeline so SerpAPI does recall and the LLM does precision, deliberately keeping the search query minimal after discovering that specific queries embedding dates and preferences fell off an empty-result cliff.}
+            \resumeItem{Enforced geocodability inside the LLM prompt, requiring street addresses with city and state and supplying good and bad examples, because those strings feed the Google Geocoding API directly and a vague ``Downtown'' would break the map.}
+            \resumeItem{Used Gemini 2.0 Flash in JSON response mode with Pydantic validation on the way out, so model output is guaranteed parseable into typed itinerary items rather than scraped from prose.}
+            \resumeItem{Built progressive relaxation into budget filtering (strict per-event cap, then double cap, then any 20 events) plus a curated fallback event set labeled as suggestions, so upstream errors, zero results, and over-filtering all degrade gracefully instead of dead-ending the user.}
+            \resumeItem{Validated every geocoding result against a 20-city bounding-box table and retried once with an explicit city and country suffix when a result landed outside its expected box, defending against same-name-city ambiguity.}
+            \resumeItem{Implemented a three-tier per-stop fallback for the aerial tour: a Google Aerial View video, else a WebView photorealistic 3D scene running an orbiting camera, else a placeholder; stops page through a list that pauses off-screen videos and drives a satellite mini-map.}
+            \resumeItem{Modeled the navigation stack itself as the state machine, accumulating one field per screen into a params object forwarded to the next, with no global store, so Start Over is a single pop to top.}
+            \resumeItem{Hand-rolled a gesture-driven budget slider that clamps to the container width and snaps to \$25 steps while driving both an animated thumb and React state, and a from-scratch calendar grid computing month length and leading blanks from date arithmetic with past dates disabled.}
+            \resumeItem{Built itinerary editing where removing a card filters it locally and appends its title to an exclusion list sent on recalculate, injected both as a natural-language prompt constraint and a post-search filter, storing each result under a new UUID so earlier itineraries stay exportable.}
+            \resumeItem{Decoded Google Directions polylines with a hand-written implementation of the varint/zigzag algorithm to render multi-stop walking and driving routes through every itinerary destination.}
+            \resumeItem{Generated PDF exports with fpdf2, writing a text sanitizer that maps smart quotes, dashes, and accented characters down to ASCII because the built-in font is Latin-1 only, and calendar exports with one event per itinerary item.}
+            \resumeItem{Shipped the marketing landing page as a React 19 + Vite + Tailwind single-page site deployed to Firebase Hosting behind an SPA rewrite, with the brand palette hardcoded as named Tailwind utilities.}
           \resumeItemListEnd
 
     \resumeSubHeadingListEnd
@@ -260,10 +320,10 @@
 \section{Technical Skills}
  \begin{itemize}[leftmargin=0.15in, label={}]
     \small{\item{
-     \textbf{Languages}{: Python, JavaScript, TypeScript, C/C++, Java, SQL, Go, MATLAB} \\
-     \textbf{Frameworks}{: PyTorch, FastAPI, React, Next.js, Node.js, Express, React Native, Flask, FreeRTOS, NASA cFS} \\
-     \textbf{Developer Tools}{: Git, Docker, Kubernetes, Kustomize, AWS, Google Cloud Platform, Azure, Supabase, Vercel, VS Code, IntelliJ} \\
-     \textbf{Libraries}{: pandas, NumPy, Matplotlib, OpenCV, CLIP, EasyOCR, scikit-learn, xarray, zarr, Cytoscape.js} \\
+     \textbf{Languages}{: Python, JavaScript, TypeScript, C/C++, C\#, Java, SQL, MATLAB} \\
+     \textbf{Frameworks}{: PyTorch, FastAPI, React, Next.js, Node.js, Express, React Native, Flask, Spring Boot, ASP.NET Core, SignalR, Blazor WebAssembly, Angular, FreeRTOS, NASA cFS} \\
+     \textbf{Developer Tools}{: Git, GitHub Actions, Docker, Kubernetes, Kustomize, AWS, Google Cloud Platform, Azure, Oracle Database, PL/SQL, Flyway, Supabase, Vercel, VS Code, IntelliJ} \\
+     \textbf{Libraries}{: pandas, NumPy, Matplotlib, OpenCV, CLIP, EasyOCR, scikit-learn, Selenium, xUnit, bUnit, xarray, zarr, Cytoscape.js} \\
     }}
  \end{itemize}
 

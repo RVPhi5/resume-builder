@@ -34,6 +34,21 @@ than as one more thing I did; move it into the bullet when the heading is TIGHT.
 A role marker counts as job title under the COLLIDE/TIGHT rule: shorten the tech
 stack to make room, never the role.
 
+## Links
+When `master.txt` records a `LINK:` for an entry, hyperlink that entry's name in
+its heading, matching the header's style so it reads as a link:
+
+```latex
+\href{https://www.coursetrees.com/}{\underline{\textbf{CourseTrees}}}
+```
+
+Currently recorded: **CourseTrees → https://www.coursetrees.com/**
+
+A hyperlink adds no rendered width, so it never affects the heading gap rules —
+`\href` wraps existing text rather than adding any. Keep the underline; the
+preamble loads `hyperref` with `hidelinks`, so without it a link is invisible on
+the page.
+
 ## Selection
 Read the JD and pick the experiences and projects that make the strongest case
 for *this* role. Typically 3–4 experiences and 3–4 projects.
