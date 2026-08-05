@@ -81,9 +81,10 @@ September 2024 -- May 2025
 PROJECTS
 ================================================================================
 
-CourseTrees | Next.js 15, React, TypeScript, Supabase/Postgres, Cytoscape.js, LLM Orchestration
+CourseTrees — Co-Founder | Next.js 15, React, TypeScript, Supabase/Postgres, Cytoscape.js, LLM Orchestration
 2025 -- Present
-- Built and help lead a production course-planning platform mapping prerequisite graphs, grade distributions, professor ratings, and degree requirements across 150+ universities (394K+ courses, 426K+ prerequisite edges, 448K+ grade rows).
+- Co-founded and help lead a production course-planning platform mapping prerequisite graphs, grade distributions, professor ratings, and degree requirements across 150+ universities (394K+ courses, 426K+ prerequisite edges, 448K+ grade rows).
+- Adopted by Brown University advising as an official course-planning resource for 2,000+ freshmen.
 - Rendered the signature interactive Cytoscape prerequisite graph per school with three layouts: a most-connected department-cluster default, a filtered division/department/rating view, and a focus "waterfall" of a course's ancestors and unlocks.
 - Architected a school-scoped data layer where every query filters by `school_id` and all DB access routes through one module, with Postgres Row-Level Security as the security boundary and cron-refreshed materialized views for heavy read aggregations.
 - Engineered "Cam," a grounded AI advisor running a bounded agent loop (max 4 hops, concurrent tool execution with deterministic processing order) over 18 school-scoped, DB-backed tools, streaming typed SSE events (status, answer deltas, UI cards) to the client.

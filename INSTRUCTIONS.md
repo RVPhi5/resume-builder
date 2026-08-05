@@ -13,9 +13,44 @@ re-emphasize what a bullet already states, and use the JD's literal terminology
 where the original genuinely supports it, but never add a capability I don't
 have. Preserve every number exactly as written in master.txt.
 
+## Title adaptation
+Job titles may be adapted to a more general equivalent when the specialized
+title misrepresents the fit. This is a deliberate, narrow exception to "never
+invent" — it relabels a role I actually held, it does not add experience.
+
+**Huang Climate Lab** — if the JD has no AI/ML component, render the title as
+`Software Engineer (UTRA)` instead of `Machine Learning Engineer (UTRA)`. Keep
+`(UTRA)` either way; it marks the research award, not the specialization. If
+the JD does involve AI/ML, keep `Machine Learning Engineer (UTRA)`.
+
+Do not adapt any other title unless I add it here. Company names, dates, and
+locations are never adapted.
+
+**Project role markers** (e.g. `CourseTrees — Co-Founder`) may be rendered
+either in the heading's left cell or carried by the first bullet's verb
+("Co-founded and help lead…") — **but not both**, or the page reads redundantly.
+Prefer the heading when the gap budget allows, since it reads as standing rather
+than as one more thing I did; move it into the bullet when the heading is TIGHT.
+A role marker counts as job title under the COLLIDE/TIGHT rule: shorten the tech
+stack to make room, never the role.
+
 ## Selection
 Read the JD and pick the experiences and projects that make the strongest case
-for *this* role. Typically 3–4 experiences and 2–3 projects.
+for *this* role. Typically 3–4 experiences and 3–4 projects.
+
+**Prefer more projects over deeper ones.** Breadth reads better than depth
+here: 3–4 projects at 2 bullets each beats 2 projects at 3. Two bullets is the
+normal target per project; go to 3 only for a flagship the JD makes central,
+and to 1 only for a small project that genuinely warrants a single line.
+
+Only add a project if it is actually relevant to this JD. A fourth project that
+doesn't fit the role is worse than a third that does — do not pad the count.
+
+Space is the real constraint, so budget before you commit. Measured in the
+compiled PDF: a project heading row costs ~11pt, the same as one bullet line;
+a two-line bullet costs ~23pt. A new 2-bullet project therefore costs ~58pt —
+roughly two and a half two-line bullets. Adding a project means cutting two to
+three bullets elsewhere, not one.
 
 Balance two things:
 - **Relevance** — does it match what this JD asks for?
@@ -82,3 +117,4 @@ Write `out/<jd-filename-stem>_<YYYY-MM-DD>.tex` and compile to the matching
 - anything the JD asked for that I genuinely can't claim
 - any bullet you couldn't get within the fit rules
 - any technology you dropped from a heading's tech stack to clear a gap flag
+- whether you adapted a job title, and why
