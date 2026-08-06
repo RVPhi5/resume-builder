@@ -1,22 +1,25 @@
 #!/usr/bin/env python3
-"""Measure resume fit: page count, column margins, bullet line usage, and the
-gap inside two-column heading rows.
+"""Measure resume fit: page count, column margins, bullet line usage, the gap
+inside two-column heading rows, and how much empty page is left at the bottom.
 
 Usage:
     python check.py out/some_resume.pdf
     python check.py out/some_resume.pdf --debug     # dump raw line geometry
 
-Exit status is 0 only when the PDF is exactly one page, every bullet is OK, and
-no heading row is COLLIDE or TIGHT, so this can gate an iteration loop.
+Exit status is 0 only when the PDF is exactly one page, every bullet is OK, no
+heading row is COLLIDE or TIGHT, and at most one further line would fit beneath
+the last one, so this can gate an iteration loop.
 """
 
 from __future__ import annotations
 
 import argparse
+import re
 import statistics
 import sys
 from collections import Counter
 from dataclasses import dataclass, field
+from pathlib import Path
 
 try:
     import fitz  # PyMuPDF
@@ -44,6 +47,29 @@ GAP_COLLIDE = 8.0        # pt; below this the cells have visibly run together
 GAP_TIGHT = 20.0         # pt; below this it still looks cramped — warn early
 MAX_HEADING_RUN = 2      # \resumeSubheading emits 2 rows, \resumeProjectHeading 1
 EDGE_TOL = 3.0           # pt; slack when testing whether a row reaches the edge
+
+# Bottom fill. The preamble pins the text block to a known place on letterpaper:
+# fullpage's 1in margins, then \topmargin -0.5in and \textheight +1.0in, leaving
+# text to run from 36pt to 756pt down the 792pt page. Everything below the last
+# baseline is unused page, and a gap deep enough for two more lines reads as a
+# resume that ran out of things to say.
+TEXT_BOTTOM = 756.0
+MAX_SPARE_LINES = 1      # at most this many further body lines may fit beneath
+PITCH_MIN, PITCH_MAX = 8.0, 16.0   # plausible body line pitch, for the median
+
+# Title adaptation (INSTRUCTIONS.md). Huang Climate Lab renders as "Software
+# Engineer (UTRA)" by default; the specialist title is only earned by a JD whose
+# role actually builds ML. "AI", "artificial intelligence", "AI literacy" and
+# "prompt engineering" are deliberately absent from this list — they describe
+# using AI tools, and treating them as ML content is the exact mistake that put
+# the specialist title on a general software engineering JD.
+SPECIALIST_TITLE = "Machine Learning Engineer"
+ML_ROLE_TERMS = (
+    "machine learning", "deep learning", "neural network", "ml engineer",
+    "ml model", "model training", "model inference", "pytorch", "tensorflow",
+    "scikit-learn", "computer vision", "natural language processing",
+    "data scientist", "reinforcement learning", "recommender",
+)
 
 
 @dataclass
@@ -285,6 +311,67 @@ def split_cells(line: Line) -> Heading:
     )
 
 
+def measure_tail(lines: list[Line]) -> tuple[float, float, float]:
+    """Return (last baseline, body line pitch, spare lines) for the final page.
+
+    Pitch is the median distance between consecutive baselines, restricted to
+    body-sized steps: section rules, heading blocks and the gaps between
+    entries are far taller than a wrapped bullet line, and letting them into
+    the median would overstate the pitch and so understate the spare room.
+    """
+    last_page = lines[-1].page
+    ys = sorted({round(l.y, 2) for l in lines if l.page == last_page})
+    steps = [b - a for a, b in zip(ys, ys[1:]) if PITCH_MIN <= b - a <= PITCH_MAX]
+    pitch = statistics.median(steps) if steps else PITCH_MAX
+    return ys[-1], pitch, (TEXT_BOTTOM - ys[-1]) / pitch
+
+
+def find_jd(pdf_path: str) -> Path | None:
+    """Locate the JD this resume was tailored from.
+
+    Output is written as out/<jd-stem>_<YYYY-MM-DD>.pdf, so stripping the date
+    suffix gives the JD's filename. Looked for next to the repo root as well as
+    the current directory, so the check works from either.
+    """
+    stem = re.sub(r"_\d{4}-\d{2}-\d{2}$", "", Path(pdf_path).stem)
+    roots = [Path.cwd(), Path(pdf_path).resolve().parent.parent]
+    for root in roots:
+        cand = root / "jds" / f"{stem}.txt"
+        if cand.is_file():
+            return cand
+    return None
+
+
+def check_title(doc: fitz.Document, jd: Path | None) -> tuple[str, str | None]:
+    """Check the adapted job title against the JD's actual ML content.
+
+    Returns (status line, complaint). The complaint is None when the title is
+    fine, when no JD could be found, or when the specialist title is not used —
+    this only ever objects to claiming ML on a JD that never asked for it.
+    """
+    resume = "\n".join(page.get_text() for page in doc).lower()
+    if SPECIALIST_TITLE.lower() not in resume:
+        return f'"{SPECIALIST_TITLE}" not used — OK', None
+    if jd is None:
+        # The specialist title has to be earned, so an unverifiable claim fails
+        # rather than passing quietly. The default title needs no JD at all.
+        return (
+            f'"{SPECIALIST_TITLE}" used, but no JD found to check it against  UNVERIFIED',
+            f'"{SPECIALIST_TITLE}" used with no JD at jds/<stem>.txt to justify it — '
+            f"save the JD there, or use the default \"Software Engineer (UTRA)\"",
+        )
+
+    text = jd.read_text(encoding="utf-8", errors="replace").lower()
+    hits = [t for t in ML_ROLE_TERMS if t in text]
+    if hits:
+        return f'"{SPECIALIST_TITLE}" used; {jd.name} matches {", ".join(hits[:3])} — OK', None
+    return (
+        f'"{SPECIALIST_TITLE}" used, but {jd.name} has no ML content  SPECIALIST',
+        f'"{SPECIALIST_TITLE}" on a JD with no ML content — render Huang Climate '
+        f"Lab as \"Software Engineer (UTRA)\" (see INSTRUCTIONS.md)",
+    )
+
+
 def classify_heading(h: Heading) -> str:
     if h.gap < GAP_COLLIDE:
         return "COLLIDE"
@@ -383,14 +470,32 @@ def main() -> int:
     print(f"{len(head_rows)} headings: {len(head_rows) - len(bad_heads)} OK, "
           f"{n_collide} COLLIDE, {n_tight} TIGHT")
 
-    ok = pages == 1 and not flagged and not bad_heads
+    # Bottom fill is only meaningful once the page count is right: on a
+    # spilled resume the last page is short by definition.
+    last_y, pitch, spare = measure_tail(lines)
+    sparse = pages == 1 and spare >= MAX_SPARE_LINES + 1
+    verdict = "SPARSE" if sparse else "OK"
+    print(f"\nBOTTOM     last baseline {last_y:.1f}pt of {TEXT_BOTTOM:.0f}pt "
+          f"— room for {spare:.2f} more lines at {pitch:.1f}pt pitch "
+          f"(max {MAX_SPARE_LINES})  {verdict}")
+
+    title_status, title_complaint = check_title(doc, find_jd(args.pdf))
+    print(f"TITLE      {title_status}")
+
+    ok = (pages == 1 and not flagged and not bad_heads
+          and not sparse and title_complaint is None)
     if ok:
-        print("\nPASS — one page, no bullet or heading flagged.")
+        print("\nPASS — one page, filled, no bullet or heading flagged.")
         return 0
 
     print("\nFAIL")
     if pages != 1:
         print(f"  - page count is {pages}, must be exactly 1")
+    if title_complaint:
+        print(f"  - {title_complaint}")
+    if sparse:
+        print(f"  - {spare:.2f} lines of empty page below the last line "
+              f"(max {MAX_SPARE_LINES}) — add a bullet to an experience")
     for i, b, fill, flag in flagged:
         why = []
         if "LONG" in flag:

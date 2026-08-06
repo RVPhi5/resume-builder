@@ -1,0 +1,44 @@
+Bank of America — Global Technology Summer Analyst Program (Software Engineer)
+
+The Global Technology division manages the critical systems and platforms that form the
+backbone of the company's retail, commercial and institutional businesses, as well as key
+support functions around the world. We develop and deploy leading-edge technology in areas
+such as mobile and online banking, payments processing, technology infrastructure,
+cyber-security, risk and capital management and enterprise data management.
+
+10-week summer program. Direct placement internships give interns the opportunity to sit
+directly on a team working on real-time, business-critical needs. Each internship includes a
+unique individual internship project designed to provide real-world experience.
+
+EDUCATION
+- Pursuing an undergraduate or master's degree; penultimate year.
+- Graduation timeframe: November 2027 - August 2028.
+- Major: Computer Science, Computer Engineering, Information Systems, or similar.
+- GPA: 3.5 minimum preferred.
+
+CANDIDATES SHOULD POSSESS
+- Fundamental knowledge and understanding of programming languages, data visualization
+  tools, application frameworks, distributed systems and databases
+- Ability to deal with ambiguity, including various work assignments and changing priorities
+- Strong influencing skills, vertically and horizontally
+- Assertiveness, initiative, leadership, strong work ethic and a team attitude
+- Distinguished written and oral communication skills
+- Intellectual curiosity, drive for excellence, commitment to sustainable results
+- Leadership, teamwork, problem solving, analytical skills, professionalism
+
+SOFTWARE ENGINEER — KEY TASKS AND RESPONSIBILITIES
+- Gather and translate internal and external client requirements into technical design
+  specifications and business process reengineering
+- Code solutions, unit tests, and ensure the solution can be integrated successfully into the
+  overall application/system with clear, robust, and well-tested interfaces
+- Participate and contribute to the delivery/release (CI/CD) events: branching timelines,
+  pull requests, issue triage, merge/conflict resolution, release notes
+- Assignments may include front end, back end, full stack, mobile development, or software
+  analyst work.
+
+RECOMMENDED SKILLSETS
+- Basic proficiency in at least one of: Java, C#/.NET, C++, Python
+- Knowledge in AI literacy fundamentals and prompt engineering
+- Experience in Agile methodology, Process Improvement, Excel, JIRA
+- Ability to work in application frameworks such as Angular, Oracle
+- May also be utilized: SQL, JavaScript, jQuery, React, CSS

@@ -18,10 +18,23 @@ Job titles may be adapted to a more general equivalent when the specialized
 title misrepresents the fit. This is a deliberate, narrow exception to "never
 invent" — it relabels a role I actually held, it does not add experience.
 
-**Huang Climate Lab** — if the JD has no AI/ML component, render the title as
-`Software Engineer (UTRA)` instead of `Machine Learning Engineer (UTRA)`. Keep
-`(UTRA)` either way; it marks the research award, not the specialization. If
-the JD does involve AI/ML, keep `Machine Learning Engineer (UTRA)`.
+**Huang Climate Lab** — the default render is **`Software Engineer (UTRA)`**.
+Upgrade it to `Machine Learning Engineer (UTRA)` only when the role being
+applied for actually builds AI/ML. Keep `(UTRA)` either way; it marks the
+research award, not the specialization.
+
+The test is whether the **role builds** AI/ML — models, the pipelines feeding
+them, inference or agent systems. It is not enough that the JD asks for "AI
+literacy" or prompt engineering as a general working skill, or that the company
+blurb name-drops AI alongside VR and other technology it happens to sell; those
+describe using AI tools, not engineering them. A general software engineering
+role renders as `Software Engineer (UTRA)` even when AI is mentioned.
+
+The default is deliberately the safe one: the general title fits every JD,
+while the specialist title on a JD that never asked for ML misrepresents the
+fit. So an upgrade must be argued for, and forgetting to decide leaves the
+render correct. `check.py` fails the run if the specialist title appears on a
+JD with no ML content, so this is checked, not remembered.
 
 Do not adapt any other title unless I add it here. Company names, dates, and
 locations are never adapted.
@@ -54,9 +67,8 @@ Read the JD and pick the experiences and projects that make the strongest case
 for *this* role. Typically 3–4 experiences and 3–4 projects.
 
 **Prefer more projects over deeper ones.** Breadth reads better than depth
-here: 3–4 projects at 2 bullets each beats 2 projects at 3. Two bullets is the
-normal target per project; go to 3 only for a flagship the JD makes central,
-and to 1 only for a small project that genuinely warrants a single line.
+here: 3–4 projects at 2 bullets each beats 2 projects at 3. Two bullets is both
+the target and the ceiling for a project — see the bullet-count rules below.
 
 Only add a project if it is actually relevant to this JD. A fourth project that
 doesn't fit the role is worse than a third that does — do not pad the count.
@@ -73,12 +85,31 @@ Balance two things:
   (hard metrics, production scope, real technical depth) even when the JD
   doesn't name that technology. Don't let a keyword mismatch cut my best work.
 
-Always include at least one bullet from any entry you keep — never render a
-bare header.
+Never render a bare header — see the bullet-count rules below for the minimum
+each kind of entry carries.
 
-## Hard constraint
-**Mirico Ltd. must always appear above Brown Space Engineering**, regardless of
-relevance.
+## Hard constraints
+These hold for every JD. They are not traded against relevance or space; if
+something has to give, cut a whole entry instead of breaking one of these.
+
+1. **Experience is listed in date order, most recent first**, by start date.
+   This is what puts Mirico above Brown Space Engineering on its own; rule 2
+   is the backstop for any case where it would not.
+2. **Mirico Ltd. must always appear above Brown Space Engineering.**
+3. **CourseTrees is always the first project listed**, whatever else is
+   selected alongside it. Projects are not date-ordered — rule 1 is about
+   experience only.
+4. **Every experience kept carries at least two bullets.** One bullet under a
+   job heading reads as a stub. If the page cannot afford two, drop that
+   experience entirely and give the space to one that can.
+5. **No project carries more than two bullets.** Two is the target, including
+   for a flagship the JD makes central; drop to one only for a small project
+   that genuinely warrants a single line.
+
+Together these set the realistic ceiling: about three experiences and three
+projects at two bullets each, plus the education line, fills one page. Adding a
+fourth entry anywhere means dropping one somewhere else — check the space
+budget above before committing to it.
 
 ## Fit rules — non-negotiable
 1. **Exactly one page.** Not 1.1, not 0.8.
@@ -86,6 +117,9 @@ relevance.
 3. **Every bullet nearly fills its final line** — at least 90% of column width.
 4. **Every heading row keeps clear space between its two cells** — at least
    20pt between the left content and the right-aligned date.
+5. **The page is full.** At most one further body line may fit beneath the last
+   line. Two or more lines of empty page at the bottom reads as running out of
+   things to say, and is as wrong as spilling onto a second page.
 
 ## How to fix violations
 **Do not estimate any of this. Measure it.** After writing the `.tex`, compile
@@ -112,10 +146,19 @@ title, the company, or the date to buy space; those are identifying
 information. COLLIDE means it is already broken on the page; TIGHT means it
 still renders but looks cramped and is one edit away from breaking.
 
+**SPARSE (two or more lines of empty page):** the page is under-filled, so add
+real content rather than padding what is there. Cheapest first: a one-line
+bullet grown into a full two-line one buys exactly one line, and an extra
+bullet on an experience buys two. A whole extra project costs five (a heading
+row plus two two-line bullets), so it only fits a page that is genuinely short.
+Respect the bullet-count rules above when choosing — projects are capped at two
+bullets, so a sparse page is filled from the experience side.
+
 **These interact — respect this order.** After lengthening a short bullet,
 re-check it didn't become three lines. After trimming a long one, re-check it
-didn't become short. Priority: (1) one page, (2) two-line maximum, (3) 90%
-fill, (4) heading gap.
+didn't become short. After filling a sparse page, re-check it is still one
+page. Priority: (1) one page, (2) two-line maximum, (3) 90% fill, (4) heading
+gap, (5) bottom fill.
 
 If a bullet genuinely can't satisfy both the two-line cap and the 90% fill,
 prefer two clean lines with a slightly short second line — but tell me which
