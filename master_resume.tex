@@ -99,7 +99,7 @@
       {Brown University}{Providence, RI}
       {Bachelor of Science in Applied Mathematics and Computer Science}{Sep. 2024 -- May 2028}
       \resumeItemListStart
-        \resumeItem{\textbf{Cumulative GPA:} 3.92 \quad \textbf{Honors:} Sprint Fellowship, Undergraduate Teaching and Research Award (UTRA), AIME Qualification, National Merit Finalist, Taekwondo 4th Dan, Speedcubing State Record Holder}
+        \resumeItem{\textbf{Cumulative GPA:} 3.92 \quad \textbf{Honors:} Sprint Fellowship, Undergraduate Teaching and Research Award (UTRA), AIME Qualification, National Merit Scholarship Finalist, Taekwondo 4th Dan, Speedcubing State Record}
         \resumeItem{\textbf{Relevant Coursework:} Networks, Deep Learning, Machine Learning, Computer Systems, Honors Statistics}
         \resumeItem{\textbf{Leadership:} Co-President - Speedcubing Club, Treasurer - Math Undergraduate Department, Treasurer - Quiz Bowl}
       \resumeItemListEnd
@@ -113,71 +113,73 @@
       {Data and Software Engineer Intern}{June 2026 -- Present}
       {Mirico Ltd.}{Harwell Science \& Innovation Campus, UK}
       \resumeItemListStart
-        \resumeItem{Designed, optimized, and deployed a production HDF5-to-Zarr conversion pipeline transforming raw laser methane-detection sensor data from Azure Blob Storage into cloud-native Zarr format for downstream emissions analysis.}
-        \resumeItem{Cut total pipeline runtime \textasciitilde74\% (87\textrightarrow23 min) for a monthly batch of \textasciitilde1,400 objects by parallelizing uploads with a Python ThreadPoolExecutor (8 workers), reducing upload time \textasciitilde81\% (71\textrightarrow13 min).}
-        \resumeItem{Re-architected deduplication around a fault-tolerant JSON manifest of converted source URLs, replacing brittle filename-date parsing.}
-        \resumeItem{Reduced that deduplication step from O(H\texttimes Z) to O(H) via set-based lookups, making incremental runs resumable and self-healing.}
-        \resumeItem{Reduced Docker image size \textasciitilde86\% (1.74 GB\textrightarrow243 MB) by tracing the true import graph with static analysis and coverage.py.}
-        \resumeItem{Removed 94 unused source files (\textasciitilde24,000 lines) and 27 transitive dependencies from that image, and stripped dev tooling out of the runtime layer.}
-        \resumeItem{Diagnosed a startup anti-pattern where \texttt{uv run} triggered an implicit dependency re-sync on every container launch, making startup depend on PyPI reachability.}
-        \resumeItem{Removed that hard runtime dependency by invoking the virtualenv interpreter directly, verified with \texttt{--network none}.}
-        \resumeItem{Deployed the converter as a scheduled Kubernetes CronJob using Kustomize for secret generation, with resource limits derived from measured peak memory (886 MB RSS).}
-        \resumeItem{Set an execution deadline on that job to prevent stuck-job deadlock under \texttt{concurrencyPolicy: Forbid}.}
-        \resumeItem{Hardened the container against credential leakage by excluding \texttt{.env} files (write-scoped Azure SAS tokens) from image layers via \texttt{.dockerignore}, and surfaced the exposure for token rotation.}
-        \resumeItem{Validated correctness against live production data, confirming converted output preserved expected structure (73 data variables, \textasciitilde8,700 timestamps/day), CF-1.6 metadata, fitted parameter sets, and physically plausible methane concentrations.}
-        \resumeItem{Resolved unbounded log growth across a fleet of \textasciitilde10 production Linux edge instruments (Intel NUC x86 Ubuntu 24.04 + Koheron ARM/Zynq FPGA boards) by root-causing rsyslog dynamic-template routing that produced \textasciitilde100 unrotated files per unit.}
-        \resumeItem{Authored and validated a logrotate config (glob-matched, \texttt{su} directive, postrotate HUP to reset daemon file descriptors, size ceilings), delivering it as infrastructure-as-code through the repo's Makefile deploy path rather than a manual production edit.}
-        \resumeItem{Integrated high-fidelity Computational Fluid Dynamics (CFD) data into the proprietary mipyelq gas-modeling framework to improve the accuracy of atmospheric gas dispersion simulations.}
-        \resumeItem{Collaborated with Data Scientists on next-generation localization models using Bayesian state estimation, Kalman smoothing, and stochastic systems modeling, accounting for 3D wind measurements and complex facility layouts.}
+        \resumeItem{Designed, optimized, and deployed a production HDF5-to-Zarr conversion pipeline transforming raw laser methane-detection sensor data from Azure Blob Storage into cloud-native Zarr for downstream emissions analysis.}
+        \resumeItem{Cut end-to-end pipeline runtime \textasciitilde74\% (87\textrightarrow23 min) for a monthly batch of \textasciitilde1,400 Azure objects by parallelizing uploads with a Python ThreadPoolExecutor (8 workers), reducing upload time \textasciitilde81\% (71\textrightarrow13 min).}
+        \resumeItem{Re-architected deduplication around a fault-tolerant JSON manifest of converted source URLs, replacing brittle filename-date parsing and cutting the deduplication step from O(H\texttimes Z) to O(H) via set-based lookups.}
+        \resumeItem{Made incremental pipeline runs resumable and self-healing by keying them on that manifest instead of dates.}
+        \resumeItem{Reduced Docker image size \textasciitilde86\% (1.74 GB\textrightarrow243 MB) by tracing the true import graph with static analysis and coverage.py, then removing 94 now-unused source files (\textasciitilde24,000 lines) and 27 transitive dependencies overall.}
+        \resumeItem{Stripped dev tooling out of the runtime layer so the shipped image carries only what the converter imports.}
+        \resumeItem{Diagnosed a startup anti-pattern where \texttt{uv run} re-synced dependencies on every launch, tying startup to PyPI.}
+        \resumeItem{Removed that dependency by invoking the virtualenv interpreter directly, verified with \texttt{--network none}.}
+        \resumeItem{Deployed the converter as a scheduled Kubernetes CronJob using Kustomize for secret generation, with resource limits from measured peak memory usage (886 MB RSS) and an execution deadline guarding against stuck jobs.}
+        \resumeItem{Ran the job under \texttt{concurrencyPolicy: Forbid} so a slow batch can never overlap the next scheduled run.}
+        \resumeItem{Hardened the container against credential leakage by excluding \texttt{.env} files (write-scoped Azure SAS tokens) from image layers via \texttt{.dockerignore}, and surfaced the exposure so the leaked tokens could be rotated promptly.}
+        \resumeItem{Validated correctness against live production data, confirming output preserved expected structure (73 data variables, \textasciitilde8,700 timestamps/day), CF-1.6 metadata, fitted parameters, and physically plausible methane levels.}
+        \resumeItem{Resolved unbounded log growth across \textasciitilde10 Linux edge instruments (Intel NUC x86 Ubuntu 24.04 + Koheron ARM/Zynq FPGA boards) by tracing rsyslog dynamic-template routing producing \textasciitilde100 unrotated files each.}
+        \resumeItem{Authored, validated, and shipped a logrotate config using glob matching, an \texttt{su} directive, a postrotate HUP to reset daemon file descriptors, and per-file size ceilings to cap each instrument's on-disk log footprint.}
+        \resumeItem{Delivered it as infrastructure-as-code through the repo's Makefile deploy path, not a manual production edit.}
+        \resumeItem{Integrated high-fidelity Computational Fluid Dynamics (CFD) data into the mipyelq gas-modeling framework to improve the accuracy and physical realism of the framework's atmospheric gas dispersion simulations.}
+        \resumeItem{Collaborated with Data Scientists on next-generation localization models using Bayesian state estimation, Kalman smoothing, and stochastic systems modeling across 3D wind measurements and complex facility layouts.}
         \resumeItem{Engineered production-grade backend services within the analysis-engine repository, using Azure Container Apps for scalable orchestration of real-time methane emission quantification for multinational energy clients.}
-        \resumeItem{Maintained robust software standards using modern tooling (uv, ruff, Docker-based devcontainers, Tailscale mesh VPN access) to ensure cross-functional alignment between hardware and software teams.}
+        \resumeItem{Maintained robust software engineering standards using modern tooling (uv, ruff, Docker-based devcontainers, Tailscale mesh VPN access) to ensure cross-functional alignment between hardware and software teams.}
       \resumeItemListEnd
 
     \resumeSubheading
       {Software Engineer, Freelance}{November 2025 -- February 2026}
       {United for Brownsville}{New York City, NY}
       \resumeItemListStart
-        \resumeItem{Repaired broken GA4 tracking on a live nonprofit site caused by multiple add-ons double-sending events, reducing inflated metrics by over 40\%.}
-        \resumeItem{Mitigated bot traffic responsible for 60\% of recorded metrics by enacting analytics filters and firewall rules.}
-        \resumeItem{Safely modified legacy PHP/JS in a live production environment with no downtime or regression in site functionality.}
+        \resumeItem{Repaired GA4 tracking on a live nonprofit site where add-ons double-sent events, cutting inflated metrics 40\%.}
+        \resumeItem{Mitigated bot traffic responsible for 60\% of recorded metrics via analytics filters and firewall rules.}
+        \resumeItem{Modified legacy PHP/JS in a live production environment with no downtime or regression in site functionality.}
       \resumeItemListEnd
 
     \resumeSubheading
       {Machine Learning Engineer (UTRA)}{January 2025 -- September 2025}
       {Huang Climate Lab}{Providence, RI}
       \resumeItemListStart
-        \resumeItem{Engineered a MATLAB GC--MS data pipeline that automated import, baseline correction, noise filtering, and peak detection for 200+ chromatograms, reducing overall preprocessing time by over 70\%.}
-        \resumeItem{Trained two PyTorch neural networks for peak identification and fitting, achieving over 90\% accuracy against scikit-learn baselines used for model trust and evaluation.}
-        \resumeItem{Indexed 1,000+ unique compounds into a custom SQL spectral library, linking peak data with comprehensive sample metadata for fast retrieval and downstream analysis.}
-        \resumeItem{Enhanced automated verification of raw sensor streams by integrating checksum validation gates across a 40+ field relational database, catching corrupted or inconsistent measurements before model training.}
-        \resumeItem{Bypassed an 80\% manual-identification bottleneck with an automated, ML-driven compound detection workflow, built end-to-end with a four-person research team.}
+        \resumeItem{Engineered and validated a MATLAB GC--MS data pipeline that automated import, baseline correction, noise filtering, and peak detection for 200+ chromatograms, reducing overall preprocessing time by more than 70\%.}
+        \resumeItem{Trained two PyTorch neural networks for peak identification and fitting, achieving over 90\% accuracy.}
+        \resumeItem{Benchmarked both networks against scikit-learn baselines to establish model trust and support evaluation.}
+        \resumeItem{Indexed 1,000+ unique compounds into a custom SQL spectral library linking peak data with sample metadata.}
+        \resumeItem{Enhanced automated verification of raw sensor streams by integrating checksum validation gates across a 40+ field relational database, catching corrupted or inconsistent measurements before any model training.}
+        \resumeItem{Bypassed an 80\% manual-identification bottleneck with an ML-driven workflow built by a four-person team.}
       \resumeItemListEnd
 
     \resumeSubheading
       {Flight Software Engineer}{September 2025 -- Present}
       {Brown Space Engineering (PVDX CubeSat)}{Providence, RI}
       \resumeItemListStart
-        \resumeItem{Developed the PVDXos flight-software core in embedded C/C++ on the radiation-hardened SAMV71 microcontroller, running under a FreeRTOS real-time operating system for a CubeSat launching in 2027.}
-        \resumeItem{Integrated NASA's Core Flight System (cFS) to manage the software bus and modular command dispatching across all satellite subsystems.}
-        \resumeItem{Architected a 7-stage deterministic state machine governing the full mission lifecycle.}
-        \resumeItem{Engineered the CCSDS File Delivery Protocol (CFDP) main task loop with modular dispatchable functions (cfdp\_put\_request, cfdp\_cancel\_request) for reliable ground-control interfacing.}
-        \resumeItem{Enhanced the bootloader with triplicated OS images and checksums, improving bit-flip reliability from 0.1\% to 97\%.}
-        \resumeItem{Applied CRC and parity checks to ensure the integrity of high-throughput S-Band transmissions.}
-        \resumeItem{Established an autonomous Fault Detection, Isolation, and Recovery (FDIR) system distinguishing transient bit-flips from permanent hardware failure, backed by a ``dead\_list'' in persistent memory letting the dispatcher bypass faulty hardware on reboot.}
-        \resumeItem{Designed a persistent MRAM storage schema (column-per-sensor, dual-version metadata, doubly linked list queue) to warehouse failure timestamps and prevent corruption during mid-write failures.}
-        \resumeItem{Created watchdog recovery logic monitoring consecutive kicks and triggering a system audit past threshold; verified resiliency in 100\% of simulated corruption events using a custom-built ``Cosmic Monkey'' fault-injection tool.}
-        \resumeItem{Developed autonomous power logic (under-voltage response, EPS monitoring, an autonomous Low Power state), improving power-aware transition efficiency by 15\%.}
-        \resumeItem{Defined a 14-day power-balanced Safe Mode requirement for the spacecraft.}
-        \resumeItem{Integrated ADCS software controls for magnetometers and magnetorquers to stabilize vehicle orientation during the detumbling phase.}
-        \resumeItem{Reduced manual telemetry debugging time by 40\% via a structured failure-logging system in MRAM; retrieved live telemetry from the ISS and other satellites using Node, Flask, and the SatNOGS database.}
-        \resumeItem{Facilitated peer code inspections for 20+ flight-software modules and enforced a static-allocation, ``No Infinite Loops'' coding standard for deterministic real-time behavior.}
+        \resumeItem{Developed the PVDXos flight-software core in embedded C/C++ on the radiation-hardened SAMV71 microcontroller, running under the FreeRTOS real-time operating system for a CubeSat launching in 2027.}
+        \resumeItem{Integrated NASA's Core Flight System (cFS) to manage software bus and command dispatch across subsystems.}
+        \resumeItem{Architected a 7-stage deterministic state machine governing the spacecraft's full mission lifecycle.}
+        \resumeItem{Engineered the CCSDS File Delivery Protocol (CFDP) main task loop with modular dispatchable functions (cfdp\_put\_request, cfdp\_cancel\_request) for reliable file transfer to and from the ground station.}
+        \resumeItem{Enhanced the bootloader with triplicated OS images and checksums, improving bit-flip reliability 0.1\% to 97\%.}
+        \resumeItem{Applied CRC and parity checks to ensure the integrity of high-throughput S-Band radio transmissions.}
+        \resumeItem{Established a Fault Detection, Isolation, and Recovery (FDIR) system separating transient bit-flips from permanent failure, backed by a ``dead\_list'' in persistent memory letting the dispatcher bypass dead hardware.}
+        \resumeItem{Designed a persistent MRAM storage schema (column-per-sensor, dual-version metadata, and a doubly linked list queue) to warehouse failure timestamps and prevent data corruption during mid-write power failures.}
+        \resumeItem{Created watchdog recovery logic monitoring consecutive kicks and triggering a system audit past threshold; verified resiliency in 100\% of simulated corruption events with a custom ``Cosmic Monkey'' fault-injection tool.}
+        \resumeItem{Developed autonomous power logic (under-voltage response, EPS monitoring, an autonomous Low Power state), improving power-aware transition efficiency by 15\% and defining a 14-day power-balanced Safe Mode requirement.}
+        \resumeItem{Integrated ADCS controls for magnetometers and magnetorquers to stabilize orientation during detumbling.}
+        \resumeItem{Reduced manual telemetry debugging time by 40\% via a structured failure-logging system in MRAM; retrieved live telemetry from the ISS and other satellites using Node, Flask, and the SatNOGS ground-station database.}
+        \resumeItem{Facilitated peer code inspections for 20+ flight-software modules across the PVDX flight-software team.}
+        \resumeItem{Enforced a static-allocation, ``No Infinite Loops'' coding standard for deterministic real-time behavior.}
       \resumeItemListEnd
 
     \resumeSubheading
       {English and Communication TA}{September 2024 -- May 2025}
       {College Unbound}{Providence, RI}
       \resumeItemListStart
-        \resumeItem{Supported an initiative expanding access to college-level instruction for over 400 formerly incarcerated individuals.}
+        \resumeItem{Supported an initiative expanding access to college-level instruction for 400+ formerly incarcerated adults.}
         \resumeItem{Led office hours and review sessions for 40+ students addressing writing mechanics and presentation skills.}
       \resumeItemListEnd
 
@@ -190,16 +192,15 @@
       \resumeProjectHeading
           {\href{https://www.coursetrees.com/}{\underline{\textbf{CourseTrees}}} --- Co-Founder $|$ \emph{Next.js 15, React, TypeScript, Supabase/Postgres, Cytoscape.js, LLM Orchestration}}{2025 -- Present}
           \resumeItemListStart
-            \resumeItem{Co-founded and help lead a production course-planning platform mapping prerequisite graphs, grade distributions, professor ratings, and degree requirements across 150+ universities (394K+ courses, 426K+ prerequisite edges, 448K+ grade rows).}
-            \resumeItem{Adopted by Brown University advising as an official course-planning resource for 2,000+ freshmen.}
-            \resumeItem{Rendered the signature interactive Cytoscape prerequisite graph per school with three layouts: a most-connected department-cluster default, a filtered division/department/rating view, and a focus ``waterfall'' of a course's ancestors and unlocks.}
-            \resumeItem{Architected a school-scoped data layer where every query filters by \texttt{school\_id} and all DB access routes through one module, with Postgres Row-Level Security as the security boundary.}
-            \resumeItem{Served heavy read aggregations from cron-refreshed materialized views.}
-            \resumeItem{Engineered ``Cam,'' a grounded AI advisor running a bounded agent loop (max 4 hops, concurrent tool execution with deterministic processing order) over 18 school-scoped, DB-backed tools, streaming typed SSE events (status, answer deltas, UI cards) to the client.}
-            \resumeItem{Implemented structural grounding verification that extracts every course code an answer asserts and validates it against the whitelist of codes the tools actually sourced, badging ungrounded responses rather than trusting model prose.}
-            \resumeItem{Hardened LLM inputs against prompt injection via Unicode NFKC normalization, role-marker and chat-template control-token stripping, and bidi-character collapsing, fencing untrusted review and board content the system prompt instructs the model never to obey.}
-            \resumeItem{Built a fail-closed cost and privacy layer: a free-tier-first router across 8 LLM providers (Groq, Cerebras, Gemini, DeepSeek, Anthropic, and others) with hard monthly spend caps and per-user daily limits enforced via a tamper-resistant SECURITY DEFINER RPC.}
-            \resumeItem{Enforced PII-safe routing that keeps authenticated-user data off providers that train on free-tier prompts, derived from the request payload rather than trusted from the caller so a missing flag still routes safely.}
+            \resumeItem{Co-founded and help lead a production course-planning platform mapping prerequisite graphs, professor ratings, and degree requirements adopted as Brown advising's official planning resource for 2,000+ freshmen.}
+            \resumeItem{Rendered an interactive Cytoscape prerequisite graph per school with three layouts: a most-connected department-cluster default, a filtered division/department/rating view, and a course-focused ``waterfall.''}
+            \resumeItem{Traced a single course's full ancestor chain and everything it unlocks in that waterfall layout.}
+            \resumeItem{Built a school-scoped data layer where every query filters by \texttt{school\_id} and all DB access goes through one module, with Postgres Row-Level Security as the boundary and cron-refreshed materialized views for heavy reads.}
+            \resumeItem{Engineered ``Cam,'' a grounded AI advisor running a bounded agent loop (max 4 hops, concurrent tool execution in deterministic order) over 18 school-scoped, DB-backed tools, streaming typed SSE events to the client.}
+            \resumeItem{Implemented structural grounding verification that extracts every course code an answer asserts and validates it against the whitelist the tools sourced, badging ungrounded responses rather than trusting model prose.}
+            \resumeItem{Hardened LLM inputs against prompt injection via Unicode NFKC normalization, role-marker and control-token stripping, and bidi-character collapsing, fencing untrusted review content the model is told never to obey.}
+            \resumeItem{Built a fail-closed cost and privacy layer: a free-tier-first router across 8 LLM providers (Groq, Cerebras, Gemini, DeepSeek, Anthropic) with hard monthly spend caps and per-user daily limits in a tamper-resistant RPC.}
+            \resumeItem{Enforced PII-safe routing that keeps authenticated-user data off providers that train on free-tier prompts, derived from the request payload rather than trusted from the caller so a missing flag still routes safely every time.}
             \resumeItem{Designed a nonce-based handoff that transfers a student's draft question through same-origin localStorage (opaque nonce, 15-minute TTL, one-shot deletion) so drafts never enter a URL, access log, or analytics property.}
             \resumeItem{Shipped an SSE streaming contract that is additive-only (unknown event types ignored) so deployed clients survive newer servers, with client-disconnect aborting the upstream LLM stream to cap cost and DoS exposure.}
           \resumeItemListEnd
@@ -207,140 +208,136 @@
       \resumeProjectHeading
           {\textbf{TextTrack --- In-Video Text Replacement Pipeline} $|$ \emph{Python, OpenCV, EasyOCR (CRAFT), PyTorch, Kalman Filtering}}{2026}
           \resumeItemListStart
-            \resumeItem{Built an end-to-end computer-vision pipeline that detects, tracks, removes, and replaces text regions in broadcast video, engineered for sports-jersey wordmarks on deforming fabric under occlusion, turn-aways, motion blur, and scale change.}
-            \resumeItem{Fused three per-region estimators --- a constant-velocity Kalman filter for prediction through occlusion, sparse Lucas-Kanade optical flow for frame-to-frame fabric deformation, and a One-Euro filter to remove sub-pixel corner jitter --- associated to detections via Hungarian assignment on quad IoU.}
-            \resumeItem{Designed a false-positive filtering stage using geometry gates, screen-static suppression (rejecting scoreboards and ad boards that hold a fixed screen position), exclusion zones, and OCR fuzzy-matching against a target brand string.}
-            \resumeItem{Implemented a visibility state machine (VISIBLE / OCCLUDED / NON\_FRONTAL / LOST) with hysteresis and alpha ramping so replacement text is never projected onto an occluded or non-frontal surface.}
-            \resumeItem{Built temporally consistent inpainting by blending each frame's Telea result with the prior frame's inpainted output warped forward by dense optical flow on the ROI, eliminating the per-frame flicker of naive diffusion inpainting.}
-            \resumeItem{Developed perspective-aware compositing that warps replacement text by homography onto the tracked quad and matches fabric shading and directional motion blur.}
-            \resumeItem{Added a ProPainter hook for production-grade learned video inpainting.}
+            \resumeItem{Built an end-to-end computer-vision pipeline that detects, tracks, removes, and replaces text regions in broadcast video, for sports-jersey wordmarks on deforming fabric under occlusion, motion blur, and scale change.}
+            \resumeItem{Fused three per-region estimators: a constant-velocity Kalman filter for occlusion, Lucas-Kanade optical flow for fabric deformation, and a One-Euro filter for corner jitter, associated by Hungarian assignment on IoU.}
+            \resumeItem{Designed a false-positive filtering stage using geometry gates, exclusion zones, screen-static suppression that rejects fixed-position scoreboards and ad boards, and OCR fuzzy-matching against a target brand string.}
+            \resumeItem{Implemented a visibility state machine (VISIBLE / OCCLUDED / NON\_FRONTAL / LOST) with hysteresis and alpha ramping so replacement text is never projected onto an occluded or non-frontal surface at any point.}
+            \resumeItem{Built temporally consistent inpainting by blending each frame's Telea result with the prior frame's inpainted output warped forward by dense optical flow on the ROI, eliminating the flicker of naive per-frame inpainting.}
+            \resumeItem{Developed perspective-aware compositing that warps replacement text by homography onto the tracked quad and matches fabric shading and directional motion blur, with a ProPainter hook for learned video inpainting.}
           \resumeItemListEnd
 
       \resumeProjectHeading
           {\textbf{Pok\'eMatch} $|$ \emph{Python, PyTorch, CLIP, scikit-learn, NumPy, Pandas, Matplotlib}}{April 2026 -- Present}
           \resumeItemListStart
-            \resumeItem{Built an ML-based Pok\'emon TCG binder recommendation system that suggests visually cohesive cards based on human aesthetic preferences rather than set, rarity, or type; presented as a poster at Brown Deep Learning Day 2026.}
-            \resumeItem{Processed 13K+ Pok\'emon card images through an end-to-end pipeline for image downloading, artwork cropping, metadata cleaning, CLIP embedding extraction, and color feature generation.}
-            \resumeItem{Engineered 527-dimensional card representations by combining 512-dim CLIP ViT-B/32 embeddings with 15 handcrafted color features capturing dominant colors and RGB/HSV statistics.}
-            \resumeItem{Designed a human-in-the-loop labeling interface that collected 200 preference examples.}
-            \resumeItem{Trained a PyTorch MLP ranker on a pairwise logistic ranking loss over joint query-candidate features, achieving roughly 90--92\% validation pairwise accuracy.}
-            \resumeItem{Evaluated recommendations against a CLIP-only baseline in a human study across 20 binder-page comparisons, with users preferring Pok\'eMatch 67\% of the time overall and 72\% in the single-card query setting.}
+            \resumeItem{Built an ML-based Pok\'emon TCG binder recommendation system suggesting visually cohesive cards from human aesthetic preference rather than set, rarity, or type, presented as a poster at Brown Deep Learning Day 2026.}
+            \resumeItem{Processed 13K+ Pok\'emon card images through an end-to-end pipeline handling image downloading, artwork cropping, metadata cleaning, CLIP embedding extraction, and handcrafted color feature generation.}
+            \resumeItem{Engineered 527-dimensional card representations by combining 512-dim CLIP ViT-B/32 embeddings with 15 handcrafted color features capturing dominant colors and RGB/HSV distribution statistics per card.}
+            \resumeItem{Designed a human-in-the-loop labeling interface collecting 200 pairwise preference examples, then trained a PyTorch MLP ranker on a pairwise logistic ranking loss over joint query-candidate features.}
+            \resumeItem{Reached roughly 90--92\% validation pairwise accuracy on held-out human preference judgements.}
+            \resumeItem{Evaluated recommendations against a CLIP-only baseline in a human study across 20 binder-page comparisons, with users preferring Pok\'eMatch 67\% of the time overall and 72\% on single-card queries.}
           \resumeItemListEnd
 
       \resumeProjectHeading
           {\textbf{The Jungle Multiplayer Game} $|$ \emph{Java, Spring Boot, WebSockets, SQLite, JavaScript, HTML/CSS}}{April 2026 -- Present}
           \resumeItemListStart
-            \resumeItem{Built a full-stack browser implementation of Jungle / Dou Shou Qi, supporting 4 gameplay modes: local two-player, human vs. AI, agent-vs-agent spectating, and real-time online multiplayer.}
-            \resumeItem{Developed 2 AI opponents using greedy one-ply search and minimax search with alpha-beta pruning, including depth-2 and depth-4 variants with randomized root jitter for varied play.}
-            \resumeItem{Built a real-time online backend with Spring Boot REST endpoints and WebSocket rooms, enabling room creation/joining, synchronized moves, reconnectable room state, resignations, and in-room chat capped at 200 characters.}
-            \resumeItem{Added an SQLite-backed leaderboard API for online game results, with persistent match history exposed through setup-screen leaderboard viewing.}
+            \resumeItem{Built a full-stack browser implementation of Jungle / Dou Shou Qi, the Chinese animal-ranking game, supporting 4 modes: local two-player, human vs. AI, agent-vs-agent spectating, and real-time online multiplayer.}
+            \resumeItem{Developed 2 AI opponents using greedy one-ply search and minimax with alpha-beta pruning, shipping depth-2 and depth-4 variants with randomized root jitter so repeat games do not play identically.}
+            \resumeItem{Built a real-time online backend with Spring Boot REST endpoints and WebSocket rooms, enabling room creation/joining, synchronized moves, reconnectable room state, resignations, and in-room chat.}
+            \resumeItem{Capped in-room chat at 200 characters per message and added an SQLite-backed leaderboard API that records every online game result, exposing persistent match history through a setup-screen leaderboard viewer.}
           \resumeItemListEnd
 
       \resumeProjectHeading
           {\textbf{Userspace TCP/IP Network Stack} $|$ \emph{C++, UDP Sockets, TCP, Concurrent Systems}}{February 2026 -- May 2026}
           \resumeItemListStart
-            \resumeItem{Built a userspace IPv4 network stack over UDP tunnels, modeling each virtual interface as a bound UDP socket and encapsulating raw IPv4 packets as UDP payloads.}
-            \resumeItem{Implemented IPv4 packet parsing, header construction, checksum validation/recomputation, TTL decrementing, local delivery, and longest-prefix-match forwarding across virtual hosts and routers.}
+            \resumeItem{Built a userspace IPv4 network stack over UDP tunnels, modeling each virtual interface as a bound UDP socket and encapsulating raw IPv4 packets as ordinary UDP payloads carried between virtual hosts and routers.}
+            \resumeItem{Implemented IPv4 packet parsing, header construction, checksum validation and recomputation, TTL decrementing, local delivery, and longest-prefix-match forwarding across virtual hosts and routers.}
             \resumeItem{Implemented a custom RIP protocol over IP protocol 200, including binary packet marshaling, periodic route advertisements, metric updates, poisoned/infinite-route filtering, and timeout-based route expiration.}
-            \resumeItem{Built a full TCP stack supporting active/passive open, three-way handshake, socket demultiplexing by 4-tuple, stream-oriented VRead/VWrite, and listener accept queues.}
-            \resumeItem{Added reliable data transfer with sliding-window sending, out-of-order receive buffering, duplicate-ACK handling, retransmission timers, RTT/RTO estimation, exponential backoff, and zero-window probing.}
-            \resumeItem{Implemented graceful TCP teardown across all FIN states (FIN\_WAIT, CLOSE\_WAIT, LAST\_ACK, CLOSING, TIME\_WAIT) with cleanup timers and EOF signaling to applications.}
+            \resumeItem{Built a full TCP stack over that IP layer, supporting active and passive open, the three-way handshake, socket demultiplexing by the 4-tuple, stream-oriented VRead/VWrite, and per-listener accept queues.}
+            \resumeItem{Added reliable data transfer with sliding-window sending, out-of-order receive buffering, duplicate-ACK handling, retransmission timers, adaptive RTT/RTO estimation, exponential backoff, and zero-window probing.}
+            \resumeItem{Implemented graceful TCP teardown across all FIN states (FIN\_WAIT, CLOSE\_WAIT, LAST\_ACK, CLOSING, TIME\_WAIT) with per-state cleanup timers and EOF signaling so a closed connection releases its socket.}
           \resumeItemListEnd
 
       \resumeProjectHeading
           {\textbf{CoCube --- Two-Player Cooperative Rubik's Cube} $|$ \emph{C\#, .NET 8, ASP.NET Core, SignalR, Blazor WebAssembly, xUnit, bUnit}}{August 2026}
           \resumeItemListStart
-            \resumeItem{Built a two-player cooperative Rubik's cube game in C\#/.NET 8 where both players share one 3x3 cube, control three faces each, and alternate turns strictly.}
-            \resumeItem{Raced both players against a single 2-minute countdown: solve the cube together to win, or both lose when the clock expires.}
-            \resumeItem{Architected the server as the sole source of truth for cube state, turn order, face permissions, and the clock; the browser client sends move intents only and has no code path that computes any of them.}
-            \resumeItem{Scoped gameplay calls to carry no room code, mapping connection to room server-side instead, so a client cannot address a room it is not seated in.}
+            \resumeItem{Built a two-player cooperative Rubik's cube game in C\#/.NET 8 where both players share one 3x3 cube, control three faces each, alternate turns strictly, and race a single 2-minute countdown to solve it together or both lose.}
+            \resumeItem{Architected the server as the sole source of truth for cube state, turn order, face permissions, and the clock, leaving the browser client to send move intents and render what it is told, with no room code on any gameplay call.}
+            \resumeItem{Mapped connection to room server-side instead, so a client cannot address a room it is not seated in.}
             \resumeItem{Implemented the cube engine as 54 facelets in six contiguous 9-element blocks in Singmaster U/R/F/D/L/B order, defining each face exactly once as five disjoint 4-cycles (20 stickers move, 34 stay).}
-            \resumeItem{Derived prime and double turns from a quarter-turn count so variants cannot drift from the base permutation.}
-            \resumeItem{Kept the engine a dependency-free class library (zero package and zero project references) with no networking, players, rooms, or time, making the game rules unit-testable without any transport.}
-            \resumeItem{Designed face grants to partition all six faces 3/3 between the two players, so no scramble can be unsolvable by the pair.}
-            \resumeItem{Enforced that partition by tests asserting union, disjointness, and exactly one owner per face.}
-            \resumeItem{Built a seeded deterministic scrambler that rejects back-to-back same-face turns and re-rolls sequences cancelling to the identity, since opposite faces commute and R L R' L' is a four-move no-op.}
-            \resumeItem{Bounded scramble generation at 64 attempts so it can never hang a server thread.}
-            \resumeItem{Fixed move-validation order (deadline, game active, player's turn, face ownership) with first-failure short-circuit, and pinned that order in tests by stacking simultaneous failures and asserting the first check wins.}
-            \resumeItem{Enforced the round deadline two independent ways: checked first on every submitted move, and swept every 250 ms by a hosted background service so a round where nobody moves again still resolves.}
-            \resumeItem{Funnelled both deadline paths through one lock-guarded expiry call, making expiry idempotent and producing exactly one end-of-game event.}
-            \resumeItem{Injected a time provider so nothing reads the system clock directly, letting deadline tests assert exact boundaries against a fake clock (no expiry at 119.5s, expiry at 120.0s, post-deadline moves discarded) rather than depending on sleeps.}
-            \resumeItem{Wrote 444 tests across engine, server, and client, pinning cube geometry with an exact order-105 constraint on the combined U and R turn and a six-repetition identity check.}
-            \resumeItem{Drove two real SignalR clients against a live test host to verify byte-identical state, caller-only rejections, and no cross-room leakage.}
-            \resumeItem{Generated 5-character room codes from an alphabet with I, O, 0, and 1 removed so a code can be read aloud over a call, and made move buttons live only when the player owns the face and holds the turn.}
+            \resumeItem{Derived prime and double turns from a quarter-turn count so variants cannot drift from the base permutation, and kept the engine a dependency-free class library with zero package and project references.}
+            \resumeItem{Excluded networking, players, rooms, and time from that library, making rules unit-testable without transport.}
+            \resumeItem{Designed face grants to partition all six faces 3/3 between the two players (U/D/F and L/R/B) so no scramble is unsolvable by the pair, enforced by tests asserting union, disjointness, and one owner for every face.}
+            \resumeItem{Built a seeded scrambler rejecting back-to-back same-face turns and re-rolling sequences that cancel to the identity, since opposite faces commute and R L R' L' is a four-move no-op that would hand out a solved cube.}
+            \resumeItem{Bounded scramble generation at 64 attempts so a pathological seed can never hang a server thread.}
+            \resumeItem{Fixed move-validation order (deadline, game active, player's turn, face ownership) with first-failure short-circuit, pinning that order in tests by stacking simultaneous failures and asserting the first check wins.}
+            \resumeItem{Enforced the round deadline two independent ways: checked first on every submitted move, and swept every 250 ms by a hosted background service so a round where nobody ever moves again still resolves cleanly.}
+            \resumeItem{Funnelled both deadline paths through one lock-guarded expiry call, making expiry idempotent and producing exactly one end-of-game event no matter which of the two paths happens to fire first.}
+            \resumeItem{Injected a time provider so nothing reads the system clock directly, letting deadline tests assert exact boundaries against a fake clock: no expiry at 119.5s, expiry at 120.0s, post-deadline moves discarded.}
+            \resumeItem{Wrote 444 tests across engine, server, and client, pinning cube geometry with an exact order-105 constraint on the combined U and R turn and a six-repetition identity check on a common commutator.}
+            \resumeItem{Drove two real SignalR clients against a live test host to verify byte-identical state, caller-only rejections, and no cross-room leakage between concurrent games, catching desyncs a single-client test would miss.}
+            \resumeItem{Generated 5-character room codes from an alphabet with I, O, 0, and 1 removed so a code can be read aloud over a call, and made move buttons live only when a player owns that face and holds the turn.}
           \resumeItemListEnd
 
       \resumeProjectHeading
-          {\textbf{Quizbowl CAT} $|$ \emph{Python, Flask, gunicorn, JavaScript, Item Response Theory (Rasch/1PL)}}{2026}
+          {\textbf{Quizbowl CAT} $|$ \emph{Python, Flask, gunicorn, JavaScript, Item Response Theory (Rasch/1PL)}}{October - December 2025}
           \resumeItemListStart
-            \resumeItem{Built a single-page computerized adaptive test (CAT) for quizbowl bonus parts that streams live questions from the QBReader public API, grades free-text answers against its answerline matcher, and estimates player ability on a latent-trait ($\theta$) scale.}
+            \resumeItem{Built a computerized adaptive test (CAT) for quizbowl bonus parts, streaming questions from the QBReader API, grading free-text answers against its answerline matcher, and estimating ability on a latent-trait ($\theta$) scale.}
             \resumeItem{Implemented a Rasch (1PL) measurement engine updating ability by Robbins--Monro stochastic approximation, adding a fixed step times the residual between outcome and logistic response probability.}
             \resumeItem{Derived that update as the single-response gradient of the Rasch log-likelihood, with $\theta$ clamped to $\pm$5.}
-            \resumeItem{Accumulated Fisher information P(1-P) per response to derive a standard error of one over the square root of total information and a 95\% confidence interval, suppressing the interval entirely before any response is recorded.}
-            \resumeItem{Designed the item bank as a hand-calibrated table mapping tournament level crossed with bonus part position onto a difficulty anchor, treating the medium part of a College Regionals bonus as a single item class.}
-            \resumeItem{Sidestepped per-item calibration, which the app collects no response data for.}
-            \resumeItem{Selected items by nearest difficulty anchor with a relative near-tie window of 0.12 logits, so genuinely interchangeable tiers randomize and the candidate set widens near the boundaries where the ability estimate is least decisive.}
-            \resumeItem{Built a two-tier fetch pipeline that first demands well-curated packets (difficulty modifiers present, three-part bonuses, standard sets only) then falls back to a relaxed query so sparse category-by-difficulty cells still yield questions, reporting explicit exhaustion rather than hanging.}
-            \resumeItem{Enforced an acceptance predicate on every drawn bonus: non-null, unseen by a stable set/year/packet/number dedup key, and at least three usable parts measured as the minimum of the parts and answers arrays.}
-            \resumeItem{Made the Flask process fully stateless by keeping all session state in a signed, zlib-compressed cookie so any worker can serve any request, hand-writing the marshal and unmarshal for the set-typed seen field that Flask's session serializer cannot encode.}
-            \resumeItem{Converted the final ability estimate into a 1--10 score and six independent linear predictions of points-per-bonus across tiers from middle school through open/college nationals.}
-            \resumeItem{Held the dependency surface to two packages by using the standard library for outbound HTTP, hand-rolling retry with linear backoff and per-request timeouts.}
-            \resumeItem{Built dependent category and subcategory dropdowns from a static two-level graph, with sentinel ``All'' values normalized to unrestricted filters server-side.}
+            \resumeItem{Accumulated Fisher information P(1-P) per response to derive a standard error of one over the square root of total information plus a 95\% confidence interval, suppressed entirely before any response is recorded.}
+            \resumeItem{Designed the item bank as a hand-calibrated table mapping tournament level crossed with bonus part position onto a difficulty anchor, sidestepping the per-item calibration the app collects no response data for.}
+            \resumeItem{Selected items by nearest difficulty anchor with a relative near-tie window of 0.12 logits, so interchangeable tiers randomize and the candidate set widens near boundaries where the estimate is least decisive.}
+            \resumeItem{Built a two-tier fetch pipeline demanding well-curated packets first (difficulty modifiers present, three-part bonuses, standard sets only), then falling back to a deliberately relaxed query so sparse cells still yield questions.}
+            \resumeItem{Reported explicit exhaustion when a sparse category-by-difficulty cell yields no usable questions at all.}
+            \resumeItem{Enforced an acceptance predicate on every drawn bonus: non-null, unseen by a stable set/year/packet/number dedup key, and carrying at least three usable parts before it can be served to a player.}
+            \resumeItem{Made the Flask process fully stateless by keeping all session state in a signed, zlib-compressed cookie so any gunicorn worker can serve any request, hand-writing the marshal for the set-typed seen field.}
+            \resumeItem{Converted the final ability estimate into a 1--10 score and six independent linear predictions of points-per-bonus across tiers from middle school through open and college nationals, so a player sees expected points at each tier.}
+            \resumeItem{Held the dependency surface to two packages (Flask and gunicorn) by using the standard library for outbound HTTP, hand-rolling retry with linear backoff and per-request timeouts against a flaky upstream.}
+            \resumeItem{Built dependent category and subcategory dropdowns from a static two-level graph, normalizing sentinel ``All'' values to unrestricted filters on the server side.}
           \resumeItemListEnd
 
       \resumeProjectHeading
-          {\textbf{Brown Course Catalog Scraper} $|$ \emph{Python, Selenium, SQLite, GitHub Actions, GitHub Pages}}{2026}
+          {\textbf{Brown Course Catalog Scraper} $|$ \emph{Python, Selenium, SQLite, GitHub Actions, GitHub Pages}}{February 2026}
           \resumeItemListStart
-            \resumeItem{Built a Selenium web scraper for Brown University's course catalog collecting \textasciitilde1,645 courses into SQLite, capturing course code, name, department, meeting times, instructor, section, CRN, maximum enrollment, and seats available.}
-            \resumeItem{Designed the schema around a unique CRN and a (course\_code, section) uniqueness constraint with INSERT OR REPLACE, so the scraper can be stopped and restarted and re-scrapes update existing rows instead of duplicating them.}
+            \resumeItem{Built a Selenium web scraper for Brown University's course catalog collecting \textasciitilde1,645 courses into SQLite, capturing code, name, department, meeting times, instructor, section, CRN, maximum enrollment, and seats available.}
+            \resumeItem{Designed the schema around a unique CRN and a (course\_code, section) uniqueness constraint with INSERT OR REPLACE, so a stopped-and-restarted scrape updates existing rows instead of duplicating them.}
             \resumeItem{Hardened catalog navigation with retry logic for stale element references, real-time progress reporting every 10 courses, and a configurable headless mode; a full catalog scrape completes in 30--60 minutes.}
-            \resumeItem{Filtered out conference and discussion sections to keep only primary sections, and wrote analysis scripts to find and reconcile courses with missing meeting-time data.}
-            \resumeItem{Built a schedule heat map visualizing course-time density across the catalog.}
-            \resumeItem{Exported scraped data to JSON and deployed the heat map as a static site to GitHub Pages through a GitHub Actions workflow.}
+            \resumeItem{Filtered out conference and discussion sections (codes beginning ``C'') to keep only primary sections, and wrote analysis scripts to find and reconcile courses left missing meeting-time data after a scrape.}
+            \resumeItem{Built a schedule heat map visualizing course-time density across the catalog, exporting the scraped data to JSON and deploying it as a static site to GitHub Pages through a GitHub Actions workflow.}
           \resumeItemListEnd
 
       \resumeProjectHeading
-          {\textbf{UFB Budget \& Reimbursement} $|$ \emph{Java 21, Spring Boot, Oracle, PL/SQL, Flyway, Angular, Docker}}{August 2026}
+          {\textbf{UFB Budget \& Reimbursement} $|$ \emph{Java 21, Spring Boot, Oracle, PL/SQL, Flyway, Angular, Docker}}{June -- August 2026}
           \resumeItemListStart
-            \resumeItem{Built a multi-club budget and reimbursement system modeled on Brown University's Undergraduate Finance Board process, covering the full budget tree (fiscal year, request, category, item, line item), recorded expenses, reimbursement claims, and tournament invoicing.}
-            \resumeItem{Enforced separation of duties through three club-scoped roles (treasurer, signatory, viewer) resolved per request by mapping any addressed id back to its owning club.}
-            \resumeItem{Split the money path so the treasurer who spends the money cannot approve repaying it and the signatory who approves cannot mark it paid.}
-            \resumeItem{Moved the approval decision into a PL/SQL procedure that locks the line-item row before summing committed claims, closing a read-then-write race where two signatories could each see budget room and together overrun the line.}
-            \resumeItem{Counted approved and paid claims alike as committed against a line item's budget.}
-            \resumeItem{Translated the procedure's Oracle failure codes back into the service layer's own exceptions so API responses stay identical whichever layer refuses, and duplicated the signatory check inside the procedure for callers that reach the service off the HTTP path.}
-            \resumeItem{Returned 403 rather than 404 for ids belonging to another club, so probing cannot reveal which ids exist; 404 appears only for a resource the caller already holds the role to read.}
-            \resumeItem{Cached each budget item's actual spend total in the same transaction as the expense row under a pessimistic row lock so concurrent postings cannot lose an update, with a resync endpoint to rebuild the cache after bulk loads.}
-            \resumeItem{Built the revenue side as tournaments to invoices to lines with a draft/sent/paid/void lifecycle, lines editable only while draft.}
-            \resumeItem{Rendered invoices to HTML/PDF with the letterhead copied onto each invoice at creation, so later config changes never rewrite invoices already sent.}
-            \resumeItem{Managed the schema exclusively through Flyway migrations with Hibernate pinned to validate mode, and ran with open-in-view off so every response reads only what its transaction loaded, via join-fetch queries or assembly inside the open transaction.}
-            \resumeItem{Secured the API with HTTP Basic over BCrypt hashes and a deliberately nullable password column, letting a club record a member who never signs in but for whom the treasurer files claims.}
-            \resumeItem{Bootstrapped an empty database by leaving registration open and making a club's creator its first treasurer, while refusing removal of the last treasurer.}
-            \resumeItem{Wrote unit tests for money formatting, invoice rendering, and error mapping.}
-            \resumeItem{Added Oracle-backed integration tests for the procedure and the HTTP role rules that run in a rolled-back transaction and skip when no database is listening, so a checkout without Docker still builds green.}
-            \resumeItem{Built the Angular frontend as standalone components with signals and a hand-written stylesheet, hiding buttons a role cannot use as a convenience over server-side checks that run regardless.}
+            \resumeItem{Built a multi-club budget and reimbursement system modeled on Brown's Undergraduate Finance Board process, covering the budget tree from fiscal year to line item, recorded expenses, claims, and tournament invoicing.}
+            \resumeItem{Enforced separation of duties through three club-scoped roles (treasurer, signatory, viewer) resolved per request by mapping any addressed id back to the club that owns it, so the treasurer who spends cannot approve repaying it.}
+            \resumeItem{Kept the signatory who approves a claim from also marking it paid, closing the obvious self-approval loop.}
+            \resumeItem{Moved the approval decision into a PL/SQL procedure locking the line-item row before summing committed claims, closing a race where two signatories each see budget room and together overrun the line.}
+            \resumeItem{Counted approved and paid claims alike as committed, so pending approvals cannot quietly be double-spent.}
+            \resumeItem{Translated the procedure's Oracle failure codes back into the service layer's own exceptions so API responses stay identical whichever layer refuses, duplicating the signatory check for non-HTTP callers.}
+            \resumeItem{Returned 403 rather than 404 for ids belonging to another club, so probing cannot reveal which ids exist; 404 appears only for a resource the caller already holds the role to read, so errors never leak the database's contents.}
+            \resumeItem{Cached each budget item's actual spend total in the same transaction as the expense row under a pessimistic row lock so concurrent postings cannot lose an update, with a resync endpoint to rebuild it.}
+            \resumeItem{Built the revenue side as tournaments to invoices to lines with a draft/sent/paid/void lifecycle, keeping lines editable only while in draft and modeling unclaimed discounts as quantity-zero lines that still print their rate.}
+            \resumeItem{Rendered invoices to HTML/PDF with the letterhead copied onto each one at creation, so later configuration changes can never rewrite the invoices a club has already sent, keeping them stable for audit.}
+            \resumeItem{Managed the schema exclusively through Flyway migrations with Hibernate pinned to validate mode, so the running application can never quietly alter a production table out from under a migration.}
+            \resumeItem{Ran with open-in-view off, so every response reads only what its transaction loaded via join-fetch queries.}
+            \resumeItem{Secured the API with HTTP Basic over BCrypt password hashes and a deliberately nullable password column, letting a club record a member who never signs in but for whom the treasurer files reimbursement claims.}
+            \resumeItem{Bootstrapped an empty database by leaving registration open and making a club's creator its first treasurer, so a fresh deployment has a working admin without seeded credentials, while refusing removal of a club's last treasurer.}
+            \resumeItem{Wrote unit tests for money formatting, invoice rendering, and the Oracle-to-exception mapping, plus Oracle-backed integration tests covering the approval procedure and every HTTP role rule the API enforces.}
+            \resumeItem{Ran those integration tests in a rolled-back transaction, skipping when no database is listening so a checkout without Docker still builds green.}
+            \resumeItem{Built the Angular frontend as standalone components with signals and a hand-written stylesheet, hiding buttons a role cannot use as a convenience over server-side checks that run regardless of what the client displays.}
             \resumeItem{Configured a dev-server proxy that keeps the browser on one origin, removing CORS configuration entirely.}
           \resumeItemListEnd
 
       \resumeProjectHeading
-          {\textbf{OughtToSee} $|$ \emph{React Native (Expo), TypeScript, Python, FastAPI, Gemini, SerpAPI, Google Maps Platform}}{February 2026}
+          {\textbf{OughtToSee} $|$ \emph{React Native (Expo), TypeScript, Python, FastAPI, Gemini, SerpAPI, Google Maps}}{February 2026}
           \resumeItemListStart
-            \resumeItem{Built an AI event-discovery and itinerary-planning app with a React Native (Expo, TypeScript) client and a fully async FastAPI backend, turning a city, budget, date, and interests into a scheduled day rendered as a list, a map route, and an aerial video tour.}
+            \resumeItem{Built an AI event-discovery and itinerary-planning app with a React Native (Expo) client and an async FastAPI backend, turning a city, budget, date, and interests into a day rendered as a list, map route, and aerial tour.}
             \resumeItem{Split the generation pipeline so SerpAPI does recall and the LLM does precision, deliberately keeping the search query minimal after discovering that specific queries embedding dates and preferences fell off an empty-result cliff.}
-            \resumeItem{Enforced geocodability inside the LLM prompt, requiring street addresses with city and state and supplying good and bad examples, because those strings feed the Google Geocoding API directly and a vague ``Downtown'' would break the map.}
-            \resumeItem{Used Gemini 2.0 Flash in JSON response mode with Pydantic validation on the way out, so model output is guaranteed parseable into typed itinerary items rather than scraped from prose.}
-            \resumeItem{Built progressive relaxation into budget filtering (strict per-event cap, then double cap, then any 20 events) so over-filtering never dead-ends the user.}
-            \resumeItem{Added a curated fallback event set labeled as suggestions, so upstream errors and zero-result searches degrade gracefully.}
-            \resumeItem{Validated every geocoding result against a 20-city bounding-box table and retried once with an explicit city and country suffix when a result landed outside its expected box, defending against same-name-city ambiguity.}
-            \resumeItem{Implemented a three-tier per-stop fallback for the aerial tour: a Google Aerial View video, else a WebView photorealistic 3D scene running an orbiting camera, else a placeholder.}
-            \resumeItem{Paged stops through a list that pauses off-screen videos and drives a satellite mini-map.}
-            \resumeItem{Modeled the navigation stack itself as the state machine, accumulating one field per screen into a params object forwarded to the next, with no global store, so Start Over is a single pop to top.}
-            \resumeItem{Hand-rolled a gesture-driven budget slider that clamps to the container width and snaps to \$25 steps while driving both an animated thumb and React state.}
-            \resumeItem{Built a from-scratch calendar grid computing month length and leading blanks from date arithmetic, with past dates disabled.}
-            \resumeItem{Built itinerary editing where removing a card filters it locally and appends its title to an exclusion list sent on recalculate, injected both as a natural-language prompt constraint and a post-search filter.}
-            \resumeItem{Stored each recalculated result under a new UUID so earlier itineraries stay exportable.}
-            \resumeItem{Decoded Google Directions polylines with a hand-written implementation of the varint/zigzag algorithm to render multi-stop walking and driving routes through every itinerary destination.}
-            \resumeItem{Generated PDF exports with fpdf2, writing a text sanitizer that maps smart quotes, dashes, and accented characters down to ASCII because the built-in font is Latin-1 only.}
-            \resumeItem{Added .ics calendar exports with one event per itinerary item.}
+            \resumeItem{Enforced geocodability in the LLM prompt, requiring street addresses with city and state and supplying good and bad examples, since those strings feed the Google Geocoding API and a vague ``Downtown'' breaks the map.}
+            \resumeItem{Used Gemini 2.0 Flash in JSON response mode with Pydantic validation on the way out, so model output is guaranteed parseable into typed itinerary items rather than scraped out of free-form prose.}
+            \resumeItem{Built progressive relaxation into budget filtering (strict per-event cap, then double cap, then any 20 events) plus a curated fallback set labeled as suggestions, so over-filtering never dead-ends the user.}
+            \resumeItem{Validated every geocoding result against a 20-city bounding-box table, retrying once with an explicit city and country suffix when a result landed outside its box, defending against same-name-city ambiguity.}
+            \resumeItem{Implemented a three-tier per-stop fallback for the aerial tour: a Google Aerial View video, else a WebView photorealistic 3D scene running an orbiting camera, else a static placeholder image for the stop.}
+            \resumeItem{Paged stops through a list that pauses off-screen videos and drives a satellite mini-map alongside.}
+            \resumeItem{Modeled the navigation stack itself as the state machine, accumulating one field per screen into a params object forwarded to the next, with no global store at all, so Start Over is a single pop to top.}
+            \resumeItem{Hand-rolled a gesture-driven budget slider that clamps to the container width and snaps to \$25 steps while driving both an animated thumb and React state in sync, plus a from-scratch calendar grid with no date library.}
+            \resumeItem{Computed month length and leading blanks from date arithmetic, disabling past dates.}
+            \resumeItem{Built itinerary editing where removing a card filters it locally and appends its title to an exclusion list sent on recalculate, injected both as a natural-language prompt constraint and as a post-search filter on the results.}
+            \resumeItem{Stored each recalculated result under a new UUID so earlier itineraries stay exportable afterwards.}
+            \resumeItem{Decoded Google Directions overview\_polyline values with a hand-written implementation of the varint/zigzag algorithm, rendering multi-stop walking and driving routes with no mapping SDK helper.}
+            \resumeItem{Generated PDF exports with fpdf2, writing a text sanitizer that maps smart quotes, dashes, and accented characters down to ASCII because the built-in font is Latin-1 only, plus .ics calendar exports.}
+            \resumeItem{Emitted one timed event per itinerary item so a finished plan imports straight into a real calendar.}
             \resumeItem{Shipped the marketing landing page as a React 19 + Vite + Tailwind single-page site deployed to Firebase Hosting behind an SPA rewrite, with the brand palette hardcoded as named Tailwind utilities.}
           \resumeItemListEnd
 

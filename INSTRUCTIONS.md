@@ -67,17 +67,18 @@ Read the JD and pick the experiences and projects that make the strongest case
 for *this* role. Typically 3–4 experiences and 3–4 projects.
 
 **Prefer more projects over deeper ones.** Breadth reads better than depth
-here: 3–4 projects at 2 bullets each beats 2 projects at 3. Two bullets is both
-the target and the ceiling for a project — see the bullet-count rules below.
+here: 4 projects at 1 bullet each beats 2 projects at 2. **One bullet is the
+default for a project.** Give a project a second bullet only when that second
+bullet is genuinely relevant to *this* JD — not merely true, and not merely
+impressive. Two is the ceiling either way — see the bullet-count rules below.
 
 Only add a project if it is actually relevant to this JD. A fourth project that
 doesn't fit the role is worse than a third that does — do not pad the count.
 
 Space is the real constraint, so budget before you commit. Measured in the
 compiled PDF: a project heading row costs ~11pt, the same as one bullet line;
-a two-line bullet costs ~23pt. A new 2-bullet project therefore costs ~58pt —
-roughly two and a half two-line bullets. Adding a project means cutting two to
-three bullets elsewhere, not one.
+a two-line bullet costs ~23pt. A new 1-bullet project therefore costs ~34pt and
+a 2-bullet one ~58pt. Adding a project means cutting a bullet or two elsewhere.
 
 Balance two things:
 - **Relevance** — does it match what this JD asks for?
@@ -102,22 +103,29 @@ something has to give, cut a whole entry instead of breaking one of these.
 4. **Every experience kept carries at least two bullets.** One bullet under a
    job heading reads as a stub. If the page cannot afford two, drop that
    experience entirely and give the space to one that can.
-5. **No project carries more than two bullets.** Two is the target, including
-   for a flagship the JD makes central; drop to one only for a small project
-   that genuinely warrants a single line.
+5. **A project carries one bullet by default, and never more than two.** The
+   second bullet has to earn its place against this specific JD: a flagship the
+   JD makes central can take two, everything else takes one. If you cannot say
+   why the second bullet matters *for this role*, cut it.
 
-Together these set the realistic ceiling: about three experiences and three
-projects at two bullets each, plus the education line, fills one page. Adding a
-fourth entry anywhere means dropping one somewhere else — check the space
-budget above before committing to it.
+Together these set the realistic ceiling: about three experiences at two to
+three bullets each and three to four projects at one bullet each, plus the
+education lines, fills one page. Adding an entry anywhere means dropping
+something somewhere else — check the space budget above before committing.
 
 ## Fit rules — non-negotiable
 1. **Exactly one page.** Not 1.1, not 0.8.
 2. **No bullet exceeds two lines.**
 3. **Every bullet nearly fills its final line** — at least 90% of column width.
-4. **Every heading row keeps clear space between its two cells** — at least
+4. **No bullet's final line touches the right edge** — it stops at least 4pt
+   short of it. Flush is not "extra full"; it is broken. See FLUSH below.
+5. **Every heading row keeps clear space between its two cells** — at least
    20pt between the left content and the right-aligned date.
-5. **The page is full.** At most one further body line may fit beneath the last
+6. **Each Technical Skills category fits on exactly one rendered line.**
+   Languages, Frameworks, and Tools & Libraries each occupy a single line. A
+   category that wraps reads as an undifferentiated dump and spends a body line
+   the page needs for real content.
+7. **The page is full.** At most one further body line may fit beneath the last
    line. Two or more lines of empty page at the bottom reads as running out of
    things to say, and is as wrong as spilling onto a second page.
 
@@ -146,6 +154,23 @@ title, the company, or the date to buy space; those are identifying
 information. COLLIDE means it is already broken on the page; TIGHT means it
 still renders but looks cramped and is one edit away from breaking.
 
+**FLUSH (last line lands on the right edge):** trim three to five characters —
+that is all it takes. A last line with no room left for its own trailing space
+pushes that space, and the `\vspace{-2pt}` closing the item, onto a line of
+their own. Nothing shows in the text, but ~11pt of dead vertical gap opens
+before the next bullet against a normal step of ~13pt, and it is obvious on the
+page. Shorten the wording rather than a metric or a technology, as with LONG.
+Then re-check the fill: you are aiming between 90% and roughly 98%, not at the
+edge.
+
+**WRAPPED (a Technical Skills category runs onto a second line):** cut entries,
+never the category. Drop the ones this JD cares about least, preferring
+technologies no kept bullet or heading actually demonstrates — the same rule as
+a heading's tech stack. Do not shrink the font, merge two categories, or delete
+a category outright to make the block fit. Every wrap you remove frees a body
+line, so re-check the bottom fill afterwards: the page will usually want a
+bullet back on the experience side.
+
 **SPARSE (two or more lines of empty page):** the page is under-filled, so add
 real content rather than padding what is there. Cheapest first: a one-line
 bullet grown into a full two-line one buys exactly one line, and an extra
@@ -156,9 +181,11 @@ bullets, so a sparse page is filled from the experience side.
 
 **These interact — respect this order.** After lengthening a short bullet,
 re-check it didn't become three lines. After trimming a long one, re-check it
-didn't become short. After filling a sparse page, re-check it is still one
-page. Priority: (1) one page, (2) two-line maximum, (3) 90% fill, (4) heading
-gap, (5) bottom fill.
+didn't become short, and that it didn't land flush. After trimming a wrapped
+skills category, re-check the bottom fill — you just freed a line. After filling
+a sparse page, re-check it is still one page. Priority: (1) one page, (2)
+two-line maximum, (3) 90% fill, (4) no flush last line, (5) heading gap,
+(6) skills lines, (7) bottom fill.
 
 If a bullet genuinely can't satisfy both the two-line cap and the 90% fill,
 prefer two clean lines with a slightly short second line — but tell me which

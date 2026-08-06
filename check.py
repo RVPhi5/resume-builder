@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
-"""Measure resume fit: page count, column margins, bullet line usage, the gap
-inside two-column heading rows, and how much empty page is left at the bottom.
+"""Measure resume fit: page count, column margins, bullet line usage, how close
+each bullet's last line comes to the column edge, the gap inside two-column
+heading rows, whether any Technical Skills category wraps, and how much empty
+page is left at the bottom.
 
 Usage:
     python check.py out/some_resume.pdf
     python check.py out/some_resume.pdf --debug     # dump raw line geometry
 
 Exit status is 0 only when the PDF is exactly one page, every bullet is OK, no
-heading row is COLLIDE or TIGHT, and at most one further line would fit beneath
-the last one, so this can gate an iteration loop.
+heading row is COLLIDE or TIGHT, no skills category is WRAPPED, and at most one
+further line would fit beneath the last one, so this can gate an iteration loop.
 """
 
 from __future__ import annotations
@@ -36,6 +38,16 @@ BULLET_GLYPHS = {"•", "‣", "◦", "∙", "·", "●", "▪", "⁃", "■", "
 
 SHORT_THRESHOLD = 0.90   # last line must reach >= 90% of column width
 MAX_LINES = 2            # a bullet may occupy at most 2 lines
+
+# A bullet's last line must stop at least this far short of the column edge.
+# A last line that lands flush has no room for its own trailing space, so that
+# space and the \vspace{-2pt} closing \resumeItem break onto a line of their
+# own: invisible in the extracted text, but ~11pt of dead vertical gap before
+# the next bullet, against a normal bullet-to-bullet step of ~13pt. One
+# interword space at \small is ~3pt, so this is that floor plus slack.
+# Only the *last* line is tested — a wrapped line reaching the margin is just
+# an ordinary line break and is what the 90% fill rule is asking for.
+FLUSH_MIN = 4.0          # pt
 COORD_TOL = 1.5          # pt; tolerance when comparing x-coordinates
 BASELINE_TOL = 2.5       # pt; spans this close in baseline are one visual line
 HANG_MIN = 3.0           # pt; a label must sit at least this far left of its text
@@ -56,6 +68,17 @@ EDGE_TOL = 3.0           # pt; slack when testing whether a row reaches the edge
 TEXT_BOTTOM = 756.0
 MAX_SPARE_LINES = 1      # at most this many further body lines may fit beneath
 PITCH_MIN, PITCH_MAX = 8.0, 16.0   # plausible body line pitch, for the median
+
+# Technical Skills (INSTRUCTIONS.md fit rule 5). The block is an itemize with an
+# empty label, so its lines sit at the heading indent — find_headings() already
+# skips them, since a run of 3+ lines there is a wrapped paragraph rather than
+# heading rows. Each category must render on exactly one line: a category that
+# wraps reads as an undifferentiated dump and spends a body line the page needs
+# for real content. Categories are found by their bold "Label:" prefix, so any
+# line without one is a continuation of the category above it.
+SKILLS_TITLE = "technical skills"
+CATEGORY_RE = re.compile(r"^[A-Z][\w&/. -]{0,28}\s*:")
+MAX_SKILL_LINES = 1      # a category may occupy at most this many lines
 
 # Title adaptation (INSTRUCTIONS.md). Huang Climate Lab renders as "Software
 # Engineer (UTRA)" by default; the specialist title is only earned by a JD whose
@@ -311,6 +334,31 @@ def split_cells(line: Line) -> Heading:
     )
 
 
+def find_skills(lines: list[Line]) -> list[list[Line]]:
+    """Group the Technical Skills block into categories, one line list each.
+
+    Everything after the section title belongs to the block: Technical Skills is
+    the last section the template emits, so there is nothing below it to stop
+    at. A line carrying a bold "Label:" prefix opens a category and every line
+    after it without one is that category wrapping.
+    """
+    start = next(
+        (i + 1 for i, l in enumerate(lines)
+         if l.text.strip().rstrip(":").lower() == SKILLS_TITLE),
+        None,
+    )
+    if start is None:
+        return []
+
+    cats: list[list[Line]] = []
+    for line in lines[start:]:
+        if CATEGORY_RE.match(line.text.strip()):
+            cats.append([line])
+        elif cats:
+            cats[-1].append(line)
+    return cats
+
+
 def measure_tail(lines: list[Line]) -> tuple[float, float, float]:
     """Return (last baseline, body line pitch, spare lines) for the final page.
 
@@ -380,12 +428,14 @@ def classify_heading(h: Heading) -> str:
     return "OK"
 
 
-def classify(bullet: Bullet, fill: float) -> str:
+def classify(bullet: Bullet, fill: float, clearance: float) -> str:
     flags = []
     if bullet.n_lines > MAX_LINES:
         flags.append("LONG")
     if fill < SHORT_THRESHOLD:
         flags.append("SHORT")
+    elif clearance < FLUSH_MIN:
+        flags.append("FLUSH")
     return "+".join(flags) if flags else "OK"
 
 
@@ -436,20 +486,23 @@ def main() -> int:
     rows = []
     for b in bullets:
         fill = (b.last_x1 - left) / width
-        rows.append((b, fill, classify(b, fill)))
+        rows.append((b, fill, right - b.last_x1, classify(b, fill, right - b.last_x1)))
 
-    print(f"\n{'#':>3}  {'LN':>2}  {'FILL':>6}  {'FLAG':<10}  BULLET")
+    print(f"\n{'#':>3}  {'LN':>2}  {'FILL':>6}  {'GAP':>6}  {'FLAG':<11}  BULLET")
     print("-" * 100)
-    for i, (b, fill, flag) in enumerate(rows, start=1):
+    for i, (b, fill, clear, flag) in enumerate(rows, start=1):
         marker = " " if flag == "OK" else "!"
-        print(f"{i:>3}  {b.n_lines:>2}  {fill*100:5.1f}%  {flag:<10}{marker} {opening(b.text, 62)}")
+        print(f"{i:>3}  {b.n_lines:>2}  {fill*100:5.1f}%  {clear:5.1f}pt  {flag:<11}{marker} {opening(b.text, 54)}")
 
-    flagged = [(i, b, fill, flag) for i, (b, fill, flag) in enumerate(rows, start=1) if flag != "OK"]
-    n_long = sum(1 for _, _, _, f in flagged if "LONG" in f)
-    n_short = sum(1 for _, _, _, f in flagged if "SHORT" in f)
+    flagged = [(i, b, fill, clear, flag)
+               for i, (b, fill, clear, flag) in enumerate(rows, start=1) if flag != "OK"]
+    n_long = sum(1 for _, _, _, _, f in flagged if "LONG" in f)
+    n_short = sum(1 for _, _, _, _, f in flagged if "SHORT" in f)
+    n_flush = sum(1 for _, _, _, _, f in flagged if "FLUSH" in f)
 
     print("-" * 100)
-    print(f"{len(bullets)} bullets: {len(bullets) - len(flagged)} OK, {n_long} LONG, {n_short} SHORT")
+    print(f"{len(bullets)} bullets: {len(bullets) - len(flagged)} OK, "
+          f"{n_long} LONG, {n_short} SHORT, {n_flush} FLUSH")
 
     headings = find_headings(lines, left)
     head_rows = [(h, classify_heading(h)) for h in headings]
@@ -470,6 +523,22 @@ def main() -> int:
     print(f"{len(head_rows)} headings: {len(head_rows) - len(bad_heads)} OK, "
           f"{n_collide} COLLIDE, {n_tight} TIGHT")
 
+    cats = find_skills(lines)
+    cat_rows = [(c, "WRAPPED" if len(c) > MAX_SKILL_LINES else "OK") for c in cats]
+    bad_cats = [(c, f) for c, f in cat_rows if f != "OK"]
+
+    print(f"\n{'LN':>3}  {'FLAG':<9}  TECHNICAL SKILLS CATEGORY")
+    print("-" * 100)
+    if not cat_rows:
+        print("      no Technical Skills block found — not checked")
+    for c, flag in cat_rows:
+        marker = " " if flag == "OK" else "!"
+        body = " ".join(l.text for l in c)
+        print(f"{len(c):>3}  {flag:<9}{marker} {opening(body, 80)}")
+    print("-" * 100)
+    print(f"{len(cat_rows)} skills categories: {len(cat_rows) - len(bad_cats)} OK, "
+          f"{len(bad_cats)} WRAPPED")
+
     # Bottom fill is only meaningful once the page count is right: on a
     # spilled resume the last page is short by definition.
     last_y, pitch, spare = measure_tail(lines)
@@ -482,7 +551,7 @@ def main() -> int:
     title_status, title_complaint = check_title(doc, find_jd(args.pdf))
     print(f"TITLE      {title_status}")
 
-    ok = (pages == 1 and not flagged and not bad_heads
+    ok = (pages == 1 and not flagged and not bad_heads and not bad_cats
           and not sparse and title_complaint is None)
     if ok:
         print("\nPASS — one page, filled, no bullet or heading flagged.")
@@ -496,13 +565,20 @@ def main() -> int:
     if sparse:
         print(f"  - {spare:.2f} lines of empty page below the last line "
               f"(max {MAX_SPARE_LINES}) — add a bullet to an experience")
-    for i, b, fill, flag in flagged:
+    for i, b, fill, clear, flag in flagged:
         why = []
         if "LONG" in flag:
             why.append(f"{b.n_lines} lines (max {MAX_LINES})")
         if "SHORT" in flag:
             why.append(f"last line {fill*100:.1f}% of column (min {SHORT_THRESHOLD*100:.0f}%)")
+        if "FLUSH" in flag:
+            why.append(f"last line stops {clear:.1f}pt short of the edge "
+                       f"(min {FLUSH_MIN:.0f}pt) — trim a few characters")
         print(f"  - #{i:<3} {'; '.join(why):<52} {opening(b.text, 40)}")
+    for c, _ in bad_cats:
+        label = c[0].text.split(":")[0].strip()
+        why = f"wraps onto {len(c)} lines (max {MAX_SKILL_LINES}) — drop entries, not the category"
+        print(f"  - S   {why:<52} {opening(label, 40)}")
     for i, h, flag in bad_heads:
         limit = GAP_COLLIDE if flag == "COLLIDE" else GAP_TIGHT
         why = f"heading gap {h.gap:.1f}pt (min {limit:.0f}pt) — shorten the tech list"

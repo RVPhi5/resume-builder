@@ -23,7 +23,8 @@ without reading it.
 3. **Never show a resume you have not compiled and checked.** Write the `.tex`,
    run pdflatex, run `python check.py out/<name>.pdf`, fix what it flags, repeat
    until it prints PASS. Do not estimate fit by eye — the checker measures page
-   count, bullet line counts, line fill, heading gaps, bottom fill, and the
+   count, bullet line counts, line fill, how close each last line comes to the
+   right edge, heading gaps, Technical Skills wrapping, bottom fill, and the
    title rule, and its exit status gates the loop.
 
 ## Workflow
