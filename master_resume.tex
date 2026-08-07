@@ -100,7 +100,7 @@
       {Bachelor of Science in Applied Mathematics and Computer Science}{Sep. 2024 -- May 2028}
       \resumeItemListStart
         \resumeItem{\textbf{Cumulative GPA:} 3.92 \quad \textbf{Honors:} Sprint Fellowship, Undergraduate Teaching and Research Award (UTRA), AIME Qualification, National Merit Scholarship Finalist, Taekwondo 4th Dan, Speedcubing State Record}
-        \resumeItem{\textbf{Relevant Coursework:} Networks, Deep Learning, Machine Learning, Computer Systems, Honors Statistics}
+        \resumeItem{\textbf{Relevant Coursework:} Data Structures \& Algorithms, Computer Systems, Computer Networks, Machine Learning, Deep Learning, Artificial Intelligence, Intro to Computer Science, Honors Statistics, Linear Algebra, Multivariable Calculus, Applied Differential Equations, Abstract Algebra, Topics in Abstract Algebra, Intermediate Microeconomics, Principles of Economics, Earth and Planetary Materials, Protest and Dissidence in Iran}
         \resumeItem{\textbf{Leadership:} Co-President - Speedcubing Club, Treasurer - Math Undergraduate Department, Treasurer - Quiz Bowl}
       \resumeItemListEnd
   \resumeSubHeadingListEnd
@@ -284,16 +284,6 @@
             \resumeItem{Converted the final ability estimate into a 1--10 score and six independent linear predictions of points-per-bonus across tiers from middle school through open and college nationals, so a player sees expected points at each tier.}
             \resumeItem{Held the dependency surface to two packages (Flask and gunicorn) by using the standard library for outbound HTTP, hand-rolling retry with linear backoff and per-request timeouts against a flaky upstream.}
             \resumeItem{Built dependent category and subcategory dropdowns from a static two-level graph, normalizing sentinel ``All'' values to unrestricted filters on the server side.}
-          \resumeItemListEnd
-
-      \resumeProjectHeading
-          {\textbf{Brown Course Catalog Scraper} $|$ \emph{Python, Selenium, SQLite, GitHub Actions, GitHub Pages}}{February 2026}
-          \resumeItemListStart
-            \resumeItem{Built a Selenium web scraper for Brown University's course catalog collecting \textasciitilde1,645 courses into SQLite, capturing code, name, department, meeting times, instructor, section, CRN, maximum enrollment, and seats available.}
-            \resumeItem{Designed the schema around a unique CRN and a (course\_code, section) uniqueness constraint with INSERT OR REPLACE, so a stopped-and-restarted scrape updates existing rows instead of duplicating them.}
-            \resumeItem{Hardened catalog navigation with retry logic for stale element references, real-time progress reporting every 10 courses, and a configurable headless mode; a full catalog scrape completes in 30--60 minutes.}
-            \resumeItem{Filtered out conference and discussion sections (codes beginning ``C'') to keep only primary sections, and wrote analysis scripts to find and reconcile courses left missing meeting-time data after a scrape.}
-            \resumeItem{Built a schedule heat map visualizing course-time density across the catalog, exporting the scraped data to JSON and deploying it as a static site to GitHub Pages through a GitHub Actions workflow.}
           \resumeItemListEnd
 
       \resumeProjectHeading

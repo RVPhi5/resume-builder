@@ -6,6 +6,7 @@ page is left at the bottom.
 
 Usage:
     python check.py out/some_resume.pdf
+    python check.py out/some_resume.pdf --brief     # drop the all-OK tables
     python check.py out/some_resume.pdf --debug     # dump raw line geometry
 
 Exit status is 0 only when the PDF is exactly one page, every bullet is OK, no
@@ -447,8 +448,15 @@ def opening(text: str, width: int) -> str:
 def main() -> int:
     ap = argparse.ArgumentParser(description="Resume fit checker.")
     ap.add_argument("pdf", help="path to the compiled resume PDF")
+    ap.add_argument("--brief", action="store_true",
+                    help="print only the totals and the verdict, not the "
+                         "per-bullet/heading/skills tables")
     ap.add_argument("--debug", action="store_true", help="dump raw line geometry")
     args = ap.parse_args()
+    # --brief suppresses the rows, never a verdict: everything the exit status
+    # depends on still prints. Re-run without it to choose *which* bullet to
+    # grow on a SPARSE page — that decision needs every fill percentage.
+    table = not args.brief
 
     try:
         doc = fitz.open(args.pdf)
@@ -488,11 +496,12 @@ def main() -> int:
         fill = (b.last_x1 - left) / width
         rows.append((b, fill, right - b.last_x1, classify(b, fill, right - b.last_x1)))
 
-    print(f"\n{'#':>3}  {'LN':>2}  {'FILL':>6}  {'GAP':>6}  {'FLAG':<11}  BULLET")
-    print("-" * 100)
-    for i, (b, fill, clear, flag) in enumerate(rows, start=1):
-        marker = " " if flag == "OK" else "!"
-        print(f"{i:>3}  {b.n_lines:>2}  {fill*100:5.1f}%  {clear:5.1f}pt  {flag:<11}{marker} {opening(b.text, 54)}")
+    if table:
+        print(f"\n{'#':>3}  {'LN':>2}  {'FILL':>6}  {'GAP':>6}  {'FLAG':<11}  BULLET")
+        print("-" * 100)
+        for i, (b, fill, clear, flag) in enumerate(rows, start=1):
+            marker = " " if flag == "OK" else "!"
+            print(f"{i:>3}  {b.n_lines:>2}  {fill*100:5.1f}%  {clear:5.1f}pt  {flag:<11}{marker} {opening(b.text, 54)}")
 
     flagged = [(i, b, fill, clear, flag)
                for i, (b, fill, clear, flag) in enumerate(rows, start=1) if flag != "OK"]
@@ -500,7 +509,7 @@ def main() -> int:
     n_short = sum(1 for _, _, _, _, f in flagged if "SHORT" in f)
     n_flush = sum(1 for _, _, _, _, f in flagged if "FLUSH" in f)
 
-    print("-" * 100)
+    print("-" * 100 if table else "")
     print(f"{len(bullets)} bullets: {len(bullets) - len(flagged)} OK, "
           f"{n_long} LONG, {n_short} SHORT, {n_flush} FLUSH")
 
@@ -508,16 +517,17 @@ def main() -> int:
     head_rows = [(h, classify_heading(h)) for h in headings]
     bad_heads = [(i, h, f) for i, (h, f) in enumerate(head_rows, start=1) if f != "OK"]
 
-    print(f"\n{'#':>3}  {'GAP':>7}  {'FLAG':<9}  HEADING (left cell | right cell)")
-    print("-" * 100)
-    for i, (h, flag) in enumerate(head_rows, start=1):
-        marker = " " if flag == "OK" else "!"
-        # Once the cells touch, the widest gap is just a word space, so the
-        # left/right split is arbitrary — show the row as it actually renders.
-        cells = (opening(h.text, 78) if flag == "COLLIDE"
-                 else f"{opening(h.left_text, 50)}  |  {opening(h.right_text, 24)}")
-        print(f"{i:>3}  {h.gap:6.1f}pt  {flag:<9}{marker} {cells}")
-    print("-" * 100)
+    if table:
+        print(f"\n{'#':>3}  {'GAP':>7}  {'FLAG':<9}  HEADING (left cell | right cell)")
+        print("-" * 100)
+        for i, (h, flag) in enumerate(head_rows, start=1):
+            marker = " " if flag == "OK" else "!"
+            # Once the cells touch, the widest gap is just a word space, so the
+            # left/right split is arbitrary — show the row as it actually renders.
+            cells = (opening(h.text, 78) if flag == "COLLIDE"
+                     else f"{opening(h.left_text, 50)}  |  {opening(h.right_text, 24)}")
+            print(f"{i:>3}  {h.gap:6.1f}pt  {flag:<9}{marker} {cells}")
+        print("-" * 100)
     n_collide = sum(1 for _, _, f in bad_heads if f == "COLLIDE")
     n_tight = sum(1 for _, _, f in bad_heads if f == "TIGHT")
     print(f"{len(head_rows)} headings: {len(head_rows) - len(bad_heads)} OK, "
@@ -527,15 +537,17 @@ def main() -> int:
     cat_rows = [(c, "WRAPPED" if len(c) > MAX_SKILL_LINES else "OK") for c in cats]
     bad_cats = [(c, f) for c, f in cat_rows if f != "OK"]
 
-    print(f"\n{'LN':>3}  {'FLAG':<9}  TECHNICAL SKILLS CATEGORY")
-    print("-" * 100)
+    if table:
+        print(f"\n{'LN':>3}  {'FLAG':<9}  TECHNICAL SKILLS CATEGORY")
+        print("-" * 100)
+        for c, flag in cat_rows:
+            marker = " " if flag == "OK" else "!"
+            body = " ".join(l.text for l in c)
+            print(f"{len(c):>3}  {flag:<9}{marker} {opening(body, 80)}")
+        print("-" * 100)
     if not cat_rows:
+        # Not a flag — the block may genuinely be absent — but never hide it.
         print("      no Technical Skills block found — not checked")
-    for c, flag in cat_rows:
-        marker = " " if flag == "OK" else "!"
-        body = " ".join(l.text for l in c)
-        print(f"{len(c):>3}  {flag:<9}{marker} {opening(body, 80)}")
-    print("-" * 100)
     print(f"{len(cat_rows)} skills categories: {len(cat_rows) - len(bad_cats)} OK, "
           f"{len(bad_cats)} WRAPPED")
 

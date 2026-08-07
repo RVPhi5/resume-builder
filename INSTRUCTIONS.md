@@ -89,6 +89,27 @@ Balance two things:
 Never render a bare header — see the bullet-count rules below for the minimum
 each kind of entry carries.
 
+## Coursework
+`coursework.txt` holds every course I have actually taken, parsed from my
+transcript, with an approved short label for each. It is the **only** source for
+the Education section's `Relevant Coursework` line — that line is selected per
+JD exactly like bullets are, not copied from a fixed list.
+
+- **Pick the courses this JD cares about, most relevant first.** Five is the
+  usual count because that fills about one rendered line; the line is measured
+  like any other bullet, so adjust the count to keep it one line at 90%+ fill.
+- **Render the `RESUME LABEL` verbatim.** The registrar titles in that file are
+  truncated abbreviations (`Prog Des: Data Structure & Alg`), not course names.
+  Shortening a label further is allowed only to clear a fit flag.
+- **Never list a course that is not in `coursework.txt`.** The AP placement
+  credits at the top of that file are transfer credit — I placed out of them and
+  never took them, so they are not coursework and never appear on a resume.
+- **Order by relevance to the JD**, not by date, level, or grade. Never render a
+  grade next to a course.
+- `Data Structures & Algorithms` earns its place on nearly any software JD, and
+  most postings name it outright. Check it against the JD before dropping it for
+  something more specialized.
+
 ## Hard constraints
 These hold for every JD. They are not traded against relevance or space; if
 something has to give, cut a whole entry instead of breaking one of these.
@@ -133,6 +154,15 @@ something somewhere else — check the space budget above before committing.
 **Do not estimate any of this. Measure it.** After writing the `.tex`, compile
 with pdflatex and run `python check.py out/<name>.pdf`. Fix what it flags,
 recompile, re-check. Repeat until clean. Cap at 8 iterations.
+
+**Aim first drafts at 203–221 characters per bullet.** Measured across a
+compiled page: a full body line holds ~113 characters, so that window is two
+lines filled to between 90% and 98% — the target the rules below describe. This
+is aim, not arithmetic: per-line width actually ranges 102–118 characters
+depending on the mix, since digits, capitals and `\texttt` all run wide. One
+bullet hit 96.2% at 197 characters while another reached only 92.9% at 212. So
+the window makes the first compile land close and the loop short; it never
+replaces the loop, and the checker remains the only authority on fill.
 
 **LONG (more than two lines):** tighten the wording. Cut filler and redundancy
 first — "utilized" → "used", "in order to" → "to", drop hedges like "helped to"

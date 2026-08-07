@@ -1,0 +1,71 @@
+ROHAN VITTAL — COURSEWORK
+Source: 2026_Spring_Transcript.pdf (internal academic record, Brown University).
+Current through Spring 2026. Cumulative GPA 3.92.
+
+This file is the only source for the Education section's "Relevant Coursework"
+line. Select from it per JD; never list a course that is not here. See
+INSTRUCTIONS.md for how many to pick and in what order.
+
+Each entry is:
+  CODE  registrar title  ->  RESUME LABEL  (grade)
+
+The RESUME LABEL is the approved short form to render on a resume. Use it
+verbatim. Do not invent a new label, and do not render the registrar title
+directly — several are truncated registrar abbreviations, not real course names.
+
+
+================================================================================
+DO NOT LIST — AP placement credit, never enrolled
+================================================================================
+
+These appear on the transcript as transfer credit ("T", 0.00 credits) from the
+Advanced Placement Program. Rohan placed out of them and did not take the
+courses. They are never coursework and never appear on a resume.
+
+  BIOL 0200  Foundation of Living Systems
+  MATH 0090  Single Variable Calculus, Part I
+  MATH 0100  Single Variable Calculus, II
+
+
+================================================================================
+COURSES TAKEN
+================================================================================
+
+--- Fall 2024 ---
+  CSCI 0150  Intro to Programming/Comp Sci   ->  Intro to Computer Science          (A)
+  MATH 0350  Multivariable Calculus w/ Thry  ->  Multivariable Calculus             (A)
+  ECON 0110  Principles of Economics         ->  Principles of Economics            (A)
+  LANG 0710  Protest and Dissidence in Iran  ->  Protest and Dissidence in Iran     (A)
+
+--- Spring 2025 ---
+  CSCI 0200  Prog Des: Data Structure & Alg  ->  Data Structures & Algorithms       (B)
+  APMA 1655  Honors Statistical Inference I  ->  Honors Statistics                  (A)
+  MATH 0540  Linear Algebra With Theory      ->  Linear Algebra                     (A)
+  APMA 0350  Applied ODEs                    ->  Applied Differential Equations     (A)
+  EEPS 0230  Earth/Planetary Matrls/ Procss  ->  Earth and Planetary Materials      (A)
+
+--- Fall 2025 ---
+  CSCI 0300  Computer Systems Fundamentals   ->  Computer Systems                   (A)
+  CSCI 0410  Foundations of AI               ->  Artificial Intelligence            (S)
+  MATH 1530  Abstract Algebra                ->  Abstract Algebra                   (A)
+  ECON 1130  Intermed Microeconomics(Math)   ->  Intermediate Microeconomics        (A)
+
+--- Spring 2026 ---
+  CSCI 1420  Machine Learning                ->  Machine Learning                   (A)
+  CSCI 1470  Deep Learning                   ->  Deep Learning                      (A)
+  CSCI 1680  Computer Networks               ->  Computer Networks                  (A)
+  MATH 1540  Topics in Abstract Algebra      ->  Topics in Abstract Algebra         (S)
+
+
+================================================================================
+NOTES
+================================================================================
+
+- (S) is a Satisfactory grade in Brown's S/NC mode, not a letter grade. The
+  course was taken and passed; it is listed like any other. Grades are recorded
+  here for reference only — never render a grade next to a course on a resume.
+- "Computer Networks" has been rendered as "Networks" on past resumes. Either
+  is acceptable; prefer "Computer Networks" and shorten only to clear a fit flag.
+- Degree: Bachelor of Science, Applied Mathematics-Computer Science (SCB).
+- Update this file when a new transcript is added, and keep the Education
+  section of master.txt pointing here rather than restating the list.

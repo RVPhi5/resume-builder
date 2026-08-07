@@ -16,7 +16,8 @@ Brown University — Providence, RI
 Bachelor of Science in Applied Mathematics and Computer Science
 Sep. 2024 -- May 2028
 - Cumulative GPA: 3.92 | Honors: Sprint Fellowship, Undergraduate Teaching and Research Award (UTRA), AIME Qualification, National Merit Scholarship Finalist, Taekwondo 4th Dan, Speedcubing State Record
-- Relevant Coursework: Networks, Deep Learning, Machine Learning, Computer Systems, Honors Statistics
+- Relevant Coursework: SELECT PER JD FROM coursework.txt — that file is the full transcript-backed
+  list and the only source for this line. Do not list a course that is not in it. See INSTRUCTIONS.md.
 - Leadership: Co-President - Speedcubing Club, Treasurer - Math Undergraduate Department, Treasurer - Quiz Bowl
 
 
@@ -166,8 +167,8 @@ August 2026
 - Drove two real SignalR clients against a live test host to verify byte-identical state, caller-only rejections, and no cross-room leakage between concurrent games, catching desyncs a single-client test would miss.
 - Generated 5-character room codes from an alphabet with I, O, 0, and 1 removed so a code can be read aloud over a call, and made move buttons live only when a player owns that face and holds the turn.
 
-Brown Course Catalog Scraper (courses-brown-schedule) | Python, Selenium, SQLite, GitHub Actions, GitHub Pages
-2026
+Quizbowl CAT (qb-cat-site) | Python, Flask, gunicorn, JavaScript, Item Response Theory (Rasch/1PL), QBReader API
+October -- December 2025
 - Built a computerized adaptive test (CAT) for quizbowl bonus parts, streaming questions from the QBReader API, grading free-text answers against its answerline matcher, and estimating ability on a latent-trait (theta) scale.
 - Implemented a Rasch (1PL) measurement engine updating ability by Robbins--Monro stochastic approximation, adding a fixed step times the residual between outcome and logistic response probability.
 - Derived that update as the single-response gradient of the Rasch log-likelihood, with theta clamped to +/-5.
@@ -181,14 +182,6 @@ Brown Course Catalog Scraper (courses-brown-schedule) | Python, Selenium, SQLite
 - Converted the final ability estimate into a 1-10 score and six independent linear predictions of points-per-bonus across tiers from middle school through open and college nationals, so a player sees expected points at each tier.
 - Held the dependency surface to two packages (Flask and gunicorn) by using the standard library for outbound HTTP, hand-rolling retry with linear backoff and per-request timeouts against a flaky upstream.
 - Built dependent category and subcategory dropdowns from a static two-level graph, normalizing sentinel "All" values to unrestricted filters on the server side.
-
-Quizbowl CAT (qb-cat-site) | Python, Flask, gunicorn, JavaScript, Item Response Theory (Rasch/1PL), QBReader API
-2026
-- Built a Selenium web scraper for Brown University's course catalog collecting ~1,645 courses into SQLite, capturing code, name, department, meeting times, instructor, section, CRN, maximum enrollment, and seats available.
-- Designed the schema around a unique CRN and a (course_code, section) uniqueness constraint with INSERT OR REPLACE, so a stopped-and-restarted scrape updates existing rows instead of duplicating them.
-- Hardened catalog navigation with retry logic for stale element references, real-time progress reporting every 10 courses, and a configurable headless mode; a full catalog scrape completes in 30-60 minutes.
-- Filtered out conference and discussion sections (codes beginning "C") to keep only primary sections, and wrote analysis scripts to find and reconcile courses left missing meeting-time data after a scrape.
-- Built a schedule heat map visualizing course-time density across the catalog, exporting the scraped data to JSON and deploying it as a static site to GitHub Pages through a GitHub Actions workflow.
 
 UFB Budget & Reimbursement (Quiz Bowl Treasury App) | Java 21, Spring Boot 3.4, Oracle Database, PL/SQL, Flyway, Angular 20, Docker
 June -- August 2026
