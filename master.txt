@@ -101,7 +101,7 @@ PROJECTS
 CourseTrees — Co-Founder | Next.js 15, React, TypeScript, Supabase/Postgres, Cytoscape.js, LLM Orchestration
 2025 -- Present
 LINK: https://www.coursetrees.com/ (hyperlink the project name in the heading)
-- Co-founded and help lead a production course-planning platform mapping prerequisite graphs, grade distributions, professor ratings, and degree requirements across 150+ universities, 394K+ courses, and 426K+ prerequisite edges.
+- Co-founded and help lead a production course-planning platform with 100+ registered users, mapping prerequisite graphs, grade distributions, professor ratings, and degree requirements across 150+ universities, 394K+ courses, and 426K+ prerequisite edges.
 - Indexed 448K+ grade rows and was adopted as Brown advising's official planning resource for 2,000+ freshmen.
 - Rendered an interactive Cytoscape prerequisite graph per school with three layouts: a most-connected department-cluster default, a filtered division/department/rating view, and a course-focused "waterfall."
 - Traced a single course's full ancestor chain and everything it unlocks in that waterfall layout.
