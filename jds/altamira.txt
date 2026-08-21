@@ -1,0 +1,15 @@
+Software Development Intern - 2027 -- Altamira Technologies Corporation
+Fairborn, OH (HQ: McLean, VA)
+
+Altamira serves the defense, intelligence, and homeland security communities,
+building solutions for data processing and intelligence extraction. Interns work
+alongside the Software Development team on real national security requirements.
+
+Desired:
+- Familiarity with C++, JavaScript/TypeScript, Python, Java, HTML/CSS, and
+  Postgres/PostGIS/SQL.
+- Working towards a BS in Computer Science or Computer Engineering.
+- Teamwork and communication skills.
+- Ability to learn new technologies.
+
+Must be a U.S. Citizen.

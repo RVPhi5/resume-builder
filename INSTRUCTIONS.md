@@ -55,7 +55,8 @@ its heading, matching the header's style so it reads as a link:
 \href{https://www.coursetrees.com/}{\underline{\textbf{CourseTrees}}}
 ```
 
-Currently recorded: **CourseTrees → https://www.coursetrees.com/**
+Currently recorded: **CourseTrees → https://www.coursetrees.com/**. BrownSync
+ships inside CourseTrees and has no heading of its own, so it carries no link.
 
 A hyperlink adds no rendered width, so it never affects the heading gap rules —
 `\href` wraps existing text rather than adding any. Keep the underline; the
@@ -71,6 +72,13 @@ here: 4 projects at 1 bullet each beats 2 projects at 2. **One bullet is the
 default for a project.** Give a project a second bullet only when that second
 bullet is genuinely relevant to *this* JD — not merely true, and not merely
 impressive. Two is the ceiling either way — see the bullet-count rules below.
+
+**CourseTrees is the sole exception.** It is the flagship, it is what I am
+actually building, and it is the one project that carries real depth on the
+page: it takes **three to five bullets**, selected per JD like any others. Its
+bullet pool now spans two products — the course-planning platform and the
+BrownSync campus-activity map that ships inside it — so pick across both by
+what this JD asks for rather than taking the first few in file order.
 
 Only add a project if it is actually relevant to this JD. A fourth project that
 doesn't fit the role is worse than a third that does — do not pad the count.
@@ -124,15 +132,21 @@ something has to give, cut a whole entry instead of breaking one of these.
 4. **Every experience kept carries at least two bullets.** One bullet under a
    job heading reads as a stub. If the page cannot afford two, drop that
    experience entirely and give the space to one that can.
-5. **A project carries one bullet by default, and never more than two.** The
-   second bullet has to earn its place against this specific JD: a flagship the
-   JD makes central can take two, everything else takes one. If you cannot say
-   why the second bullet matters *for this role*, cut it.
+5. **A project carries one bullet by default, and never more than two** —
+   every project except CourseTrees. The second bullet has to earn its place
+   against this specific JD: a project the JD makes central can take two,
+   everything else takes one. If you cannot say why the second bullet matters
+   *for this role*, cut it.
+6. **CourseTrees carries three to five bullets.** It is the flagship and the
+   only entry exempt from rule 5. Fewer than three undersells the one thing on
+   the page that is a real product; more than five crowds out the breadth that
+   makes the rest of the section work. Draw them from both the platform and the
+   BrownSync feature, weighted to the JD.
 
 Together these set the realistic ceiling: about three experiences at two to
-three bullets each and three to four projects at one bullet each, plus the
-education lines, fills one page. Adding an entry anywhere means dropping
-something somewhere else — check the space budget above before committing.
+three bullets each, CourseTrees at three to five, and two to three further
+projects at one bullet each, plus the education lines, fills one page. Adding
+an entry anywhere means dropping something somewhere else — check the space budget above before committing.
 
 ## Fit rules — non-negotiable
 1. **Exactly one page.** Not 1.1, not 0.8.

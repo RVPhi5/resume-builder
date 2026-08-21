@@ -1,0 +1,28 @@
+Summer 2027 Software Engineer Intern -- The Nuclear Company
+Washington, DC. Onsite 5 days/week. Full housing and relocation for non-DC
+interns. 12-week internship, May-August 2027.
+
+An AI-first nuclear energy startup building NOS (Nuclear Operating System), the
+software running regulatory, supply chain, cost, schedule, and field work for
+reactor construction.
+
+Responsibilities:
+- Build features and modules within NOS: regulatory automation, cost and
+  schedule, supply chain, commercial portal.
+- Build AI-powered software: LLM and agent features, RAG, tool-calling.
+- Data integrations across Palantir Foundry and AWS GovCloud.
+- Convert prototypes into production features; field deployment tooling.
+- Automated testing and compliance infrastructure.
+
+Required:
+- Enrolled in a BS in CS, SWE, CE, Math, Physics, or related.
+- Available for the full term, returning to school afterward.
+- Strong programming in Python, TypeScript, Java, Go, Rust, or C++.
+- A track record of shipping software.
+- U.S. Person status (citizen or LPR) due to export controls (DOE 10 CFR Part
+  810, NRC). No visa sponsorship.
+
+Preferred: LLM APIs (OpenAI/Anthropic), RAG and agents, Palantir Foundry/AWS,
+algorithms and data structures, cloud, frontend frameworks.
+
+Pay: $25/hr plus $2,000/mo housing stipend. 401k match, medical/dental/vision.

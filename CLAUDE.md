@@ -1,7 +1,9 @@
 # resume-builder
 
 Tailors Rohan's resume to a job description: select from the master resume,
-render Jake's Resume template as LaTeX, compile, and measure the fit.
+render Jake's Resume template as LaTeX, compile, and measure the fit. Cover
+letters are built the same way against their own spec — see **Cover letters**
+below.
 
 **Read [`INSTRUCTIONS.md`](INSTRUCTIONS.md) in full before producing a resume.**
 It is the spec — selection rules, hard constraints, fit rules, and how to fix
@@ -69,6 +71,35 @@ Delete the LaTeX intermediates (`out/*.aux`, `*.log`, `*.out`) when the build is
 done. Leave everything else in `out/` alone: it is gitignored, so nothing there
 is recoverable, and past tailored resumes are not yours to decide about.
 
+## Cover letters
+
+**Read [`COVER_INSTRUCTIONS.md`](COVER_INSTRUCTIONS.md) in full before writing
+one.** Same shape as the resume loop — write the body, `cat` it onto
+`template_head.tex`, compile, run `python check_cover.py out/<name>.pdf`, fix
+what it flags, repeat until PASS — but the rules being measured are different,
+and so are the traps:
+
+1. **A cover letter is not the resume in prose.** 150–200 words, three
+   paragraphs, at most one metric. Every number is already on the resume in the
+   same envelope; repeating them spends the letter's only advantage, which is
+   voice.
+
+2. **The voice rules are the spec, not a preference.** No em-dashes, no
+   self-characterizing thesis lines ("I write software for systems that…"), no
+   claims on one's own humility ("the work I'm proudest of"), no flattering the
+   employer, no aphorisms, no stock phrases. `check_cover.py` holds the pattern
+   list and fails the run on a hit. Every one of those patterns is there
+   because a draft got rejected for it by hand.
+
+3. **`VOICE` means delete the sentence, not rewrite it.** The shape is the
+   problem. Rephrasing a thesis line produces another thesis line; state what
+   was actually done instead.
+
+Naming is `out/<jd-stem>_cover_<YYYY-MM-DD>.tex`. The `_cover` marker is load
+bearing: the checker strips the date and then `_cover` to find `jds/<stem>.txt`,
+so a letter for the same JD as a resume sits beside it and resolves to the same
+posting.
+
 ## Layout
 
 | Path | |
@@ -78,5 +109,7 @@ is recoverable, and past tailored resumes are not yours to decide about.
 | `master_resume.tex` | the same content as LaTeX; keep the two in sync |
 | `template_head.tex` | fixed prefix every tailored resume is built on |
 | `INSTRUCTIONS.md` | the tailoring spec |
-| `check.py` | fit checker; exit 0 only on PASS |
+| `COVER_INSTRUCTIONS.md` | the cover letter spec — length, shape, voice rules |
+| `check.py` | resume fit checker; exit 0 only on PASS |
+| `check_cover.py` | cover letter fit and voice checker; exit 0 only on PASS |
 | `jds/`, `out/` | job descriptions in, tailored resumes out |

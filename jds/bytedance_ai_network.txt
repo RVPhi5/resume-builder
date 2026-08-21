@@ -1,0 +1,30 @@
+AI Network Automation Engineer Intern (Global Physical Network Infrastructure)
+2027 Summer -- San Jose, CA. ByteDance / TikTok.
+
+ByteDance Networking builds hyperscale data-center networking for Douyin and
+TikTok.
+
+Responsibilities:
+- Build AI-enabled automation tools for IDC network implementation and
+  operations: LLM-powered runbook execution, chat-driven tooling, ticket and
+  work-order automation, with safety controls.
+- Analyze network data with AI-assisted analysis: anomaly summarization,
+  incident triage, log and telemetry interpretation, integrating LLMs into
+  pipelines.
+- Design AI features: prompt flows, tool/function-calling, eval and guardrails,
+  feedback loops.
+
+Minimum qualifications:
+- Pursuing a Bachelor's or Master's in CS, CE, or related.
+- A backend language (Python, Go, C, C++, or Rust).
+- SQL/NoSQL.
+- Hands-on experience integrating LLMs/AI APIs into backend services (RAG
+  pipelines, tool-using agents).
+
+Preferred:
+- Networking basics (OSI, TCP/IP).
+- AI for root cause analysis and incident summarization.
+- Prompt and version management, LLM observability.
+
+Pay: $45/hr, day-1 health/life insurance, 10 paid holidays, paid sick time,
+housing allowance if not remote.

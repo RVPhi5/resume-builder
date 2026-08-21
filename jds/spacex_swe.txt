@@ -1,0 +1,23 @@
+Summer 2027 Software Engineering Internship/Co-op -- SpaceX
+
+Flexible location, any SpaceX site: Bastrop TX, Brownsville TX, Cape Canaveral
+FL, Hawthorne/LA CA, Irvine CA, McGregor/Waco TX, Palo Alto CA, Redmond/Seattle
+WA. Work with a mentor on impactful projects across teams (Dragon, Falcon,
+Starship, Starlink, Starshield, SpaceXAI/Grok).
+
+Basic qualifications:
+- Enrolled in a bachelor's or graduate program.
+- 3+ months software development experience.
+- Coding experience in C/C++, C#, Java, JavaScript, or Python.
+- Must be a US citizen, national, lawful permanent resident, refugee, or asylee
+  (ITAR).
+
+Preferred:
+- 3.5+ GPA.
+- 6+ months real-world software experience.
+- Knowledge of computer architecture and networks.
+- Debugging, testing, and performance optimization skills.
+
+Must work full-time onsite for 12+ consecutive weeks starting May/June 2027.
+Pay: $30/hr (freshman/sophomore) to $40/hr (PhD) by academic level, plus
+relocation stipend, medical, 401k, paid holidays.

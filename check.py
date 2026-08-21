@@ -88,11 +88,30 @@ MAX_SKILL_LINES = 1      # a category may occupy at most this many lines
 # using AI tools, and treating them as ML content is the exact mistake that put
 # the specialist title on a general software engineering JD.
 SPECIALIST_TITLE = "Machine Learning Engineer"
+#
+# The LLM terms below are here because INSTRUCTIONS.md counts "inference or
+# agent systems" as building ML: a role whose core requirement is integrating
+# LLMs into backend services — RAG pipelines, tool-using agents, model serving
+# — is engineering inference, not merely using an AI tool. Every one of them
+# names the *building*, which is what makes them safe to match on.
+#
+# Bare "llm", "large language model" and "agentic" are deliberately absent, for
+# the same reason as "AI" and "prompt engineering": the Roblox SWE JD says it
+# experiments with "agentic coding tools, and large language models (LLMs)",
+# and it is a general software engineering role. Matching those would hand the
+# specialist title to exactly the JD this rule was written to refuse.
+#
+# Bare "rag" and bare "agent" are absent for a second reason: matching is
+# substring, and "rag" is inside "storage" and "average" while "agent" is
+# inside "user agent", so either would fire on JDs with no AI content at all.
 ML_ROLE_TERMS = (
     "machine learning", "deep learning", "neural network", "ml engineer",
     "ml model", "model training", "model inference", "pytorch", "tensorflow",
     "scikit-learn", "computer vision", "natural language processing",
     "data scientist", "reinforcement learning", "recommender",
+    "llm-powered", "llm inference", "llm serving", "integrating llms",
+    "rag pipeline", "retrieval-augmented", "tool-using agent", "ai agent",
+    "multi-agent", "model serving",
 )
 
 
