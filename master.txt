@@ -1,5 +1,5 @@
 ROHAN VITTAL
-(609)-937-9296 | rohan_vittal@brown.edu | linkedin.com/in/rohan-vittal1618 | github.com/RVPhi5 | Portfolio: https://rohan-vittal-portfolio.vercel.app/
+(609)-937-9296 | vittalrohan@gmail.com | linkedin.com/in/rohan-vittal1618 | github.com/RVPhi5 | Portfolio: https://rohan-vittal-portfolio.vercel.app/
 
 NOTE: This is the exhaustive master resume. It is intentionally far longer than one
 page. Select from it; never add to it.
@@ -15,7 +15,7 @@ EDUCATION
 Brown University — Providence, RI
 Bachelor of Science in Applied Mathematics and Computer Science
 Sep. 2024 -- May 2028
-- Cumulative GPA: 3.92 | Honors: Sprint Fellowship, Undergraduate Teaching and Research Award (UTRA), AIME Qualification, National Merit Scholarship Finalist, Taekwondo 4th Dan, Speedcubing State Record
+- Cumulative GPA: 3.93 | Honors: Sprint Fellowship, Undergraduate Teaching and Research Award (UTRA), AIME Qualification, National Merit Scholarship Finalist, Taekwondo 4th Dan, Speedcubing State Record
 - Relevant Coursework: SELECT PER JD FROM coursework.txt — that file is the full transcript-backed
   list and the only source for this line. Do not list a course that is not in it. See INSTRUCTIONS.md.
 - Leadership: Co-President - Speedcubing Club, Treasurer - Math Undergraduate Department, Treasurer - Quiz Bowl
@@ -72,20 +72,24 @@ in its company blurb, does NOT qualify. check.py enforces this.
 Flight Software Engineer — Brown Space Engineering (PVDX CubeSat)
 Providence, RI
 September 2025 -- Present
-- Developed the PVDXos flight-software core in embedded C/C++ on the radiation-hardened SAMV71 microcontroller, running under the FreeRTOS real-time operating system for a CubeSat launching in April 2027.
-- Integrated NASA's Core Flight System (cFS) to manage the software bus and command dispatch across subsystems.
-- Architected a 7-stage deterministic state machine governing the spacecraft's full mission lifecycle.
-- Engineered the CCSDS File Delivery Protocol (CFDP) main task loop with modular dispatchable functions (cfdp_put_request, cfdp_cancel_request) for reliable file transfer to and from the ground station.
-- Enhanced the bootloader with triplicated OS images and checksums, improving bit-flip reliability 0.1% to 97%.
-- Applied CRC and parity checks to ensure the integrity of high-throughput S-Band radio transmissions.
-- Established a Fault Detection, Isolation, and Recovery (FDIR) system separating transient bit-flips from permanent failure, backed by a "dead_list" in persistent memory letting the dispatcher bypass dead hardware.
-- Designed a persistent MRAM storage schema (column-per-sensor, dual-version metadata, and a doubly linked list queue) to warehouse failure timestamps and prevent data corruption during mid-write power failures.
-- Created watchdog recovery logic monitoring consecutive kicks and triggering a system audit past threshold; verified resiliency in 100% of simulated corruption events with a custom "Cosmic Monkey" fault-injection tool.
-- Developed autonomous power logic (under-voltage response, EPS monitoring, an autonomous Low Power state), improving power-aware transition efficiency by 15% and defining a 14-day power-balanced Safe Mode requirement.
-- Integrated ADCS controls for magnetometers and magnetorquers to stabilize orientation during detumbling.
-- Reduced manual telemetry debugging time by 40% via a structured failure-logging system in MRAM; retrieved live telemetry from the ISS and other satellites using Node, Flask, and the SatNOGS ground-station database.
+NOTE: the MCU is a SAMD51 (full part ATSAMD51P20A, Cortex-M4F),
+commercial-grade, NOT a radiation-hardened SAMV71 -- an earlier version of this
+entry said SAMV71 and was wrong. ALWAYS RENDER IT AS `SAMD51` on a resume, never
+the full part number or the core name. cFS was studied as a reference
+architecture, not integrated.
+- Developed core subsystems of PVDXos, a FreeRTOS-based flight operating system in embedded C for Brown Space Engineering's PVDX CubeSat, running on a SAMD51 — a commercial-grade MCU, so the OS is architected to tolerate radiation-induced bit flips rather than rely on hardened silicon.
+- Designed a 7-mode mission state machine governing the spacecraft lifecycle — first boot, antenna deployment, nominal, UHF and S-band downlink, imaging, and flash recovery — with explicit state and input variables, power-threshold guards on every transition, and a per-mode Active/Idle mapping across all hardware that feeds the power budget.
+- Engineered the CCSDS File Delivery Protocol (CFDP) main task loop with modular dispatchable functions (cfdp_put_request, cfdp_cancel_request), a fixed-slot transaction store, NAK segment tracking, and retransmit/inactivity timers for reliable file transfer to and from the ground station.
+- Enhanced the bootloader with triplicated OS images and checksums, reduced by a per-bit 2-of-3 majority vote during the flash-to-RAM copy; modeled bit-flip recovery over the non-recoverable boot region improving from 0.1% to 97%.
+- Designed the fault detection, isolation, and recovery (FDIR) scheme distinguishing transient bit flips from permanent hardware failure — re-reading memory after a watchdog reset to classify the fault, incrementing per-device failure counts against per-device thresholds, and recording confirmed failures to a "dead list" in persistent MRAM so the command dispatcher and task manager can bypass dead hardware after reboot.
+- Designed a persistent MRAM storage schema — column-per-sensor, dual-version metadata, and a doubly linked list queue — to warehouse failure timestamps and prevent data corruption during mid-write power failures, by writing only to the inactive version and activating the higher valid version on boot.
+- Specified watchdog recovery logic tracking consecutive kicks within a window and triggering a device probe past threshold; exercised the two-level watchdog and Cortex-M fault handlers under live memory corruption using "Cosmic Monkey," a TRNG-driven fault injector that flips random bits across the full 256 KB SRAM in development builds.
+- Designed autonomous power management — under-voltage response, EPS monitoring, and an autonomous Low Power state that sheds the camera, pointing, and S-band while keeping UHF receive alive — and defined a 14-day power-balanced Safe Mode requirement per fault-protection guidance.
+- Integrated ADCS control paths for the RM3100 magnetometer and magnetorquers, wrapping B-dot detumbling algorithms in RTOS tasks to stabilize orientation after deployment.
+- Designed a structured failure-logging schema in MRAM to replace volatile debug-only logging, giving ground operators timestamped failure history that survives the reboot every fault triggers.
+- Retrieved live telemetry from the ISS and other satellites using Node, Flask, and the SatNOGS ground-station database.
 - Facilitated peer code inspections for 20+ flight-software modules across the PVDX flight-software team.
-- Enforced a static-allocation, "No Infinite Loops" coding standard for deterministic real-time behavior.
+- Enforced a static-allocation standard — every task, stack, queue, and TCB statically declared with overflow padding and no heap use in application code — for deterministic real-time behavior and bounded worst-case memory.
 
 English and Communication TA — College Unbound
 Providence, RI
