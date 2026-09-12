@@ -1,0 +1,25 @@
+NimbleFig — Engineering Intern
+Internet & Software
+$50–65/hr. Remote or onsite, New York City, NY or San Francisco, CA. Internship, Full-time.
+US work authorization required. Apply by September 21, 2026.
+
+Job description
+You will spend the term on real ingestion, resolution, or product work, with review and support, and ship something that ends up in the product. No busywork, no throwaway projects. You will see how a small, senior team turns messy public information into structured data at scale, and your work will be part of it.
+
+What you'll do
+- Take a real ingestion, resolution, or product task from start to ship
+- Write code that goes into production, with review and support from the team
+- Debug real data-quality problems and measure whether your fix worked
+- Ask good questions and leave the code better than you found it
+
+What we look for
+- Studying CS or equivalent, or self-taught with proof
+- Comfortable in at least one language and eager on hard problems
+- Curious, careful, and able to work independently
+- A link to something you have built beats a resume
+
+Bonus points
+- Side projects, open-source contributions, or a portfolio of things you shipped
+- Some exposure to data pipelines, backends, or web scraping
+
+Learn more: https://nimblefig.com/careers/

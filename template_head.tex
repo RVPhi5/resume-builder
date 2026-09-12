@@ -40,6 +40,12 @@
   \vspace{-4pt}\scshape\raggedright\large
 }{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
 
+% \textasciitilde carries the tilde *accent*'s glyph name, so the stock
+% glyphtounicode.tex maps it to U+02DC and "~74%" extracts as a
+% replacement character. The resume has no accents, so pin it to plain
+% ASCII tilde: the metric has to survive into the text layer an ATS reads.
+\pdfglyphtounicode{asciitilde}{007E}
+\pdfglyphtounicode{tilde}{007E}
 \pdfgentounicode=1
 
 %-------------------------

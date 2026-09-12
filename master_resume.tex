@@ -39,6 +39,12 @@
   \vspace{-4pt}\scshape\raggedright\large
 }{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
 
+% \textasciitilde carries the tilde *accent*'s glyph name, so the stock
+% glyphtounicode.tex maps it to U+02DC and "~74%" extracts as a
+% replacement character. The resume has no accents, so pin it to plain
+% ASCII tilde: the metric has to survive into the text layer an ATS reads.
+\pdfglyphtounicode{asciitilde}{007E}
+\pdfglyphtounicode{tilde}{007E}
 \pdfgentounicode=1
 
 %-------------------------
@@ -97,7 +103,7 @@
   \resumeSubHeadingListStart
     \resumeSubheading
       {Brown University}{Providence, RI}
-      {Bachelor of Science in Applied Mathematics and Computer Science}{Sep. 2024 -- May 2028}
+      {Bachelor of Science in Applied Mathematics-Computer Science}{September 2024 -- May 2028}
       \resumeItemListStart
         \resumeItem{\textbf{Cumulative GPA:} 3.93 \quad \textbf{Honors:} Sprint Fellowship, Undergraduate Teaching and Research Award (UTRA), AIME Qualification, National Merit Scholarship Finalist, Taekwondo 4th Dan, Speedcubing State Record}
         \resumeItem{\textbf{Relevant Coursework:} Data Structures \& Algorithms, Computer Systems, Computer Networks, Machine Learning, Deep Learning, Artificial Intelligence, Intro to Computer Science, Honors Statistics, Linear Algebra, Multivariable Calculus, Applied Differential Equations, Abstract Algebra, Topics in Abstract Algebra, Intermediate Microeconomics, Principles of Economics, Earth and Planetary Materials, Protest and Dissidence in Iran}
@@ -110,14 +116,14 @@
   \resumeSubHeadingListStart
 
     \resumeSubheading
+      {Mirico Ltd.}{Didcot, UK}
       {Data and Software Engineer Intern}{June 2026 -- Present}
-      {Mirico Ltd.}{Harwell Science \& Innovation Campus, UK}
       \resumeItemListStart
         \resumeItem{Designed, optimized, and deployed a production HDF5-to-Zarr conversion pipeline transforming raw laser methane-detection sensor data from Azure Blob Storage into cloud-native Zarr for downstream emissions analysis.}
-        \resumeItem{Cut end-to-end pipeline runtime \textasciitilde74\% (87\textrightarrow23 min) for a monthly batch of \textasciitilde1,400 Azure objects by parallelizing uploads with a Python ThreadPoolExecutor (8 workers), reducing upload time \textasciitilde81\% (71\textrightarrow13 min).}
+        \resumeItem{Cut end-to-end pipeline runtime \textasciitilde74\% (87$\rightarrow$23 min) for a monthly batch of \textasciitilde1,400 Azure objects by parallelizing uploads with a Python ThreadPoolExecutor (8 workers), reducing upload time \textasciitilde81\% (71$\rightarrow$13 min).}
         \resumeItem{Re-architected deduplication around a fault-tolerant JSON manifest of converted source URLs, replacing brittle filename-date parsing and cutting the deduplication step from O(H\texttimes Z) to O(H) via set-based lookups.}
         \resumeItem{Made incremental pipeline runs resumable and self-healing by keying them on that manifest instead of dates.}
-        \resumeItem{Reduced Docker image size \textasciitilde86\% (1.74 GB\textrightarrow243 MB) by tracing the true import graph with static analysis and coverage.py, then removing 94 now-unused source files (\textasciitilde24,000 lines) and 27 transitive dependencies overall.}
+        \resumeItem{Reduced Docker image size \textasciitilde86\% (1.74 GB$\rightarrow$243 MB) by tracing the true import graph with static analysis and coverage.py, then removing 94 now-unused source files (\textasciitilde24,000 lines) and 27 transitive dependencies overall.}
         \resumeItem{Stripped dev tooling out of the runtime layer so the shipped image carries only what the converter imports.}
         \resumeItem{Diagnosed a startup anti-pattern where \texttt{uv run} re-synced dependencies on every launch, tying startup to PyPI.}
         \resumeItem{Removed that dependency by invoking the virtualenv interpreter directly, verified with \texttt{--network none}.}
@@ -135,8 +141,8 @@
       \resumeItemListEnd
 
     \resumeSubheading
-      {Software Engineer, Freelance}{November 2025 -- February 2026}
       {United for Brownsville}{New York City, NY}
+      {Software Engineer, Freelance}{November 2025 -- February 2026}
       \resumeItemListStart
         \resumeItem{Repaired GA4 tracking on a live nonprofit site where add-ons double-sent events, cutting inflated metrics 40\%.}
         \resumeItem{Mitigated bot traffic responsible for 60\% of recorded metrics via analytics filters and firewall rules.}
@@ -144,8 +150,8 @@
       \resumeItemListEnd
 
     \resumeSubheading
-      {Machine Learning Engineer (UTRA)}{January 2025 -- September 2025}
       {Huang Climate Lab}{Providence, RI}
+      {Machine Learning Engineer}{January 2025 -- September 2025}
       \resumeItemListStart
         \resumeItem{Engineered and validated a MATLAB GC--MS data pipeline that automated import, baseline correction, noise filtering, and peak detection for 200+ chromatograms, reducing overall preprocessing time by more than 70\%.}
         \resumeItem{Trained two PyTorch neural networks for peak identification and fitting, achieving over 90\% accuracy.}
@@ -156,8 +162,8 @@
       \resumeItemListEnd
 
     \resumeSubheading
+      {Brown Space Engineering}{Providence, RI}
       {Flight Software Engineer}{September 2025 -- Present}
-      {Brown Space Engineering (PVDX CubeSat)}{Providence, RI}
       \resumeItemListStart
         \resumeItem{Developed core subsystems of PVDXos, a FreeRTOS-based flight operating system in embedded C for Brown Space Engineering's PVDX CubeSat, running on a SAMD51---a commercial-grade MCU, so the OS is architected to tolerate radiation-induced bit flips rather than rely on hardened silicon.}
         \resumeItem{Designed a 7-mode mission state machine governing the spacecraft lifecycle---first boot, antenna deployment, nominal, UHF and S-band downlink, imaging, and flash recovery---with explicit state and input variables, power-threshold guards on every transition, and a per-mode Active/Idle mapping across all hardware that feeds the power budget.}
@@ -175,8 +181,8 @@
       \resumeItemListEnd
 
     \resumeSubheading
-      {English and Communication TA}{September 2024 -- May 2025}
       {College Unbound}{Providence, RI}
+      {English and Communication TA}{September 2024 -- May 2025}
       \resumeItemListStart
         \resumeItem{Supported an initiative expanding access to college-level instruction for 400+ formerly incarcerated adults.}
         \resumeItem{Led office hours and review sessions for 40+ students addressing writing mechanics and presentation skills.}
@@ -191,12 +197,27 @@
       \resumeProjectHeading
           {\href{https://www.coursetrees.com/}{\underline{\textbf{CourseTrees}}} --- Co-Founder $|$ \emph{Next.js 15, TypeScript, Swift, Python, Supabase/Postgres/PostGIS, Cloudflare Workers, Cytoscape.js, MapLibre GL, LLM Orchestration}}{2025 -- Present}
           \resumeItemListStart
-            \resumeItem{Co-founded and help lead a production course-planning platform with 137 registered accounts, mapping prerequisite graphs and degree requirements across 150+ universities, 394K+ courses, and 426K+ prerequisite edges.}
+            \resumeItem{Co-founded and help lead a production course-planning platform with 293 registered users, 16,306 pageviews and over 50 iOS app downloads.}
+            \resumeItem{Mapped prerequisite graphs and degree requirements across 156 universities, 440K+ courses and 236K+ prerequisite edges under one schema.}
             \resumeItem{Mapped course catalogs and prerequisite graphs across 153 universities under one schema, layering grade distributions on 22 of them, professor ratings on 11, and term-level meeting times on 7, deepest at the two launch campuses.}
             \resumeItem{Indexed 448K+ grade rows and was adopted as Brown advising's official planning resource for 2,000+ freshmen.}
+            \resumeItem{Served 156 registrars that agree on nothing --- code formats, prerequisite grammar, term naming, department taxonomy --- through one pipeline carrying per-school capability flags rather than a fork per school.}
+            \resumeItem{Built the Python ingestion tier that is the only writer of course, prerequisite and grade data, with 18 school scrapers over a shared base class and roughly 30 source adapters for events, dining, library, mapping and scholarly feeds.}
+            \resumeItem{Recovered roughly 92,800 prerequisite edges across 22 schools whose catalogs had loaded with an empty edge table, parsing free-text prerequisite prose into a validated DAG instead of re-scraping every registrar.}
+            \resumeItem{Normalized six incompatible course-code dialects to one canonical form before matching, and emitted an edge only when both endpoints already existed as real courses, making the backfill idempotent and incapable of inserting an invalid edge.}
+            \resumeItem{Replaced a checked-in list of which schools have prerequisite data with a runtime empty-edge check that degrades the planner to requirement-only ordering behind a visible notice, after the hardcoded list rotted silently for two months.}
+            \resumeItem{Grew the platform to 293 signups over 1,448 unique visitors and 16,306 pageviews, with an average session of 5 minutes 24 seconds and 5.9 pages per visit.}
+            \resumeItem{Read engagement per person rather than raw traffic --- 10.0 views per visitor on the org directory, 8.4 on the degree planner and 7.7 on the graph explorer against 2.4 on marketing pages --- and treated the directory's ratio as a buried entry point rather than a weak feature.}
             \resumeItem{Rendered an interactive Cytoscape prerequisite graph per school with three layouts: a most-connected department-cluster default, a filtered division/department/rating view, and a course-focused ``waterfall.''}
             \resumeItem{Traced a single course's full ancestor chain and everything it unlocks in that waterfall layout.}
+            \resumeItem{Assigned graph division colors from a cross-school department-stem heuristic so a registrar the pipeline has never seen still clusters its departments into the right divisions.}
+            \resumeItem{Eliminated a class of whole-page crashes in the graph canvas, where Cytoscape throws uncatchably on a dangling edge, a dangling compound parent or a duplicate node id and the student sees only a blank application-error screen.}
+            \resumeItem{Layered that fix as a sanitize pass at the end of the elements memo, a try/catch around the layout effect and a route-level error boundary, rather than patching the one call site that happened to produce it.}
+            \resumeItem{Traced the original trigger to invisible division hub nodes spoking out to raw course codes that variant-collapsing had already merged away.}
             \resumeItem{Built a school-scoped data layer where every query filters by \texttt{school\_id} and all DB access goes through one module, with Postgres Row-Level Security as the boundary and cron-refreshed materialized views for heavy reads.}
+            \resumeItem{Scaled that single chokepoint to 156 tenants across 78 page routes and 131 JSON API routes with no per-tenant fork, so no route can forget to scope itself.}
+            \resumeItem{Made the same layer fall back to bundled demo data when the database is unconfigured, so the whole application --- graph, planner and course sheets --- runs locally with zero setup.}
+            \resumeItem{Tuned incremental static regeneration per route by volatility, five minutes on the home page, an hour on the course shell and a day on analytics, rather than one cache lifetime for the site.}
             \resumeItem{Engineered ``Cam,'' a grounded AI advisor running a bounded agent loop (max 4 hops, concurrent tool execution in deterministic order) over 18 school-scoped, DB-backed tools, streaming typed SSE events to the client.}
             \resumeItem{Implemented structural grounding verification that extracts every course code an answer asserts and validates it against the whitelist the tools sourced, badging ungrounded responses rather than trusting model prose.}
             \resumeItem{Hardened LLM inputs against prompt injection via Unicode NFKC normalization, role-marker and control-token stripping, and bidi-character collapsing, fencing untrusted review content the model is told never to obey.}
@@ -206,6 +227,12 @@
             \resumeItem{Shipped an SSE streaming contract that is additive-only (unknown event types ignored) so deployed clients survive newer servers, with client-disconnect aborting the upstream LLM stream to cap cost and DoS exposure.}
             \resumeItem{Replaced Cam's entire LLM stack with a deterministic classify-answer-render engine that reads the catalog and fills a template, answering roughly 25 question types at zero cost per turn with no model in the request path.}
             \resumeItem{Deleted the anonymous cache-miss 401 and the nightly prewarm cron alongside it, since a turn that cannot spend money at a provider no longer needs gating on a warm cache, and kept the SSE transport so the client never changed shape.}
+            \resumeItem{Built the eval harness that gates the AI advisor, replaying graded scenarios through the real tool loop and the real grounding checker rather than against a mock of either.}
+            \resumeItem{Held two floors in that harness: 90\% on scoring a properly sourced answer as grounded, and 100\% on catching an answer that cites a course no tool returned.}
+            \resumeItem{Paired those floors deliberately, since a grounding checker that never fires would score perfectly on the first metric alone and the catch floor is what keeps the first honest.}
+            \resumeItem{Ran the offline half with no API key, database or network so it gates CI and turns a pull request red, and reported the live-model half weekly instead of gating, because a red build on a model's off day is noise.}
+            \resumeItem{Reused the same harness as the launch threshold for enabling the advisor at a new school, making that a measurement rather than a judgement call.}
+            \resumeItem{Deleted a fully built 256-dimensional GNN embedding pipeline in a dead-code sweep once nothing read it, recording the restore commit in the README rather than carrying an unused model path.}
             \resumeItem{Normalized tier placements into per-student z-scores before averaging, since a harsh grader's B and a generous grader's B are different signals and an un-normalized mean ranks courses by whoever happened to rate them.}
             \resumeItem{Blended each student's own mean and standard deviation toward the global distribution with shrinkage constant 4, so a student with two ratings cannot produce a wild z-score that moves a course.}
             \resumeItem{Kept the rating write path free of statistics --- upsert the placement, null its z-value, flag the student dirty --- and swept every two minutes in pg\_cron, rewriting a student's whole history only when their distribution moved.}
@@ -228,6 +255,12 @@
             \resumeItem{Replaced the framework data cache to do it, which hard-rejects entries over 2 MB mid-stream in a way no caller can catch, killing the response for the largest catalogs.}
             \resumeItem{Disabled JIT on one database function after conservative row-security cost estimates crossed the compilation threshold, spending three seconds planning a query that executes in a tenth of one, once per pooled connection.}
             \resumeItem{Rewrote the rankings page to materialize only course codes, compute a top-N page from that narrow set, then fetch titles and enrollment for the requested page alone, holding totals, rank order, row security and grants unchanged.}
+            \resumeItem{Cut the course sheet from 14 PostgREST queries in 4 round-trip waves to a single security-definer Postgres function, taking 688 ms of fan-out to 5.1 ms measured server-side under explain analyze.}
+            \resumeItem{Took that page's lab time-to-first-byte from 548 ms to 9 ms and largest-contentful-paint from 588 ms to 176 ms in the same change, and a school home page from 34 ms to 9 ms.}
+            \resumeItem{Diagnosed it from field vitals whose p50 of 1.2 s against a p90 of 18.5 s marked a cold path rather than a uniformly slow page, after confirming every table involved was already indexed on school and course code.}
+            \resumeItem{Caught a production 500 on the base branch during that work, which the before measurement had been quietly recording as a fast error page.}
+            \resumeItem{Set the performance CI lane to warn and never fail on field numbers, since a p75 over 29 samples moves on one person's train ride and a red build on that teaches nobody anything.}
+            \resumeItem{Labeled every user-facing count exact or estimated with a timestamp and scoped every query by school by construction, after unfiltered counts on the 400k-row tables hit Postgres statement timeouts.}
             \resumeItem{Ordered composite indexes \texttt{school\_id} first so one index serves both whole-school scans and school-plus-code point lookups, turning sequential scans over hundreds of thousands of rows into range scans.}
             \resumeItem{Paged every list read past the client's 1000-row ceiling by keyset rather than offset, ordered so the truncated tail of a large sitemap is deterministic instead of flapping between builds.}
             \resumeItem{Enforced row-level security across 75 tables with 175 policies, 147 security-definer functions and 14 caller-privilege views, revoking direct reads on base tables so all public reads go through views that expose no author identity.}
@@ -245,8 +278,23 @@
             \resumeItem{Made a production build fail closed without database credentials and required an explicit opt-in for bundled demo data, so a misconfigured deploy cannot silently serve demo content as real while CI still needs no secrets.}
             \resumeItem{Serialized per-user watch quotas with a transaction-scoped advisory lock and a deliberately volatile count, so a concurrent caller reads a fresh snapshot including the insert that just committed rather than its own stale one.}
             \resumeItem{Held Stripe to test mode in code, throwing on any non-test key and rejecting live-mode webhook events outright, with deterministic idempotency keys and a per-event processing token so ambiguous commits never expire a shared attempt.}
+            \resumeItem{Held the billing integration behind four independent gates --- an unset feature flag, a client that rejects any non-test key, no page linking the pricing route, and a robots disallow --- so a complete Stripe implementation charges nobody.}
+            \resumeItem{Admitted a third-party post embed to the content-security policy as a sandboxed frame while explicitly refusing its official widget script, which would otherwise execute inside our origin on a signed-in student's page.}
+            \resumeItem{Made publication state a database decision through \texttt{release\_stage} and \texttt{is\_public} rather than a checked-in constant, so a transient lookup failure fails closed instead of falling back to a static list of public schools.}
+            \resumeItem{Resolved every failure path on the admin analytics page --- migration unapplied, caller not an admin, network error --- to an explicit unavailable state, since a zero there has to mean we counted none or the page is worse than nothing.}
+            \resumeItem{Shipped \texttt{captured\_at} and \texttt{age\_seconds} with every analytics snapshot so staleness is visible rather than inferred.}
             \resumeItem{Wrote 3,436 test cases across 411 files and gated merges on eight stages --- hygiene, lint, typecheck, a prerequisite-edge invariant, dependency audit, unit tests, ops checks and build --- plus a zero-serious-violations accessibility gate.}
+            \resumeItem{Chained one merge gate of ten stages --- repo hygiene, schema hygiene, lint at zero warnings, typecheck, prerequisite-edge fixtures, production dependency audit, unit tests, orchestration tests, build and a bundle budget --- with no exceptions.}
+            \resumeItem{Grew coverage to 639 unit test files carrying roughly 7,900 assertions, 27 Playwright specs over 6 sharded CI jobs, and 131 offline scraper test files, across 17 workflows gating an auto-deploying production branch.}
+            \resumeItem{Diagnosed a silent runner-OOM class of end-to-end failures, where Playwright boots every configured web server and three development servers at a 2 GB heap each exhaust a 7 GB runner before the browser allocates anything.}
+            \resumeItem{Separated that into three overlapping causes --- an out-of-memory kill, a development server self-restarting at its memory threshold and making the next request pay a cold compile, and genuine flake --- then sharded the matrix by server group rather than by wall time.}
+            \resumeItem{Wrote the evidence for each shard-count increase into the workflow file beside the setting it justifies, including a correction to an earlier comment in the same file that had explained the fix wrongly.}
+            \resumeItem{Supplied the exactly-named status context branch protection requires but a matrix job can never report, through an aggregator job asserting the shard result, so the shard count changes without editing branch protection.}
             \resumeItem{Built an internal MCP server exposing 18 tools over the live database and repository --- health, coverage, gaps, schema counts, scraper status, launch audit, two guarded writes --- so operational questions are answered from data.}
+            \resumeItem{Gated that server's writes three ways --- a service key, an explicit environment opt-in and a per-call confirmation --- so it reads live production data freely but can only write two metadata tools.}
+            \resumeItem{Built the native client as 358 Swift files across two local packages with its own unit, UI and snapshot test targets.}
+            \resumeItem{Shipped 2,512 commits across 187 reviewed pull requests in 13 weeks into a roughly 386,000-line polyglot codebase spanning TypeScript, Python, SQL and SwiftUI.}
+            \resumeItem{Wrote comments that record evidence and dates rather than intent --- the heap at which a build died, the two CI runs that isolated a flake, the measurement that superseded a stale table --- including explicit corrected blocks where earlier documentation promised something that did not exist.}
             \resumeItem{Extended the platform with BrownSync, a campus-activity map aggregating 16 registered public sources --- events, athletics schedules, course meetings, news, dining, library hours --- into one Postgres/PostGIS canonical layer.}
             \resumeItem{Rendered that layer as a dark 2.5D MapLibre map of College Hill with a time scrubber, backed by a versioned read API of 52 OpenAPI paths that a SwiftUI client code-generates against.}
             \resumeItem{Ingested 1,106 events, 1,755 course meetings, 457 organizations and 174 resolved places, plus 823 amenity, 552 landmark and 262 building GeoJSON features over a committed 4.7 MB PMTiles basemap cutout.}

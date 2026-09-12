@@ -12,11 +12,21 @@ without reading it.
 
 ## The three that bite
 
-1. **The Huang Climate Lab title defaults to `Software Engineer (UTRA)`.**
-   Upgrade to `Machine Learning Engineer (UTRA)` only when the role being
-   applied for actually *builds* ML. A JD asking for "AI literacy" or prompt
-   engineering, or name-dropping AI in its company blurb, does **not** qualify —
-   that mistake has been made before. `check.py` fails the run on it.
+1. **The Huang Climate Lab title defaults to `Software Engineer`.**
+   Upgrade to `Machine Learning Engineer` only when the role being applied for
+   actually *builds* ML. A JD asking for "AI literacy" or prompt engineering, or
+   name-dropping AI in its company blurb, does **not** qualify — that mistake
+   has been made before. `check.py` fails the run on it. **Never append
+   `(UTRA)`**, or any parenthetical, to a title or company: an ATS reads
+   `Title (X)` as `Title @ X` and splits the entry in two.
+
+   More generally, the page is only half the deliverable — the PDF's text layer
+   is the other half, and `\extracolsep{\fill}` gives a parser no column
+   structure to read. `\resumeSubheading` is called
+   `{Organization}{Location}{Title}{Dates}`, locations are `City, ST` or
+   `City, Country`, months are spelled out in full, and no glyph may come from a
+   Type3 font. See **ATS parsing** in `INSTRUCTIONS.md`; `check.py` enforces all
+   of it.
 
 2. **Never invent experience.** `master.txt` is the only source of bullets,
    metrics and technologies. Reframing what a bullet already says is fine;
@@ -26,8 +36,8 @@ without reading it.
    run pdflatex, run `python check.py out/<name>.pdf`, fix what it flags, repeat
    until it prints PASS. Do not estimate fit by eye — the checker measures page
    count, bullet line counts, line fill, how close each last line comes to the
-   right edge, heading gaps, Technical Skills wrapping, bottom fill, and the
-   title rule, and its exit status gates the loop.
+   right edge, heading gaps, Technical Skills wrapping, bottom fill, the
+   title rule, and the ATS text-layer rules, and its exit status gates the loop.
 
 ## What a build reads
 

@@ -1,0 +1,66 @@
+NVIDIA 2027 Internships: Software Engineering
+US, CA, Santa Clara. Full time. Req JR2023495.
+
+TARGETED TRACKS: Cloud (primary) + Tools Infrastructure (secondary).
+The other two listed tracks (Development Tools, Machine Learning Operations)
+were not targeted -- see notes at the bottom.
+
+Throughout the 12-week full-time internship, students will work on projects that
+have a measurable impact on our business. We're looking for students pursuing a
+B.S., M.S., or Ph.D. degree within a relevant or related field.
+
+Potential Internships in this field include:
+
+Development Tools
+- Debugging complex system-level issues using Jenkins
+- Course or internship experience related to the following areas could be required:
+  Relational Databases, Linear Algebra & Numerical Methods, Operating Systems
+  (memory/resource management), Scheduling and Process Control, Hardware Virtualization
+
+Cloud
+- Supporting overall architecture and design of our cloud storage infrastructure
+- Implementing and troubleshooting storage and data platform tools, automating storage
+  infrastructure end-to-end
+- Course or internship experience related to the following areas could be required:
+  Distributed Systems, Data Structures & Algorithms, Virtualization,
+  Automation/Scripting, Container & Cluster Management, Debugging
+
+Tools Infrastructure
+- Building industry leading technology by proving workflows and infrastructure,
+  alongside a team of experts in production software development and chip design
+  methodologies
+- Enabling success for content running on the chip from application tracing and analysis
+  to modeling, diagnostics, performance tuning, and debugging
+- Course or internship experience related to the following areas and technologies could
+  be required: Unix/Shell Scripting, Linux, Java, JavaScript (including Node, React,
+  Vue), C++, CUDA, OOP, Go, Python, Git, GitLab, Perforce, Kubernetes and Microservices,
+  Schedulers (LSF, SLURM), Containers (Docker), Configuration Automation (Ansible)
+
+Machine Learning Operations
+- Deep Learning, GPU Computing, Accelerated Computing
+- Validation Frameworks for Deep Learning, Deep Learning Frameworks and Libraries
+  (NumPy, SciPy, cuBLAS, cuDNN)
+- Data Preprocessing, Training Acceleration (CUDA, cuDNN, NCCL), Convolution Operations
+  (cuDNN), Real-Time Inference (TensorRT)
+- Building Infrastructure for Back-End Analytics
+
+What we need to see:
+- Must be actively enrolled in a university pursuing a B.S., M.S., or Ph.D. degree in
+  Electrical Engineering, Computer Engineering, or a related field, for the full duration
+  of the internship; anticipated graduation date (month and year) must be clearly
+  indicated on a resume or CV to be considered.
+- Depending on the internship role, prior experience or knowledge requirements could
+  include the following programming skills and technologies: Java, JavaScript (including
+  Node, React, Vue), SQL, C, C++, CUDA, OOP, Go, Python, Git, Perforce, Kubernetes and
+  Microservices, Schedulers (LSF, SLURM), Containers (Docker), Configuration Automation
+  (Ansible)
+
+Intern hourly rate 20 USD - 71 USD. Applications accepted on an ongoing basis.
+
+NOTE ON TRACK CHOICE: Cloud is the strongest match (Azure object storage pipeline,
+Kubernetes CronJob deployment, Docker, container/cluster management, troubleshooting a
+data platform end to end). Tools Infrastructure overlaps heavily (Linux, C++, Python,
+JS/React/Node, Git, Kubernetes, Docker, performance tuning and diagnostics). MLOps was
+not targeted: no CUDA, cuDNN, NCCL, TensorRT, cuBLAS or GPU-kernel experience exists in
+master.txt. Development Tools was not targeted: no Jenkins or hardware virtualization.
+This is NOT an ML-building role -- the Huang Climate Lab title stays Software Engineer (UTRA).

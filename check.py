@@ -10,8 +10,9 @@ Usage:
     python check.py out/some_resume.pdf --debug     # dump raw line geometry
 
 Exit status is 0 only when the PDF is exactly one page, every bullet is OK, no
-heading row is COLLIDE or TIGHT, no skills category is WRAPPED, and at most one
-further line would fit beneath the last one, so this can gate an iteration loop.
+heading row is COLLIDE or TIGHT, no skills category is WRAPPED, no ATS parsing
+rule is violated, and at most one further line would fit beneath the last one,
+so this can gate an iteration loop.
 """
 
 from __future__ import annotations
@@ -88,6 +89,48 @@ MAX_SKILL_LINES = 1      # a category may occupy at most this many lines
 # using AI tools, and treating them as ML content is the exact mistake that put
 # the specialist title on a general software engineering JD.
 SPECIALIST_TITLE = "Machine Learning Engineer"
+
+# ATS parsing (INSTRUCTIONS.md, "ATS parsing"). The tabular* rows carry no
+# column structure into the text layer -- a parser sees two runs sharing a
+# baseline and has to guess where the left cell ends and what the right one is.
+# It guesses well on date-shaped runs and badly on everything else, so these
+# rules keep every right-hand cell to a shape it can recognise. Each one is
+# here because a real submission was mangled by it.
+#
+# A \resumeSubheading emits a pair of rows: {Organization}{Location} then
+# {Title}{Dates}. Row 1's right cell must therefore be a location and row 2's
+# a date range; the reverse means the body was written title-first, which puts
+# an organization-plus-location pair -- the exact shape of a new job header --
+# on the second line of every entry.
+LOCATION_RE = re.compile(
+    r"^[A-Z][\w.'&-]*(?: [A-Z][\w.'&-]*)*,\s*(?:[A-Z]{2}|UK|USA|Canada)$"
+)
+MONTH = (r"January|February|March|April|May|June|July|August|September|"
+         r"October|November|December")
+DASH = r"[-\u2010-\u2015]+"   # hyphen, en/em dash, or the `--` LaTeX writes
+DATERANGE_RE = re.compile(
+    rf"^(?:(?:{MONTH})\s+)?\d{{4}}\s*{DASH}\s*"
+    rf"(?:Present|(?:(?:{MONTH})\s+)?\d{{4}})$|"
+    rf"^(?:{MONTH})\s*{DASH}\s*(?:{MONTH})\s+\d{{4}}$|"
+    rf"^(?:{MONTH})\s+\d{{4}}$",
+    re.IGNORECASE,
+)
+# "Sep. 2024" -- the period reads as a sentence terminator and truncates the
+# range to a single date, which the parser then mirrors into both year fields.
+ABBREV_MONTH_RE = re.compile(
+    r"\b(?:Jan|Feb|Mar|Apr|Jun|Jul|Aug|Sept?|Oct|Nov|Dec)\.", re.IGNORECASE
+)
+# Field of Study is a controlled picklist; a conjunction matches no entry and
+# the parser will not split it to pick a winner, so the field comes back empty.
+# A glyph with no ToUnicode entry extracts as a control character or U+FFFD:
+# invisible on the page, garbage to a parser. \textrightarrow was the one that
+# bit -- it resolves through TS1, whose font is not installed as Type1 here, so
+# pdflatex embeds a Type3 bitmap that carries no mapping at all, and every
+# "87\u219223 min" metric reached the ATS as "8723 min". Use $\rightarrow$
+# (CMSY10, Type1, already declared in glyphtounicode.tex) instead.
+UNMAPPED_RE = re.compile(r"[\x00-\x08\x0b\x0c\x0e-\x1f\x7f-\x9f\ufffd]")
+
+DEGREE_CONJ_RE = re.compile(r"^(?:Bachelor|Master|Associate)\b.*\band\b")
 #
 # The LLM terms below are here because INSTRUCTIONS.md counts "inference or
 # agent systems" as building ML: a role whose core requirement is integrating
@@ -140,6 +183,8 @@ class Heading:
     gap: float               # pt of clear space between the two cells
     x1: float
     text: str                # whole row, for when a collision makes the split meaningless
+    row: int = 0             # 0-based position within its heading run
+    run_len: int = 1         # 1 for \resumeProjectHeading, 2 for \resumeSubheading
 
 
 @dataclass
@@ -328,11 +373,23 @@ def find_headings(lines: list[Line], bullet_left: float) -> list[Heading]:
     # stable estimate even if one row is overfull and overshoots it.
     edge = statistics.median(l.x1 for l in candidates)
 
+    # Re-walk the runs so each surviving row knows its position within the
+    # \resumeSubheading pair it came from -- the ATS rules below are about
+    # which cell type belongs on which of the two rows.
     headings: list[Heading] = []
-    for line in candidates:
-        if line.x1 < edge - EDGE_TOL:
+    keep = {id(l) for l in candidates if l.x1 >= edge - EDGE_TOL}
+    run = []
+    for line in lines + [None]:
+        if line is not None and abs(line.x0 - head_left) <= COORD_TOL:
+            run.append(line)
             continue
-        headings.append(split_cells(line))
+        if run and len(run) <= MAX_HEADING_RUN:
+            kept = [l for l in run if id(l) in keep]
+            for i, l in enumerate(kept):
+                h = split_cells(l)
+                h.row, h.run_len = i, len(kept)
+                headings.append(h)
+        run = []
     return headings
 
 
@@ -352,6 +409,88 @@ def split_cells(line: Line) -> Heading:
         page=line.page, left_text=left, right_text=right,
         gap=gap, x1=line.x1, text=line.text,
     )
+
+
+def check_glyphs(doc: fitz.Document) -> list[tuple[str, str, str]]:
+    """Find text that reaches the text layer as unmappable glyphs.
+
+    The page can look perfect while the extracted text an ATS reads is
+    corrupt, so this reads what a parser reads rather than what renders.
+    """
+    bad: list[tuple[str, str, str]] = []
+    for page in doc:
+        for raw in page.get_text().splitlines():
+            m = UNMAPPED_RE.search(raw)
+            if not m:
+                continue
+            bad.append((
+                "GLYPH", raw.strip(),
+                f"U+{ord(m.group()):04X} has no ToUnicode entry -- it is "
+                "invisible to a parser; use a Type1 equivalent "
+                "($\\rightarrow$) or declare \\pdfglyphtounicode",
+            ))
+    return bad
+
+
+def check_ats(headings: list[Heading]) -> list[tuple[str, str, str]]:
+    """Check every heading row against the ATS parsing rules.
+
+    Returns (flag, cell, why) triples, one per violation. Only paired rows --
+    the two a \\resumeSubheading emits -- are checked for cell order, since a
+    lone \\resumeProjectHeading row is a project and carries a tech stack, not
+    an organization. Parentheticals are likewise an experience-heading problem:
+    a parser promotes `Title (ACRONYM)` to a separate employer.
+    """
+    bad: list[tuple[str, str, str]] = []
+    for h in headings:
+        for cell in (h.left_text, h.right_text):
+            if ABBREV_MONTH_RE.search(cell):
+                bad.append((
+                    "ABBREV", cell,
+                    "abbreviated month -- the period truncates the range to a "
+                    "single date; spell the month out in full",
+                ))
+        if h.run_len < 2:
+            continue                      # a project heading: no org, no dates
+        if h.row == 0:
+            if DATERANGE_RE.match(h.right_text.strip()):
+                bad.append((
+                    "ORDER", h.text,
+                    "dates on row 1 -- the body was written title-first; call "
+                    "\\resumeSubheading as {Organization}{Location}{Title}{Dates}",
+                ))
+            elif not LOCATION_RE.match(h.right_text.strip()):
+                bad.append((
+                    "LOCATION", h.right_text,
+                    "not City, ST or City, Country -- it fails the location "
+                    "validator and falls through into the description block",
+                ))
+            if DEGREE_CONJ_RE.match(h.left_text.strip()):
+                bad.append((
+                    "DEGREE", h.left_text,
+                    'a conjunction matches no Field of Study picklist entry -- '
+                    "hyphenate the concentration name",
+                ))
+        else:
+            if not DATERANGE_RE.match(h.right_text.strip()):
+                bad.append((
+                    "DATES", h.right_text,
+                    "row 2's right cell is not a date range -- check the "
+                    "\\resumeSubheading argument order",
+                ))
+            if DEGREE_CONJ_RE.match(h.left_text.strip()):
+                bad.append((
+                    "DEGREE", h.left_text,
+                    'a conjunction matches no Field of Study picklist entry -- '
+                    "hyphenate the concentration name",
+                ))
+        if "(" in h.left_text:
+            bad.append((
+                "PAREN", h.left_text,
+                "a parenthetical in an organization or title cell is promoted "
+                "to a separate employer -- move the detail into a bullet",
+            ))
+    return bad
 
 
 def find_skills(lines: list[Line]) -> list[list[Line]]:
@@ -552,6 +691,15 @@ def main() -> int:
     print(f"{len(head_rows)} headings: {len(head_rows) - len(bad_heads)} OK, "
           f"{n_collide} COLLIDE, {n_tight} TIGHT")
 
+    bad_ats = check_ats(headings) + check_glyphs(doc)
+    if table and bad_ats:
+        print(f"\n{'FLAG':<9}  ATS PARSING")
+        print("-" * 100)
+        for flag, cell, why in bad_ats:
+            print(f"{flag:<9}! {opening(cell, 88)}")
+        print("-" * 100)
+    print(f"ATS: {len(bad_ats)} violations")
+
     cats = find_skills(lines)
     cat_rows = [(c, "WRAPPED" if len(c) > MAX_SKILL_LINES else "OK") for c in cats]
     bad_cats = [(c, f) for c, f in cat_rows if f != "OK"]
@@ -583,9 +731,9 @@ def main() -> int:
     print(f"TITLE      {title_status}")
 
     ok = (pages == 1 and not flagged and not bad_heads and not bad_cats
-          and not sparse and title_complaint is None)
+          and not bad_ats and not sparse and title_complaint is None)
     if ok:
-        print("\nPASS — one page, filled, no bullet or heading flagged.")
+        print("\nPASS — one page, filled, no bullet, heading or ATS rule flagged.")
         return 0
 
     print("\nFAIL")
@@ -593,6 +741,8 @@ def main() -> int:
         print(f"  - page count is {pages}, must be exactly 1")
     if title_complaint:
         print(f"  - {title_complaint}")
+    for flag, cell, why in bad_ats:
+        print(f"  - {flag:<5} {why:<52} {opening(cell, 40)}")
     if sparse:
         print(f"  - {spare:.2f} lines of empty page below the last line "
               f"(max {MAX_SPARE_LINES}) — add a bullet to an experience")

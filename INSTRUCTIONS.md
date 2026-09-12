@@ -18,17 +18,24 @@ Job titles may be adapted to a more general equivalent when the specialized
 title misrepresents the fit. This is a deliberate, narrow exception to "never
 invent" — it relabels a role I actually held, it does not add experience.
 
-**Huang Climate Lab** — the default render is **`Software Engineer (UTRA)`**.
-Upgrade it to `Machine Learning Engineer (UTRA)` only when the role being
-applied for actually builds AI/ML. Keep `(UTRA)` either way; it marks the
-research award, not the specialization.
+**Huang Climate Lab** — the default render is **`Software Engineer`**.
+Upgrade it to `Machine Learning Engineer` only when the role being applied for
+actually builds AI/ML.
+
+**Never append `(UTRA)`** — or any other parenthetical — to the title. ATS
+parsers read `Title (X)` as `Title @ X`, and `UTRA` is a four-letter all-caps
+token, about the strongest organization signal there is: it becomes the
+employer, the entry splits in two, and the real Huang heading one line below is
+consumed as a second job. The award is already carried by the `Honors` line on
+the education entry, where it parses as text rather than as an employer. See
+**ATS parsing** below.
 
 The test is whether the **role builds** AI/ML — models, the pipelines feeding
 them, inference or agent systems. It is not enough that the JD asks for "AI
 literacy" or prompt engineering as a general working skill, or that the company
 blurb name-drops AI alongside VR and other technology it happens to sell; those
 describe using AI tools, not engineering them. A general software engineering
-role renders as `Software Engineer (UTRA)` even when AI is mentioned.
+role renders as `Software Engineer` even when AI is mentioned.
 
 The default is deliberately the safe one: the general title fits every JD,
 while the specialist title on a JD that never asked for ML misrepresents the
@@ -79,6 +86,15 @@ page: it takes **three to five bullets**, selected per JD like any others. Its
 bullet pool now spans two products — the course-planning platform and the
 BrownSync campus-activity map that ships inside it — so pick across both by
 what this JD asks for rather than taking the first few in file order.
+
+**Its first bullet is fixed.** The traction line marked `RULE:` in master.txt --
+registered users, pageviews, iOS downloads -- renders as CourseTrees' bullet one
+on every JD, without exception. Only the remaining two to four slots are selected
+per JD. It leads because it is the one bullet that says the thing shipped and
+people use it; the engineering bullets underneath then read as work that reached
+users rather than work that reached a repo. Refresh its numbers from the `VERIFY:`
+line before rendering -- they move, and a stale user count is the one number in
+this entry a reader can check in a browser.
 
 Only add a project if it is actually relevant to this JD. A fourth project that
 doesn't fit the role is worse than a third that does — do not pad the count.
@@ -147,6 +163,56 @@ Together these set the realistic ceiling: about three experiences at two to
 three bullets each, CourseTrees at three to five, and two to three further
 projects at one bullet each, plus the education lines, fills one page. Adding
 an entry anywhere means dropping something somewhere else — check the space budget above before committing.
+
+## ATS parsing — non-negotiable
+A resume is read twice: once by a person looking at the page, and once by a
+parser reading the PDF's text layer, where `\extracolsep{\fill}` produces no
+column structure at all — just two text runs sharing a baseline. The parser
+guesses where the left cell ends and what the right one is. Date-shaped runs
+guess well; everything else does not. Every rule here exists because a real
+submission was mangled by one of them.
+
+1. **`\resumeSubheading` is called organization-first:**
+   `{Organization}{Location}{Title}{Dates}`. Never title-first. A title-first
+   call puts an organization-plus-location pair on the *second* line of every
+   entry — which is exactly the shape of a new job header — so as soon as the
+   first line has yielded a company, the second line opens a phantom second
+   job that swallows the entry's bullets. This is Jake's original argument
+   order, and it is the order every parser is tuned for.
+2. **No parentheticals in an organization or title cell.** Not
+   `Software Engineer (UTRA)`, not `Brown Space Engineering (PVDX CubeSat)`.
+   An acronym in parentheses is promoted to a separate employer; anything that
+   does not look like an acronym is silently discarded. If the detail matters,
+   put it in a bullet, where it is prose.
+3. **Locations are `City, ST` or `City, Country`.** Nothing else validates.
+   A campus or site name — `Harwell Science & Innovation Campus, UK` — fails
+   the location validator, and unvalidated trailing text falls through into the
+   description block, where it is prepended to the entry's bullets. Mirico Ltd.
+   renders as **`Didcot, UK`** (the postal town for the Harwell campus).
+4. **Spell every month out in full.** `September 2024`, never `Sep. 2024`. The
+   period reads as a sentence terminator and truncates the range to a single
+   date; the parser then mirrors the start year into the end year, so
+   `Sep. 2024 -- May 2028` lands as 2024–2024.
+5. **The degree renders as `Bachelor of Science in Applied
+   Mathematics-Computer Science`** — Brown's official concentration name, and
+   hyphenated rather than joined with "and". Field of Study is a controlled
+   picklist in most systems; a conjunction matches no entry and the parser will
+   not split it to pick a winner, so the field comes back empty.
+6. **Keep `\href` on every link.** Parsers read PDF link annotations, not the
+   glyphs, so a bare visible `github.com/RVPhi5` still delivers the full URL.
+   This is the one thing the current template already gets right.
+7. **Keep labeled key-value pairs labeled.** `\textbf{GPA:} 3.93` parses because it is
+   a labeled pair; a bare `3.93` does not.
+8. **Every glyph must survive into the text layer.** Use `$\rightarrow$`, never
+   `\textrightarrow`: the latter resolves through TS1, whose font is not installed
+   as Type1 here, so pdflatex embeds a Type3 bitmap with no ToUnicode entry at
+   all and `87→23 min` reaches the ATS as `8723 min`. `$\rightarrow$` takes
+   the same arrow from CMSY10, which is Type1 and already declared. The
+   preamble pins `asciitilde` and `tilde` to U+007E for the same reason, so
+   `\textasciitilde74\%` extracts as `~74%` rather than as a replacement character.
+
+`check.py` enforces rules 1–5 and 8 from the text layer and fails the run on a
+violation, so these are checked, not remembered.
 
 ## Fit rules — non-negotiable
 1. **Exactly one page.** Not 1.1, not 0.8.
