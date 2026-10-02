@@ -195,7 +195,7 @@
     \resumeSubHeadingListStart
 
       \resumeProjectHeading
-          {\href{https://www.coursetrees.com/}{\underline{\textbf{CourseTrees}}} --- Co-Founder $|$ \emph{Next.js 15, TypeScript, Swift, Python, Supabase/Postgres/PostGIS, Cloudflare Workers, Cytoscape.js, MapLibre GL, LLM Orchestration}}{2025 -- Present}
+          {\href{https://www.coursetrees.com/}{\underline{\textbf{CourseTrees}}} --- Co-Founder $|$ \emph{Next.js 15, TypeScript, Swift, Python, Supabase/Postgres/PostGIS, Cloudflare Workers, Stripe, Cytoscape.js, MapLibre GL, LLM Orchestration}}{2025 -- Present}
           \resumeItemListStart
             \resumeItem{Co-founded and help lead a production course-planning platform with 293 registered users, 16,306 pageviews and over 50 iOS app downloads.}
             \resumeItem{Mapped prerequisite graphs and degree requirements across 156 universities, 440K+ courses and 236K+ prerequisite edges under one schema.}
@@ -219,6 +219,7 @@
             \resumeItem{Made the same layer fall back to bundled demo data when the database is unconfigured, so the whole application --- graph, planner and course sheets --- runs locally with zero setup.}
             \resumeItem{Tuned incremental static regeneration per route by volatility, five minutes on the home page, an hour on the course shell and a day on analytics, rather than one cache lifetime for the site.}
             \resumeItem{Engineered ``Cam,'' a grounded AI advisor running a bounded agent loop (max 4 hops, concurrent tool execution in deterministic order) over 18 school-scoped, DB-backed tools, streaming typed SSE events to the client.}
+            \resumeItem{Called the Groq OpenAI-compatible chat-completions endpoint over raw fetch rather than adding a vendor SDK, keeping the advisor request path one HTTP call and a provider swap a base-URL change.}
             \resumeItem{Implemented structural grounding verification that extracts every course code an answer asserts and validates it against the whitelist the tools sourced, badging ungrounded responses rather than trusting model prose.}
             \resumeItem{Hardened LLM inputs against prompt injection via Unicode NFKC normalization, role-marker and control-token stripping, and bidi-character collapsing, fencing untrusted review content the model is told never to obey.}
             \resumeItem{Built a fail-closed cost and privacy layer: a free-tier-first router across 8 LLM providers (Groq, Cerebras, Gemini, DeepSeek, Anthropic) with hard monthly spend caps and per-user daily limits in a tamper-resistant RPC.}
@@ -279,6 +280,8 @@
             \resumeItem{Serialized per-user watch quotas with a transaction-scoped advisory lock and a deliberately volatile count, so a concurrent caller reads a fresh snapshot including the insert that just committed rather than its own stale one.}
             \resumeItem{Held Stripe to test mode in code, throwing on any non-test key and rejecting live-mode webhook events outright, with deterministic idempotency keys and a per-event processing token so ambiguous commits never expire a shared attempt.}
             \resumeItem{Held the billing integration behind four independent gates --- an unset feature flag, a client that rejects any non-test key, no page linking the pricing route, and a robots disallow --- so a complete Stripe implementation charges nobody.}
+            \resumeItem{Built the billing surface end to end against the Stripe Node SDK --- Checkout Sessions, the Billing Portal, the Prices API and signature-verified webhooks --- with every route of it running in test mode behind a feature flag.}
+            \resumeItem{Pinned every billing and AI route to the Node runtime with caching forced off, since webhook signature verification needs the raw request body and a per-viewer entitlement check served from a shared cache is a correctness bug rather than a fast page.}
             \resumeItem{Admitted a third-party post embed to the content-security policy as a sandboxed frame while explicitly refusing its official widget script, which would otherwise execute inside our origin on a signed-in student's page.}
             \resumeItem{Made publication state a database decision through \texttt{release\_stage} and \texttt{is\_public} rather than a checked-in constant, so a transient lookup failure fails closed instead of falling back to a static list of public schools.}
             \resumeItem{Resolved every failure path on the admin analytics page --- migration unapplied, caller not an admin, network error --- to an explicit unavailable state, since a zero there has to mean we counted none or the page is worse than nothing.}
@@ -334,7 +337,7 @@
           \resumeItemListEnd
 
       \resumeProjectHeading
-          {\textbf{TextTrack --- In-Video Text Replacement Pipeline} $|$ \emph{Python, OpenCV, EasyOCR (CRAFT), PyTorch, Kalman Filtering}}{2026}
+          {\textbf{TextTrack} $|$ In-Video Text Replacement Pipeline $|$ \emph{Python, OpenCV, EasyOCR (CRAFT), PyTorch, Kalman Filtering}}{2026}
           \resumeItemListStart
             \resumeItem{Built an end-to-end computer-vision pipeline that detects, tracks, removes, and replaces text regions in broadcast video, for sports-jersey wordmarks on deforming fabric under occlusion, motion blur, and scale change.}
             \resumeItem{Fused three per-region estimators: a constant-velocity Kalman filter for occlusion, Lucas-Kanade optical flow for fabric deformation, and a One-Euro filter for corner jitter, associated by Hungarian assignment on IoU.}
@@ -376,7 +379,7 @@
           \resumeItemListEnd
 
       \resumeProjectHeading
-          {\textbf{CoCube --- Two-Player Cooperative Rubik's Cube} $|$ \emph{C\#, .NET 8, ASP.NET Core, SignalR, Blazor WebAssembly, xUnit, bUnit}}{August 2026}
+          {\textbf{CoCube} $|$ Two-Player Cooperative Rubik's Cube $|$ \emph{C\#, .NET 8, ASP.NET Core, SignalR, Blazor WebAssembly, xUnit, bUnit}}{August 2026}
           \resumeItemListStart
             \resumeItem{Built a two-player cooperative Rubik's cube game in C\#/.NET 8 where both players share one 3x3 cube, control three faces each, alternate turns strictly, and race a single 2-minute countdown to solve it together or both lose.}
             \resumeItem{Architected the server as the sole source of truth for cube state, turn order, face permissions, and the clock, leaving the browser client to send move intents and render what it is told, with no room code on any gameplay call.}
@@ -467,7 +470,7 @@
     \small{\item{
      \textbf{Languages}{: Python, JavaScript, TypeScript, C/C++, C\#, Java, Swift, SQL, PL/pgSQL, MATLAB} \\
      \textbf{Frameworks}{: PyTorch, FastAPI, React, Next.js, Node.js, Express, React Native, Flask, Spring Boot, ASP.NET Core, SignalR, Blazor WebAssembly, Angular, Hono, SwiftUI, Tailwind CSS, FreeRTOS, NASA cFS} \\
-     \textbf{Developer Tools}{: Git, GitHub Actions, Docker, Kubernetes, Kustomize, AWS, Google Cloud Platform, Azure, Cloudflare Workers, Oracle Database, PostGIS, PL/SQL, Flyway, Supabase, Vercel, Playwright, Vitest, VS Code, IntelliJ} \\
+     \textbf{Developer Tools}{: Git, GitHub Actions, Docker, Kubernetes, Kustomize, AWS, Google Cloud Platform, Azure, Cloudflare Workers, Oracle Database, PostGIS, PL/SQL, Flyway, Supabase, Vercel, Stripe, PostHog, Playwright, Vitest, VS Code, IntelliJ} \\
      \textbf{Libraries}{: pandas, NumPy, Matplotlib, OpenCV, CLIP, EasyOCR, scikit-learn, Selenium, xUnit, bUnit, xarray, zarr, Cytoscape.js, MapLibre GL, deck.gl} \\
     }}
  \end{itemize}

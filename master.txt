@@ -18,7 +18,7 @@ September 2024 -- May 2028
 - Cumulative GPA: 3.93 | Honors: Sprint Fellowship, Undergraduate Teaching and Research Award (UTRA), AIME Qualification, National Merit Scholarship Finalist, Taekwondo 4th Dan, Speedcubing State Record
 - Relevant Coursework: SELECT PER JD FROM coursework.txt — that file is the full transcript-backed
   list and the only source for this line. Do not list a course that is not in it. See INSTRUCTIONS.md.
-- Leadership: Co-President - Speedcubing Club, Treasurer - Math Undergraduate Department, Treasurer - Quiz Bowl
+- Leadership: Founder and Co-President - Speedcubing Club, Treasurer - Math Undergraduate Department, Treasurer - Quiz Bowl
 
 
 ================================================================================
@@ -97,12 +97,89 @@ September 2024 -- May 2025
 - Supported an initiative expanding access to college-level instruction for 400+ formerly incarcerated adults.
 - Led office hours and review sessions for 40+ students addressing writing mechanics and presentation skills.
 
+Mentor — Petey Greene Program
+Providence, RI
+September 2024 -- Present
+NOTE: this is the placement behind the College Unbound TA entry above -- Petey Greene
+places volunteer tutors into College Unbound classrooms, so the two entries describe
+one body of work. Render EITHER Petey Greene OR College Unbound on a resume, never
+both: two headings over the same tutoring reads as two jobs. Petey Greene is the
+stronger heading when the role is teaching, since the title is Mentor and the program
+name carries the mission; College Unbound is the stronger heading when the point is
+college-level instruction. Whichever is kept may carry the other's bullets, since the
+students, the courses, and the work are the same.
+- Tutored formerly incarcerated adults in English language writing as a teaching assistant in College Unbound.
+- Taught presentation and communication skills to individuals running their own entrepreneurship ventures.
+
+Mentor — Partnership for Adult Learning
+Providence, RI
+September 2024 -- June 2025
+- Tutored adults with autism in English and mathematics skills, guiding each learner through their own interests.
+- Organized recreational events for participants alongside the English and mathematics tutoring sessions.
+
+Coach — Taekwondo Coach
+Hightstown, NJ
+September 2020 -- May 2024
+NOTE: renders organization-cell `Taekwondo Coach`, title-cell `4th Degree Black Belt`.
+The rank is the credential that makes the coaching legible, and it is the same 4th Dan
+the Honors line in Education can carry -- never render it in both places on one resume.
+The role ended May 2024, so its bullets render in past tense.
+- Won medals at the Taekwondo League Championship and coached students competing in state competitions.
+- Trained students in sparring and board-breaking technique, self-defense maneuvers, and forms.
+
+
+================================================================================
+LEADERSHIP
+================================================================================
+
+NOTE: these are club and competition roles, not employment. They render under their
+own `Leadership` section heading rather than inside Experience, and they follow the
+same rule as an experience entry: at least two bullets, or cut the entry. Ordering
+here is by relevance to the JD rather than by date -- the date-order constraint in
+INSTRUCTIONS.md governs the Experience section, not this one. Brown Quiz Bowl leads
+on any teaching, coaching, or academic-competition role.
+
+Treasurer — Brown Quiz Bowl Club
+Providence, RI
+September 2024 -- Present
+NOTE: the Wheeler Middle School coaching is part of this role, but it is NOT rendered
+on a resume aimed at Wheeler itself -- Rohan asked for it removed there. Keep it for
+other teaching or coaching applications, where it is the strongest bullet in the entry.
+- Coach at Wheeler Middle School, moderate and adjudicate tournaments, and write and submit question packets.
+- Ranked top 5 individually in New Jersey, and led a team of 6 players to the HSNCT national championship.
+- Manage and appropriate club funds as financial signatory, and ran competitions that raised over $2,000 for the club.
+
+Treasurer — Math Department of Undergraduates
+Providence, RI
+July 2025 -- Present
+- Acquire funding for events, manage the budget, and work with Achievement First High School as outreach.
+- Work with sponsors including HRT, SIG, and Jane Street for events including the Brown Math Olympiad.
+
+Founder, Co-President — Brown Speedcubing Club
+Providence, RI
+December 2024 -- Present
+- Hold the New Jersey state record and rank top 100 in North America for solving a Rubik's Cube blindfolded.
+- Organize World Cube Association competitions for Rhode Island to raise funds and spread speedcubing.
+- Arrange learning sessions for new cubers, and obtained UCS approval and funding for club activities.
+
+Captain — Consumer Bowl
+Hightstown, NJ
+September 2023 -- May 2024
+NOTE: Consumer Bowl is New Jersey's high-school consumer-law quiz competition, run in
+county, regional and state rounds. It is the closest thing on this resume to
+competitive quiz bowl experience and leads the section on any quiz bowl or academic
+competition role.
+- Defeated over 75 other schools across County and Regional competitions to win the New Jersey State Championship.
+- Received a certificate from Governor Phil Murphy and Proclamations from the Board of County Commissioners.
+- Honored by a Joint Legislative Resolution passed by the Senate and General Assembly.
+- Received individual medals and trophies along with $1,000 worth of prizes.
+
 
 ================================================================================
 PROJECTS
 ================================================================================
 
-CourseTrees — Co-Founder | Next.js 15, TypeScript, Swift, Python, Supabase/Postgres/PostGIS, Cloudflare Workers, Cytoscape.js, MapLibre GL, LLM Orchestration
+CourseTrees — Co-Founder | Next.js 15, TypeScript, Swift, Python, Supabase/Postgres/PostGIS, Cloudflare Workers, Stripe, Cytoscape.js, MapLibre GL, LLM Orchestration
 2025 -- Present
 LINK: https://www.coursetrees.com/ (hyperlink the project name in the heading)
 VERIFY: live /api/stats 2026-09-12 -- 439,604 courses, 235,822 prerequisite edges, 217,700 term offerings, 156 schools. Table census 2026-07-04 -- 447,687 grade-distribution rows, 408,950 scraped course ratings, 393,893 scraped professor ratings, 385,021 professors, 36,592 first-party ratings. PostHog pull 2026-09-05 -- 293 signups, 1,448 unique visitors, 16,306 pageviews. The earlier 426K+ prerequisite-edge figure was wrong; the live edge count is 236K and the old number should not be rendered again. Re-pull before rendering any of these. App downloads (over 50) are Rohan's own figure, given 2026-09-11 and not in the dossier or the repo; confirm whether that is App Store or TestFlight before an interview, since the two invite different follow-up questions.
@@ -110,8 +187,13 @@ NOTE: Cam's LLM stack was deleted 2026-07-30 and the advisor ran deterministical
 NOTE: 273 of the 293 signups (87%) are Brown; eighteen other schools contributed between one and nine each. The 156-school catalog is a supply-side asset that has not been demand-tested. Never write or render a bullet implying national adoption or multi-campus usage -- the breadth claim is the catalog, the usage claim is one campus.
 NOTE: three figures were re-measured on 2026-09-10 and the older bullets are kept only as history. Never render both members of a pair on one page: 153 universities -> 156; the eight-stage merge gate and "3,436 test cases across 411 files" -> the ten-stage gate and "639 unit test files, roughly 7,900 assertions". A third pair is deliberately not bulleted: the dossier counts roughly 830 RLS policy statements across 153 migrations, which is a count of migration statements, not of live policies -- the defensible interview number is the 75 tables / 175 policies / 147 security-definer functions already recorded below.
 NOTE: every course rating in the database is scraped, not first-party. Do not write or render a bullet that implies a student-ratings corpus; the tier-ranking bullets describe the statistics engine, which is honest, and stop there. CONFLICT (2026-09-10, unresolved): the dossier table census separates external_ratings (408,950, ingested) from course_ratings (36,592, labelled first-party student ratings). Until Rohan confirms which is right this note wins, and no bullet claims a first-party ratings corpus.
+RULE: render the traction figures rounded and open-ended, not exact -- `over 300 registered
+users` and `16,000 pageviews`, never `293` or `16,306`. Rohan's instruction, 2026-09-12: the
+user count passed 300 that day, and an exact count on a resume is stale the week after it is
+printed while a floor stays true and keeps reading as growth. This governs any bullet in this
+entry that carries those two numbers, not only the traction line.
 RULE: the traction bullet is bullet one of this entry, always, on every JD where CourseTrees appears. It is not selected per JD like the rest -- the per-JD picks fill the remaining two to four slots after it. It is the only bullet here that leads with the product rather than the engineering, and it is what makes the rest read as shipped rather than built. Refresh its three numbers before rendering; see VERIFY.
-- Co-founded and help lead a production course-planning platform with 293 registered users, 16,306 pageviews and over 50 iOS app downloads.
+- Co-founded and help lead a production course-planning platform with over 300 registered users, 16,000 pageviews and over 50 iOS app downloads.
 - Mapped prerequisite graphs and degree requirements across 156 universities, 440K+ courses and 236K+ prerequisite edges under one schema.
 - Mapped course catalogs and prerequisite graphs across 153 universities under one schema, layering grade distributions on 22 of them, professor ratings on 11, and term-level meeting times on 7, deepest at the two launch campuses.
 - Indexed 448K+ grade rows and was adopted as Brown advising's official planning resource for 2,000+ freshmen.
@@ -133,6 +215,7 @@ RULE: the traction bullet is bullet one of this entry, always, on every JD where
 - Made the same layer fall back to bundled demo data when the database is unconfigured, so the whole application -- graph, planner and course sheets -- runs locally with zero setup.
 - Tuned incremental static regeneration per route by volatility, five minutes on the home page, an hour on the course shell and a day on analytics, rather than one cache lifetime for the site.
 - Engineered "Cam," a grounded AI advisor running a bounded agent loop (max 4 hops, concurrent tool execution in deterministic order) over 18 school-scoped, DB-backed tools, streaming typed SSE events to the client.
+- Called the Groq OpenAI-compatible chat-completions endpoint over raw fetch rather than adding a vendor SDK, keeping the advisor request path one HTTP call and a provider swap a base-URL change.
 - Implemented structural grounding verification that extracts every course code an answer asserts and validates it against the whitelist the tools sourced, badging ungrounded responses rather than trusting model prose.
 - Hardened LLM inputs against prompt injection via Unicode NFKC normalization, role-marker and control-token stripping, and bidi-character collapsing, fencing untrusted review content the model is told never to obey.
 - Built a fail-closed cost and privacy layer: a free-tier-first router across 8 LLM providers (Groq, Cerebras, Gemini, DeepSeek, Anthropic) with hard monthly spend caps and per-user daily limits in a tamper-resistant RPC.
@@ -193,6 +276,8 @@ RULE: the traction bullet is bullet one of this entry, always, on every JD where
 - Serialized per-user watch quotas with a transaction-scoped advisory lock and a deliberately volatile count, so a concurrent caller reads a fresh snapshot including the insert that just committed rather than its own stale one.
 - Held Stripe to test mode in code, throwing on any non-test key and rejecting live-mode webhook events outright, with deterministic idempotency keys and a per-event processing token so ambiguous commits never expire a shared attempt.
 - Held the billing integration behind four independent gates -- an unset feature flag, a client that rejects any non-test key, no page linking the pricing route, and a robots disallow -- so a complete Stripe implementation charges nobody.
+- Built the billing surface end to end against the Stripe Node SDK -- Checkout Sessions, the Billing Portal, the Prices API and signature-verified webhooks -- with every route of it running in test mode behind a feature flag.
+- Pinned every billing and AI route to the Node runtime with caching forced off, since webhook signature verification needs the raw request body and a per-viewer entitlement check served from a shared cache is a correctness bug rather than a fast page.
 - Admitted a third-party post embed to the content-security policy as a sandboxed frame while explicitly refusing its official widget script, which would otherwise execute inside our origin on a signed-in student's page.
 - Made publication state a database decision through release_stage and is_public rather than a checked-in constant, so a transient lookup failure fails closed instead of falling back to a static list of public schools.
 - Resolved every failure path on the admin analytics page -- migration unapplied, caller not an admin, network error -- to an explicit unavailable state, since a zero there has to mean we counted none or the page is worse than nothing.
@@ -247,7 +332,7 @@ FEATURE: BrownSync -- campus-activity map shipped inside CourseTrees. Bullets be
 - Defaulted analytics to silent with DOM autocapture off and nine explicitly named events, so the deployment collects nothing unless an operator supplies a key.
 - Wrote 1,096 TypeScript test cases across 116 files plus 57 Python and 62 Swift test files, including Playwright end-to-end coverage asserting pixel-statistic bounds on the rendered cartography.
 
-TextTrack --- In-Video Text Replacement Pipeline | Python, OpenCV, EasyOCR (CRAFT), PyTorch, Kalman Filtering
+TextTrack | In-Video Text Replacement Pipeline | Python, OpenCV, EasyOCR (CRAFT), PyTorch, Kalman Filtering
 2026
 - Built an end-to-end computer-vision pipeline that detects, tracks, removes, and replaces text regions in broadcast video, for sports-jersey wordmarks on deforming fabric under occlusion, motion blur, and scale change.
 - Fused three per-region estimators: a constant-velocity Kalman filter for occlusion, Lucas-Kanade optical flow for fabric deformation, and a One-Euro filter for corner jitter, associated by Hungarian assignment on IoU.
@@ -281,7 +366,7 @@ February 2026 -- May 2026
 - Added reliable data transfer with sliding-window sending, out-of-order receive buffering, duplicate-ACK handling, retransmission timers, adaptive RTT/RTO estimation, exponential backoff, and zero-window probing.
 - Implemented graceful TCP teardown across all FIN states (FIN_WAIT, CLOSE_WAIT, LAST_ACK, CLOSING, TIME_WAIT) with per-state cleanup timers and EOF signaling so a closed connection releases its socket.
 
-CoCube --- Two-Player Cooperative Rubik's Cube | C#, .NET 8, ASP.NET Core, SignalR, Blazor WebAssembly, xUnit, bUnit
+CoCube | Two-Player Cooperative Rubik's Cube | C#, .NET 8, ASP.NET Core, SignalR, Blazor WebAssembly, xUnit, bUnit
 August 2026
 - Built a two-player cooperative Rubik's cube game in C#/.NET 8 where both players share one 3x3 cube, control three faces each, alternate turns strictly, and race a single 2-minute countdown to solve it together or both lose.
 - Architected the server as the sole source of truth for cube state, turn order, face permissions, and the clock, leaving the browser client to send move intents and render what it is told, with no room code on any gameplay call.
@@ -364,5 +449,5 @@ TECHNICAL SKILLS
 
 Languages: Python, JavaScript, TypeScript, C/C++, C#, Java, Swift, SQL, PL/pgSQL, MATLAB
 Frameworks: PyTorch, FastAPI, React, Next.js, Node.js, Express, React Native, Flask, Spring Boot, ASP.NET Core, SignalR, Blazor WebAssembly, Angular, Hono, SwiftUI, Tailwind CSS, FreeRTOS, NASA cFS
-Developer Tools: Git, GitHub Actions, Docker, Kubernetes, Kustomize, AWS, Google Cloud Platform, Azure, Cloudflare Workers, Oracle Database, PostGIS, PL/SQL, Flyway, Supabase, Vercel, Playwright, Vitest, VS Code, IntelliJ
+Developer Tools: Git, GitHub Actions, Docker, Kubernetes, Kustomize, AWS, Google Cloud Platform, Azure, Cloudflare Workers, Oracle Database, PostGIS, PL/SQL, Flyway, Supabase, Vercel, Stripe, PostHog, Playwright, Vitest, VS Code, IntelliJ
 Libraries: pandas, NumPy, Matplotlib, OpenCV, CLIP, EasyOCR, scikit-learn, Selenium, xUnit, bUnit, xarray, zarr, Cytoscape.js, MapLibre GL, deck.gl

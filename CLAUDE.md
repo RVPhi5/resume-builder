@@ -81,6 +81,12 @@ Delete the LaTeX intermediates (`out/*.aux`, `*.log`, `*.out`) when the build is
 done. Leave everything else in `out/` alone: it is gitignored, so nothing there
 is recoverable, and past tailored resumes are not yours to decide about.
 
+Then append the build's gaps to [`GAPS.txt`](GAPS.txt) — the running ledger of
+what each JD asked for that `master.txt` cannot support. It is the same list the
+build already reports back, kept so the pattern across applications is visible;
+the file's own header holds the entry format and the HARD/SOFT convention.
+A bullet cut for space is not a gap and does not go in it.
+
 ## Cover letters
 
 **Read [`COVER_INSTRUCTIONS.md`](COVER_INSTRUCTIONS.md) in full before writing
@@ -120,6 +126,7 @@ posting.
 | `template_head.tex` | fixed prefix every tailored resume is built on |
 | `INSTRUCTIONS.md` | the tailoring spec |
 | `COVER_INSTRUCTIONS.md` | the cover letter spec — length, shape, voice rules |
+| `GAPS.txt` | running ledger of what each JD asked for and I can't claim |
 | `check.py` | resume fit checker; exit 0 only on PASS |
 | `check_cover.py` | cover letter fit and voice checker; exit 0 only on PASS |
 | `jds/`, `out/` | job descriptions in, tailored resumes out |

@@ -115,7 +115,9 @@ each kind of entry carries.
 
 ## Coursework
 `coursework.txt` holds every course I have actually taken, parsed from my
-transcript, with an approved short label for each. It is the **only** source for
+transcript, with an approved short label for each. It also carries the term I
+am sitting now, marked `(in progress)`; those are selected like any other
+course and rendered with no marker. It is the **only** source for
 the Education section's `Relevant Coursework` line — that line is selected per
 JD exactly like bullets are, not copied from a fixed list.
 
@@ -130,9 +132,9 @@ JD exactly like bullets are, not copied from a fixed list.
   never took them, so they are not coursework and never appear on a resume.
 - **Order by relevance to the JD**, not by date, level, or grade. Never render a
   grade next to a course.
-- `Data Structures & Algorithms` earns its place on nearly any software JD, and
-  most postings name it outright. Check it against the JD before dropping it for
-  something more specialized.
+- **Never list `Data Structures & Algorithms`.** It is table stakes for every
+  software JD, so it distinguishes nothing, and the slot is better spent on a
+  course that does. This holds even when the posting names it outright.
 
 ## Hard constraints
 These hold for every JD. They are not traded against relevance or space; if
@@ -229,6 +231,11 @@ violation, so these are checked, not remembered.
 7. **The page is full.** At most one further body line may fit beneath the last
    line. Two or more lines of empty page at the bottom reads as running out of
    things to say, and is as wrong as spilling onto a second page.
+8. **No em-dashes and no semicolons in a bullet.** Not `---`, not
+   `\textemdash`, not a literal `—`, and not `;`. Both splice two clauses into
+   one bullet. Write a comma, a colon, or two clauses instead. This leaves `--`
+   untouched, which is how a compound (`GC--MS`) and a date range are written,
+   and neither of those is prose.
 
 ## How to fix violations
 **Do not estimate any of this. Measure it.** After writing the `.tex`, compile
@@ -273,6 +280,15 @@ page. Shorten the wording rather than a metric or a technology, as with LONG.
 Then re-check the fill: you are aiming between 90% and roughly 98%, not at the
 edge.
 
+**PROSE (an em-dash or a semicolon in a bullet):** rewrite the punctuation,
+and expect the sentence to change shape. An em-dash pair is usually fencing a
+list off mid-sentence, and a semicolon is usually welding two findings
+together. Both are doing work a comma or a colon should do. Restructure so the
+clause leads or trails: `... lifecycle --- first boot, deployment, imaging ---
+with guards` becomes `... lifecycle across first boot, deployment, and imaging,
+with guards`. Re-check the fill afterwards, since the rewrite rarely comes out
+the same length.
+
 **WRAPPED (a Technical Skills category runs onto a second line):** cut entries,
 never the category. Drop the ones this JD cares about least, preferring
 technologies no kept bullet or heading actually demonstrates — the same rule as
@@ -295,7 +311,8 @@ didn't become short, and that it didn't land flush. After trimming a wrapped
 skills category, re-check the bottom fill — you just freed a line. After filling
 a sparse page, re-check it is still one page. Priority: (1) one page, (2)
 two-line maximum, (3) 90% fill, (4) no flush last line, (5) heading gap,
-(6) skills lines, (7) bottom fill.
+(6) skills lines, (7) bottom fill. Punctuation (rule 8) is not traded against
+any of them. Rewrite the bullet and re-measure.
 
 If a bullet genuinely can't satisfy both the two-line cap and the 90% fill,
 prefer two clean lines with a slightly short second line — but tell me which

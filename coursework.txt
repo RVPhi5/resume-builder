@@ -1,6 +1,8 @@
 ROHAN VITTAL — COURSEWORK
-Source: 2026_Spring_Transcript.pdf (internal academic record, Brown University).
-Current through Spring 2026. Cumulative GPA 3.93.
+Source: Rohan_Vittal_Fall_2026_Academic_Transcript.pdf (internal academic
+record, Brown University, pulled 2026-09-16). Supersedes 2026_Spring_Transcript.pdf.
+Current through Fall 2026, which is in progress and carries no grades yet.
+Cumulative GPA 3.93, unchanged: the last graded term is still Spring 2026.
 
 This file is the only source for the Education section's "Relevant Coursework"
 line. Select from it per JD; never list a course that is not here. See
@@ -8,6 +10,11 @@ INSTRUCTIONS.md for how many to pick and in what order.
 
 Each entry is:
   CODE  registrar title  ->  RESUME LABEL  (grade)
+
+An in-progress course carries (in progress) where the grade would be. Those
+are selectable like any other course -- the line is Relevant Coursework, not
+completed coursework, and the current term is where the most advanced courses
+are. Render them with no marker, the same as the rest.
 
 The RESUME LABEL is the approved short form to render on a resume. Use it
 verbatim. Do not invent a new label, and do not render the registrar title
@@ -56,6 +63,13 @@ COURSES TAKEN
   CSCI 1680  Computer Networks               ->  Computer Networks                  (A)
   MATH 1540  Topics in Abstract Algebra      ->  Topics in Abstract Algebra         (S)
 
+--- Fall 2026 (in progress) ---
+  CSCI 1600  Real-time + Embedded Software   ->  Real-Time and Embedded Software    (in progress)
+  CSCI 1670  Operating Systems               ->  Operating Systems                  (in progress)
+  ENGN 1630  Digital Electronic System Dsgn  ->  Digital Electronics Systems Design (in progress)
+  ENGN 0510  Electricity and Magnetism       ->  Electricity and Magnetism          (in progress)
+  ENGN 0030  Introduction to Engineering     ->  Introduction to Engineering        (in progress)
+
 
 ================================================================================
 NOTES
@@ -64,8 +78,20 @@ NOTES
 - (S) is a Satisfactory grade in Brown's S/NC mode, not a letter grade. The
   course was taken and passed; it is listed like any other. Grades are recorded
   here for reference only — never render a grade next to a course on a resume.
+- "Data Structures & Algorithms" is never listed on a resume. It was taken and
+  belongs in this file, but it is table stakes on every software JD and earns
+  no slot. See INSTRUCTIONS.md.
 - "Computer Networks" has been rendered as "Networks" on past resumes. Either
   is acceptable; prefer "Computer Networks" and shorten only to clear a fit flag.
+- "Digital Electronics Systems Design" is the full ENGN 1630 title and is long
+  enough to cost a slot on its own; shorten to "Digital Systems Design" to clear
+  a fit flag, the same allowance Computer Networks has.
+- "Introduction to Engineering" is a first-year survey and reads as one. It
+  belongs here because it was taken, but it earns a slot only on a hardware,
+  mechanical, or general-engineering JD, never against a software posting
+  competing with Operating Systems or Real-Time and Embedded Software.
 - Degree: Bachelor of Science, Applied Mathematics-Computer Science (SCB).
+- Fall 2026 grades post in December 2026. Re-pull the transcript then, replace
+  each (in progress) with its grade, and recheck the cumulative GPA line above.
 - Update this file when a new transcript is added, and keep the Education
   section of master.txt pointing here rather than restating the list.

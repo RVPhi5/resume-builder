@@ -411,6 +411,101 @@ def split_cells(line: Line) -> Heading:
     )
 
 
+# A section heading is identified by the \titlerule drawn under it: a hairline
+# spanning essentially the whole column. Link underlines are drawn too, but they
+# are a fraction of the width, so the span test separates them.
+SECTION_RULE_WIDTH = 0.9      # of the measured column, minimum
+SECTION_RULE_HEIGHT = 2.0     # pt, maximum — a rule, not a filled box
+# A heading sits this far above its own rule. The window has a floor as well as
+# a ceiling: without one, an entry set tight under the rule is nearer to it than
+# the heading is, and the heading the rule belongs to gets mistaken for the
+# organization line of the first entry.
+SECTION_RULE_MIN_DROP = 5.0   # pt
+SECTION_RULE_MAX_DROP = 25.0  # pt
+# How much closer to the section it opens than to the one it ends a heading has
+# to sit. Equal gaps are not enough: the tie has to break downward. The bar is
+# low on purpose -- these coordinates are exact, so any strict win is a real
+# one, and \resumeProjectHeading sets looser than \resumeSubheading, which
+# leaves the Projects heading about a point of margin and no way to buy more
+# without spending page. The bold/uppercase CASE signal is the primary defense;
+# this is the tiebreaker for parsers that read geometry and not fonts.
+SECTION_BIND_MARGIN = 0.5     # pt
+# \resumeSubheading sets an organization and a location on one baseline. They
+# are two text lines but one visual row, so collapse anything sharing a baseline
+# before measuring gaps — otherwise the neighbour of a row is its own other half
+# and every gap reads 0.0pt.
+SAME_ROW = 1.0                # pt
+BOLD_FLAG = 1 << 4
+
+
+def find_section_headings(doc: fitz.Document, left: float, right: float):
+    """Yield (text, is_bold, gap_above, gap_below) for each section heading.
+
+    Anchored on the \\titlerule rather than on font size, because size alone
+    cannot tell a heading from the name in the contact block.
+    """
+    width = right - left
+    for page in doc:
+        rules = sorted(
+            d["rect"].y0 for d in page.get_drawings()
+            if d["rect"].width >= SECTION_RULE_WIDTH * width
+            and d["rect"].height <= SECTION_RULE_HEIGHT
+        )
+        rows: list[tuple[float, str, bool]] = []
+        for block in page.get_text("dict")["blocks"]:
+            for line in block.get("lines", []):
+                text = "".join(s["text"] for s in line["spans"]).strip()
+                if not text:
+                    continue
+                bold = any(s["flags"] & BOLD_FLAG for s in line["spans"])
+                y = line["bbox"][1]
+                for i, (y0, t0, b0) in enumerate(rows):
+                    if abs(y0 - y) <= SAME_ROW:
+                        rows[i] = (y0, f"{t0}  {text}", b0 or bold)
+                        break
+                else:
+                    rows.append((y, text, bold))
+        rows.sort()
+
+        for i, (y, text, bold) in enumerate(rows):
+            drop = min((r - y for r in rules if r > y), default=None)
+            if drop is None or not (
+                    SECTION_RULE_MIN_DROP <= drop <= SECTION_RULE_MAX_DROP):
+                continue
+            gap_above = y - rows[i - 1][0] if i else None
+            gap_below = rows[i + 1][0] - y if i + 1 < len(rows) else None
+            yield text, bold, gap_above, gap_below
+
+
+def check_sections(doc: fitz.Document, left: float,
+                   right: float) -> list[tuple[str, str, str]]:
+    """Check that section headings survive into the text layer as headings.
+
+    Two independent signals, because parsers disagree about which they use.
+    CASE covers the ones that look for a prominent line; BIND covers the ones
+    that segment on whitespace and will otherwise attach a heading to the
+    section above it, swallowing everything that follows.
+    """
+    bad: list[tuple[str, str, str]] = []
+    for text, bold, above, below in find_section_headings(doc, left, right):
+        if not (bold or (text.upper() == text and any(c.isalpha() for c in text))):
+            bad.append((
+                "CASE", text,
+                "section heading extracts neither bold nor uppercase -- a "
+                "parser ranks \\textbf employers above it; use \\bfseries "
+                "and \\MakeUppercase in \\titleformat",
+            ))
+        if above is not None and below is not None \
+                and above < below + SECTION_BIND_MARGIN:
+            bad.append((
+                "BIND", text,
+                f"gap above ({above:.1f}pt) not clear of gap below "
+                f"({below:.1f}pt) -- the heading binds to the section it "
+                "ends; shift \\vspace from after \\titlerule to before",
+            ))
+    return bad
+
+
 def check_glyphs(doc: fitz.Document) -> list[tuple[str, str, str]]:
     """Find text that reaches the text layer as unmappable glyphs.
 
@@ -429,6 +524,32 @@ def check_glyphs(doc: fitz.Document) -> list[tuple[str, str, str]]:
                 "invisible to a parser; use a Type1 equivalent "
                 "($\\rightarrow$) or declare \\pdfglyphtounicode",
             ))
+    return bad
+
+
+# Punctuation a bullet may not carry. Both of these splice two clauses into
+# one bullet; the house style is a comma, a colon, or a shorter sentence.
+# En-dashes are deliberately absent from this list -- `--` is how this repo
+# writes a compound (GC--MS) and a date range, and neither is prose.
+PROSE_BANNED = (
+    ("\u2014", "em-dash",
+     "`---` in the .tex -- use a comma, a colon, or two clauses"),
+    (";", "semicolon",
+     "splices two clauses -- use a comma, or make it two bullets"),
+)
+
+
+def check_prose(bullets: list[Bullet]) -> list[tuple[str, str, str]]:
+    """Find punctuation the house style bans from bullet prose.
+
+    Bullets only. Headings carry dates and tech stacks, not sentences, and
+    the contact line's separators are the template's, not the body's.
+    """
+    bad: list[tuple[str, str, str]] = []
+    for b in bullets:
+        for ch, name, why in PROSE_BANNED:
+            if ch in b.text:
+                bad.append(("PROSE", b.text, f"{name} present -- {why}"))
     return bad
 
 
@@ -691,7 +812,8 @@ def main() -> int:
     print(f"{len(head_rows)} headings: {len(head_rows) - len(bad_heads)} OK, "
           f"{n_collide} COLLIDE, {n_tight} TIGHT")
 
-    bad_ats = check_ats(headings) + check_glyphs(doc)
+    bad_ats = (check_ats(headings) + check_glyphs(doc)
+               + check_sections(doc, left, right))
     if table and bad_ats:
         print(f"\n{'FLAG':<9}  ATS PARSING")
         print("-" * 100)
@@ -699,6 +821,15 @@ def main() -> int:
             print(f"{flag:<9}! {opening(cell, 88)}")
         print("-" * 100)
     print(f"ATS: {len(bad_ats)} violations")
+
+    bad_prose = check_prose(bullets)
+    if table and bad_prose:
+        print(f"\n{'FLAG':<9}  PROSE")
+        print("-" * 100)
+        for flag, text, why in bad_prose:
+            print(f"{flag:<9}! {opening(text, 88)}")
+        print("-" * 100)
+    print(f"PROSE: {len(bad_prose)} violations")
 
     cats = find_skills(lines)
     cat_rows = [(c, "WRAPPED" if len(c) > MAX_SKILL_LINES else "OK") for c in cats]
@@ -731,9 +862,11 @@ def main() -> int:
     print(f"TITLE      {title_status}")
 
     ok = (pages == 1 and not flagged and not bad_heads and not bad_cats
-          and not bad_ats and not sparse and title_complaint is None)
+          and not bad_ats and not bad_prose and not sparse
+          and title_complaint is None)
     if ok:
-        print("\nPASS — one page, filled, no bullet, heading or ATS rule flagged.")
+        print("\nPASS — one page, filled, no bullet, heading, prose or ATS "
+              "rule flagged.")
         return 0
 
     print("\nFAIL")
@@ -743,6 +876,8 @@ def main() -> int:
         print(f"  - {title_complaint}")
     for flag, cell, why in bad_ats:
         print(f"  - {flag:<5} {why:<52} {opening(cell, 40)}")
+    for flag, text, why in bad_prose:
+        print(f"  - {flag:<5} {why:<52} {opening(text, 40)}")
     if sparse:
         print(f"  - {spare:.2f} lines of empty page below the last line "
               f"(max {MAX_SPARE_LINES}) — add a bullet to an experience")

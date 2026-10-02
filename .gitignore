@@ -1,5 +1,8 @@
-# Build output
-out/
+# Build output and job descriptions: keep the folders, not their contents
+out/*
+!out/.gitkeep
+jds/*
+!jds/.gitkeep
 .cache/
 
 # LaTeX intermediates

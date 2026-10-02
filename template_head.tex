@@ -36,14 +36,28 @@
 \raggedright
 \setlength{\tabcolsep}{0in}
 
+% Section headings are the document's structure, and a parser reads structure
+% out of the text layer, not off the page. \scshape renders PROJECTS but
+% *extracts* "Projects" -- small capitals sit in CMCSC10's a-z slots -- so the
+% heading arrives lowercase and unbolded while \textbf employer names arrive
+% bold. A parser then ranks the employer above the section and folds the whole
+% Projects block into the last job. \MakeUppercase puts real capitals in the
+% text layer and \bfseries sets the bold flag. The glyph remap below cannot fix
+% this: CMCSC10's small caps share glyph names with ordinary lowercase, so
+% remapping them would corrupt every body word.
+%
+% The other half is vertical. A heading has to sit nearer the section it opens
+% than the one it ends, or whitespace segmentation attaches it upward and the
+% section's whole contents land inside the last entry above it. Only the space
+% *before* the heading controls this: the \vspace after \titlerule is glue at
+% the top of a list and LaTeX discards it, which is why -5pt and -11pt there
+% render identically. So the binding is tuned by the leading \vspace alone --
+% -3pt rather than -4pt, since full capitals also stand taller than small caps
+% and push the rule down on their own. check.py enforces both halves.
 \titleformat{\section}{
-  \vspace{-4pt}\scshape\raggedright\large
-}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+  \vspace{-3pt}\bfseries\raggedright\large
+}{}{0em}{\MakeUppercase}[\color{black}\titlerule \vspace{-5pt}]
 
-% \textasciitilde carries the tilde *accent*'s glyph name, so the stock
-% glyphtounicode.tex maps it to U+02DC and "~74%" extracts as a
-% replacement character. The resume has no accents, so pin it to plain
-% ASCII tilde: the metric has to survive into the text layer an ATS reads.
 \pdfglyphtounicode{asciitilde}{007E}
 \pdfglyphtounicode{tilde}{007E}
 \pdfgentounicode=1
@@ -65,7 +79,7 @@
 }
 
 \newcommand{\resumeProjectHeading}[2]{
-    \item
+    \vspace{-2pt}\item
     \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
       \small#1 & #2 \\
     \end{tabular*}\vspace{-7pt}

@@ -1,0 +1,194 @@
+ROHAN VITTAL — APPLICATION GAP LEDGER
+================================================================================
+
+One entry per tailored resume. A "gap" is something the job description asked
+for that master.txt cannot honestly support — a named technology, a credential,
+a domain, or an eligibility condition. It is NOT something that was merely cut
+for space: a bullet dropped to fit one page is a selection decision and belongs
+in the build's summary, not here.
+
+The point of the file is the pattern across applications. The same gap showing
+up in five postings is a thing worth actually going and learning, which no
+single build summary would ever tell you.
+
+Conventions
+  - Append new entries at the BOTTOM, oldest first, so the file reads as a
+    history. Never rewrite an older entry to reflect skills acquired later.
+  - Each entry: Company, Title, then the JD and resume it came from, then the
+    gaps, then a horizontal rule.
+  - Mark each gap HARD (the JD names it and master.txt has nothing at all) or
+    SOFT (partial or adjacent backing exists, but the claim is a stretch).
+    HARD gaps are the ones that accumulate into something actionable.
+  - State the nearest real thing in master.txt, where there is one. That is
+    what makes a gap answerable in an interview rather than just absent.
+  - Entries marked [RECONSTRUCTED] were written after the fact from the JD and
+    the compiled resume, not during that build.
+
+================================================================================
+
+
+Company:  RTX / Collins Aerospace
+Title:    Software Engineering Co-op (Spring/Summer 2027)
+JD:       jds/rtx_swe_coop.txt
+Resume:   out/rtx_swe_coop_2026-09-11.pdf
+Logged:   2026-09-17  [RECONSTRUCTED]
+
+Gaps:
+  - Ada  [HARD]
+    Named in the required qualifications alongside C, C++ and Python. Appears
+    nowhere in master.txt. C and C++ are both solidly backed (PVDXos embedded
+    C, the userspace TCP/IP stack in C++), so this is a single-language gap in
+    an otherwise satisfied requirement.
+
+  - DO-178 certification  [HARD]
+    Listed under preferred qualifications. No safety-certification work of any
+    kind in master.txt. Nearest: the PVDX fault-protection work at Brown Space
+    Engineering — FDIR, watchdog recovery, static-allocation standard — which
+    is the engineering discipline DO-178 formalizes, without the process.
+
+  - Pilot / avionics experience  [HARD]
+    Preferred qualification. No aviation background. Nearest: spacecraft flight
+    software, which is adjacent in rigor but a different domain and a different
+    certification regime.
+
+  - Drafting formal system and software requirements  [SOFT]
+    Preferred qualification. Real but informal backing: the 7-mode mission
+    state machine with explicit state and input variables, the per-device FDIR
+    thresholds, and the 14-day power-balanced Safe Mode requirement are all
+    specification work. None of it was written to a requirements standard.
+
+  - Prior RTX internship or co-op  [HARD]
+    Preferred qualification. Nothing to do about this one, recorded for
+    completeness.
+
+--------------------------------------------------------------------------------
+
+
+Company:  Wheeler Middle School
+Title:    Quiz Bowl Instructor / Coach
+JD:       jds/wheeler_quiz_bowl_teaching.txt
+Resume:   out/wheeler_quiz_bowl_teaching_2026-09-12.pdf
+Logged:   2026-09-17  [RECONSTRUCTED]
+
+Gaps:
+  - Teaching credential or certification  [HARD]
+    Not demanded outright by the posting, but assumed by the shape of it. No
+    licensure in master.txt. Nearest: the Petey Greene Program mentorship and
+    the College Unbound TA role, both real classroom instruction, neither
+    credentialed.
+
+  - Middle-school classroom instruction  [SOFT]
+    Every teaching entry in master.txt is adult education: formerly
+    incarcerated adults at College Unbound, adults with autism at Partnership
+    for Adult Learning. The Taekwondo coaching covers younger students and the
+    Brown Quiz Bowl entry covers the subject matter, but the combination —
+    middle schoolers, in a classroom, on academic quiz bowl — is split across
+    entries rather than held by one.
+    NOTE: the Wheeler coaching bullet in the Brown Quiz Bowl entry would close
+    this outright, and it was withheld deliberately on Rohan's instruction
+    because the application is to Wheeler itself. That is a choice, not a gap.
+    It is recorded here only so a future reader does not "fix" it.
+
+--------------------------------------------------------------------------------
+
+
+Company:  Rocket Lab
+Title:    Flight Software Intern, Spring 2027 (Littleton, CO)
+JD:       jds/rocket_lab_flight_software_intern.txt
+Resume:   out/rocket_lab_flight_software_intern_2026-09-14.pdf
+Logged:   2026-09-17  [RECONSTRUCTED]
+
+Gaps:
+  - Rust  [HARD]
+    Named in the nice-to-have programming list beside C, C++ and Python, all
+    three of which are strongly backed. Appears nowhere in master.txt. This is
+    the second aerospace posting in a row where a single unlisted systems
+    language is the only technical gap.
+
+  - Testing against emulated hardware  [SOFT]
+    Called out explicitly as something the internship develops, so partial
+    backing is acceptable. Nearest: "Cosmic Monkey," the TRNG-driven fault
+    injector flipping random bits across the full 256 KB SRAM in development
+    builds, which is fault injection on real hardware rather than an emulator,
+    and the two-level watchdog and Cortex-M fault handlers exercised under it.
+
+  - On-site, 12 consecutive weeks beginning January, February or March 2027
+    [ELIGIBILITY]
+    Not a skills gap. Recorded because it conflicts with a spring semester and
+    is the kind of thing that sinks an application after the resume passes.
+
+--------------------------------------------------------------------------------
+
+
+Company:  Jefferies
+Title:    2027 Information Technology Summer Internship Programme (London)
+JD:       jds/jefferies_it_summer_intern.txt
+Resume:   out/jefferies_it_summer_intern_2026-09-16.pdf
+Logged:   2026-09-17
+
+Gaps:
+  - KDB / q  [HARD]
+    Named first in the technical skills list. Nothing in master.txt. This is
+    the one on the list that is specifically a finance technology rather than a
+    general one, so it is the most expensive to be missing and the least
+    likely to be picked up incidentally.
+
+  - Visual Basic  [HARD]
+    Named in the same line. Nothing in master.txt. C# and .NET 8 are backed by
+    CoCube, which covers the .NET half of "Visual Basic, C# .Net".
+
+  - Sybase and SQL Server  [HARD]
+    Named under database knowledge. Neither appears in master.txt. Nearest, and
+    it is close: Oracle Database and PL/SQL in the UFB Budget & Reimbursement
+    project, plus heavy Postgres across CourseTrees. The dialect is missing,
+    the skill is not.
+
+  - Data warehousing / Snowflake  [HARD]
+    Named as a bonus. No warehouse product in master.txt. Nearest: the
+    HDF5-to-Zarr pipeline at Mirico, which is analytical data engineering into
+    a cloud-native columnar store, and the CourseTrees ingestion tier. Neither
+    is a warehouse.
+
+  - Bloomberg API  [HARD]
+    "A plus." No financial market data work of any kind in master.txt.
+
+  - Atlassian suite — JIRA, Bitbucket, Bamboo CI/CD  [SOFT]
+    Named as bonus technology exposure. None of the three in master.txt. The
+    underlying skill is well backed by the wrong vendor: 17 GitHub Actions
+    workflows gating an auto-deploying production branch, a ten-stage merge
+    gate, sharded CI jobs. Tool-specific, learnable in days, worth naming as
+    such if it comes up.
+
+  - AWS Lambda and S3  [SOFT]
+    Named as bonus technology exposure. AWS is in the master skills list but no
+    bullet demonstrates it, and Lambda and S3 specifically appear nowhere.
+    Nearest: Azure Blob Storage and Azure Container Apps at Mirico, Cloudflare
+    Workers on CourseTrees — the same three primitives at two other vendors.
+
+  - Formal financial and accounting fundamentals  [SOFT]
+    Listed under general skills. No accounting coursework and no finance role.
+    Nearest and reasonably strong: the UFB Budget & Reimbursement project, which
+    is a real budget tree, claims, approvals and invoicing system with
+    separation of duties, plus Principles of Economics and Intermediate
+    Microeconomics on the transcript and three Treasurer positions. What is
+    missing is accounting proper — statements, double-entry, accruals.
+
+--------------------------------------------------------------------------------
+
+
+Company:  Jefferies
+Title:    2027 Information Technology Summer Internship Programme (London)
+JD:       jds/jefferies_it_summer_intern.txt
+Resume:   out/jefferies_it_summer_intern_2026-09-22.pdf
+Logged:   2026-09-22
+
+Gaps:
+  - Unchanged from the 2026-09-17 entry above, same JD.
+    This build is a rebuild of the same posting against the updated master.txt
+    and the Fall 2026 transcript. The JD did not change, so the gap set did not:
+    KDB/q, Visual Basic, Sybase and SQL Server, data warehousing/Snowflake and
+    Bloomberg API remain HARD; the Atlassian suite, AWS Lambda/S3 and formal
+    accounting fundamentals remain SOFT. Nothing in the master resume update
+    closed any of them.
+
+--------------------------------------------------------------------------------
